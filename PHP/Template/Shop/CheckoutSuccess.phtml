@@ -1,0 +1,19 @@
+<div id="elefunds_share">
+    <h3><?php echo $view['tellAboutIt']; ?></h3>
+    <p><?php echo $view['IDonatedAndWantToTellAboutIt']; ?></p>
+
+    <a href="http://elefunds.de/fb/share.php?s=<?php echo $view['clientId']; ?>&amp;o=<?php echo $view['encryptedForeignId']; ?>&amp;r=<?php echo $view['encryptedReceiverIds']; ?>" onclick="return elefunds_share('http://elefunds.de/fb/share.php?s=<?php echo $view['clientId']; ?>&amp;o=<?php echo $view['encryptedForeignId']; ?>&amp;r=<?php echo $view['encryptedReceiverIds']; ?>', 'Facebook Share', 660, 350)">
+    <img src="https://bbbf9fd0e36d5cb36b93-c1fc539e0df6af03ccc14b5020ab4161.ssl.cf1.rackcdn.com/default/share_on_facebook.png" /></a>
+    &nbsp;&nbsp;
+    <a href="https://elefunds.de/twitter/tweet.php?s=<?php echo $view['clientId']; ?>&amp;o=<?php echo $view['encryptedForeignId']; ?>&amp;r=<?php echo $view['encryptedReceiverIds']; ?>" onclick="return elefunds_share('https://elefunds.de/twitter/tweet.php?s=<?php echo $view['clientId']; ?>&amp;o=<?php echo $view['encryptedForeignId']; ?>&amp;r=<?php echo $view['encryptedReceiverIds']; ?>', 'Share on Twitter', 620, 415)">
+    <img src="https://bbbf9fd0e36d5cb36b93-c1fc539e0df6af03ccc14b5020ab4161.ssl.cf1.rackcdn.com/default/tweet_on_twitter.png"></a><br>
+    <span>Erfahre mehr über <a href="http://elefunds.de" target="_blank"><img src="https://bbbf9fd0e36d5cb36b93-c1fc539e0df6af03ccc14b5020ab4161.ssl.cf1.rackcdn.com/default/elefunds_logo_s.png"></a></span>
+
+</div>
+<script language="javascript" type="text/javascript">
+    function elefunds_share(url, title, width, height) {
+        newwindow=window.open(url,title,'left=100,top=50,width='+width+',height='+height);
+        if (window.focus) {newwindow.focus()}
+        return false;
+    }
+</script>
