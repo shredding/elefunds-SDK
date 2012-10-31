@@ -12,7 +12,7 @@ CSS or Javascript Snippets), be sure to contact us at <hello@elefunds.de> and we
 
 Best
 
-The elefunds IT-Crowd
+The elefunds team
 
 Dive in
 -------
