@@ -30,7 +30,4 @@ Please make sure that you have can provide all the features mentioned above when
 
 As always, make sure to call us in case of doubt!
 In desperate need for Financial, Legal or any other non-software related Support,
-please call:
-
-*Yannick Sonnenberg*: +49 (0) 176 610 95 331
-or mail to: <yannick@elefunds.de>
+please contact us at <hello@elefunds.de>!
