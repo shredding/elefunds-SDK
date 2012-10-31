@@ -10,7 +10,8 @@ Accounts
 
 > Have you already read the general Getting Started guide in the root Documentation folder of this repository?
 
-In order to integrate electronic fundraising into your app, you just need an API key and a Client ID. You can contact us at <hello@elefunds.de> to receive your own authentication keys and get started collecting donations. In the meantime you can grab a test account from the `testaccounts.csv` in the same folder!
+In order to integrate electronic fundraising into your app, you just need an API key and a Client ID. You can contact us at <hello@elefunds.de> to receive your own authentication keys and get started collecting donations.
+In the meantime you can grab a test account from the `testaccounts.csv` in the root's documentation folder!
 
 Let's assume, you choose to use the client ID `1001` with the associated API Key of `ay3456789gg234561234`.
 
