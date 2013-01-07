@@ -1,7 +1,7 @@
 <?php
 
 /**
- * elefunds API PHP Library 
+ * elefunds API PHP Library
  *
  * Copyright (c) 2012, elefunds GmbH <hello@elefunds.de>.
  * All rights reserved.
@@ -36,15 +36,15 @@
  * POSSIBILITY OF SUCH DAMAGE.
  *
  */
- 
-require_once dirname(__FILE__) .'/../Exception/ElefundsCommunicationException.php';
+
+require_once dirname(__FILE__) . '/../Exception/ElefundsCommunicationException.php';
 
 /**
  * Rest Interface
- * 
+ *
  * By default, the API uses the CurlRequest implementation of this interface.
  * If you are not able (or not want to) use curl, use this interface for your request method.
- * 
+ *
  * @package    elefunds API PHP Library
  * @subpackage Communication
  * @author     Christian Peters <christian@elefunds.de>
@@ -54,44 +54,44 @@ require_once dirname(__FILE__) .'/../Exception/ElefundsCommunicationException.ph
  * @since      File available since Release 1.0.0
  */
 interface Library_Elefunds_Communication_RestInterface  {
-    
+
     /**
      * Performs a GET Request against a given URL.
-     * 
+     *
      * @param string $restUrl with fully qualified resource path
      * @throws Library_Elefunds_Exception_ElefundsCommunicationException if connection or authentication fails or retrieved http code is not 200
      * @return string the server response as JSON
-     */    
+     */
     public function get($restUrl);
-    
+
     /**
      * Performs a POST Request against a given URL.
-     * 
+     *
      * @param string $restUrl with fully qualified resource path
      * @param string $body the JSON body
      * @throws Library_Elefunds_Exception_ElefundsCommunicationException if connection or authentication fails or retrieved http code is not 200
      * @return string the server response as JSON
      */
     public function post($restUrl, $body);
-    
+
     /**
      * Performs a PUT Request against a given URL.
-     * 
+     *
      * @param string $restUrl with fully qualified resource path
      * @param string $body the JSON body
      * @throws Library_Elefunds_Exception_ElefundsCommunicationException if connection or authentication fails or retrieved http code is not 200
      * @return string the server response as JSON
      */
     public function put($restUrl, $body);
-    
+
     /**
      * Performs a DELETE Request against a given URL.
-     * 
+     *
      * @param string $restUrl with fully qualified resource path
      * @throws Library_Elefunds_Exception_ElefundsCommunicationException if connection or authentication fails or retrieved http code is not 200
      * @return string the server response as JSON
      */
     public function delete($restUrl);
-    
-    
+
+
 }

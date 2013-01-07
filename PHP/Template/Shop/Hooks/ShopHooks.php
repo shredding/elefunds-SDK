@@ -50,6 +50,9 @@
  */
 class Library_Elefunds_Template_Shop_Hooks_ShopHooks {
 
+    private static $foreignId;
+    private static $receiverIds;
+
     /**
      * Calculates the suggested roundup to be displayed in the shop.
      *
@@ -59,39 +62,54 @@ class Library_Elefunds_Template_Shop_Hooks_ShopHooks {
      */
     public static function calculateRoundup(Library_Elefunds_View_ViewInterface $view, $total) {
 
-        //Change is the difference to the next full unit
-        $change = 100 - ($total % 100);
+        //Checkout total price tiers
+        $tiers = array(16, 100, 1000, 999999);
 
-        if($total < 2500) {
-            $minRoundup = 100;
-        } else {
-            $minRoundup = 200;
+        //Percentage of checkout total
+        $percent = array(0.10, 0.06, 0.04, 0.03);
+
+        //Round to the nearest "round sum"
+        $roundup = array(2, 5, 10, 20);
+
+        //Default tier
+        $tier = count($tiers)-1;
+
+        //Determine checkout price tier
+        foreach($tiers as $key => $value) {
+            if($total < $value) {
+                $tier = $key;
+                break;
+            }
         }
 
-        if($total < 10000) {
-            // Change is the roundup to the next full five unit
-            $additionalChange = 500 - ($total % 500);
-        } else {
-            // Change is the roundup to the next full ten units
-            $additionalChange = 1000 - ($total % 1000);
+        //Percentage of the checkout total...
+        $donationSuggestion = $total * $percent[$tier];
+
+        //Round up total sum, rounded to the nearest $roundup...
+        $roundTotal = ceil(($total + $donationSuggestion) / $roundup[$tier]) * $roundup[$tier];
+
+        //Donation suggestion is the difference between the round total and the checkout total
+        $donationSuggestion = $roundTotal - $total;
+
+        //In case the suggestion is higher than the nearest $roundup, we subtract the nearest $roundup
+        //and adjust the $roundTotal
+
+        if($donationSuggestion > $roundup[$tier] && $tier < count($tiers)-2) {
+            $donationSuggestion -= $roundup[$tier];
         }
 
-        if($total < 50000) {
-            $suggestedDonationAmount = $minRoundup + $change;
-        } elseif($additionalChange < $minRoundup) {
-            $suggestedDonationAmount = $minRoundup + $additionalChange + $change;
-        } else {
-            $suggestedDonationAmount = $additionalChange + $change;
-        }
-
-        $view->assign('suggestedDonationAmountCent', $suggestedDonationAmount);
+        //Round the donationSuggestion to eliminate float bugs
 
         $assigns = $view->getAssignments();
+        $suggestedDonationAmount = round($donationSuggestion, 2);
         $donationAmountString = number_format($suggestedDonationAmount / 100, 2, $assigns['currencyDelimiter'], '');
         $roundedSum = number_format(($suggestedDonationAmount + $total) / 100, 2, $assigns['currencyDelimiter'], '');
 
+        $view->assign('suggestedDonationAmountCent', $suggestedDonationAmount);
         $view->assign('suggestedDonationAmount', $donationAmountString);
         $view->assign('roundedSum', $roundedSum);
+
+
     }
 
     /**
@@ -141,11 +159,11 @@ class Library_Elefunds_Template_Shop_Hooks_ShopHooks {
             $paddingEach = ceil($paddingEach);
             $bonus = $mod - $receiversCount;
         }
-        
+
         //Padding of the receivers buttons
         $paddingLeft = $paddingLeft + ceil($paddingEach / 2);
         $paddingRight = $paddingRight + floor($paddingEach / 2);
-        
+
         //Padding of the last receiver buttons
         $paddingLeftLast = $paddingLeft + floor($bonus / 2);
         $paddingRightLast = $paddingRight + ceil($bonus / 2);
@@ -159,6 +177,41 @@ class Library_Elefunds_Template_Shop_Hooks_ShopHooks {
             )
         );
 
+    }
+
+    /**
+     * Forwards the handling to the assignShares method if foreignId is already set. If not,
+     * it just assigns the receiverIds to a private property. The action will then be invoked
+     * once the foreignId is added.
+     *
+     * Invokes as well calculateReceiversText.
+     *
+     * @param Library_Elefunds_View_ViewInterface $view
+     * @param array $receivers
+     */
+    public static function onReceiversAdded(Library_Elefunds_View_ViewInterface $view, array $receivers) {
+        self::$receiverIds = array_keys($receivers);
+
+        if(self::$foreignId !== NULL) {
+            self::assignShares($view);
+        }
+        self::calculateReceiversText($view, $receivers);
+    }
+
+    /**
+     * Forwards the handling to the assignShares method if receiverIds are already set. If not,
+     * it just assigns the foreignId to a private property. The action will then be invoked
+     * once receivers are added.
+     *
+     * @param Library_Elefunds_View_ViewInterface $view
+     * @param $foreignId
+     */
+    public static function onForeignIdAdded(Library_Elefunds_View_ViewInterface $view, $foreignId) {
+        self::$foreignId = $foreignId;
+
+        if(self::$receiverIds !== NULL) {
+            self::assignShares($view);
+        }
     }
 
     /**
@@ -200,37 +253,52 @@ class Library_Elefunds_Template_Shop_Hooks_ShopHooks {
 
         // Override with calculated text.
         $view->assign('IDonatedAndWantToTellAboutIt', $baseText);
-
     }
-    
+
     /**
-     * Encrypts the information for the facebook share.
+     * Assigns shares to the success page!
      *
      * @param Library_Elefunds_View_ViewInterface $view
-     * @param int $foreignId
+     *
+     * @throws InvalidArgumentException
+
      * @return void
      */
-     public static function encryptFacebookShare(Library_Elefunds_View_ViewInterface $view, $foreignId) {
-
-        require_once dirname(__FILE__) . '/../phpseclib/Math/BigInteger.php';
-        require_once dirname(__FILE__) . '/../phpseclib/Crypt/Hash.php';
-        require_once dirname(__FILE__) . '/../phpseclib/Crypt/Random.php';
-        require_once dirname(__FILE__) . '/../phpseclib/Crypt/RSA.php';
-        require_once dirname(__FILE__) . '/../phpseclib/Crypt/AES.php';
+    private static function assignShares(Library_Elefunds_View_ViewInterface $view) {
 
         $assigns = $view->getAssignments();
 
-        $receivers = $assigns['donationReceivers'];
+        // No services are configured, hence we skip this.
+        if(!isset($assigns['shareServices'])) {
+            return;
+        }
 
-        $aes = new Crypt_Rijndael(2);
-        $aes->setKey($assigns['hashedKey']);
+        $services = $assigns['shareServices'];
+        $baseUrl = 'https://share.elefunds.de/on/%s/%d/%d/%s/%s';
+        $receivers = implode(',', self::$receiverIds);
+        $clientId = $assigns['clientId'];
+        $hashedKey = $assigns['hashedKey'];
+        $checksum = sha1($clientId . self::$foreignId . $receivers . $hashedKey);
 
-        $foreignIdEncrypted = strtr(base64_encode($aes->encrypt($foreignId)), '+/=', '-_,');
-        $view->assign('encryptedForeignId', $foreignIdEncrypted);
+        $shares = array();
+        $availableShareServices = $assigns['availableShareServices'];
 
-        $receiverIds = implode(',',array_keys($receivers));
-        $receiverIdsEncrypted = strtr(base64_encode($aes->encrypt($receiverIds)), '+/=', '-_,');
-        $view->assign('encryptedReceiverIds', $receiverIdsEncrypted);
+        foreach($services as $service) {
+
+            if(!array_key_exists($service, $availableShareServices)) {
+                throw new InvalidArgumentException('Service must be one of the following: ' . implode(', ', $availableShareServices));
+            }
+            $serviceObj = new stdClass();
+            $serviceObj->url = sprintf($baseUrl, $service, $clientId, self::$foreignId, $receivers, $checksum);
+            $serviceObj->imageUrl = $availableShareServices[$service]['image'];
+            $serviceObj->width = $availableShareServices[$service]['width'];
+            $serviceObj->height = $availableShareServices[$service]['height'];
+            $serviceObj->title = $availableShareServices[$service]['title'];
+            $shares[] = $serviceObj;
+        }
+        $view->assign('shares', $shares);
+
     }
+
 
 }

@@ -96,8 +96,7 @@ class Library_Elefunds_Test_Unit_Model_DonationTest extends PHPUnit_Framework_Te
    public function setAmountThrowsErrorIfGivenStringIsNotCastableToInt() {
        $this->donation->setAmount('This string is not castable to int.');
    }
-   
-   
+
    /**
     * @test
     * @expectedException InvalidArgumentException
@@ -288,5 +287,41 @@ class Library_Elefunds_Test_Unit_Model_DonationTest extends PHPUnit_Framework_Te
        $this->donation->setTime($time);
        $this->assertSame($time, $this->donation->getTime());
    }
-   
+
+    /**
+     * @test
+     */
+    public function setDonatorAcceptsAValidUser() {
+        $this->donation->setDonator('hello@elefunds.de', 'Christian', 'Peters', 'Schönhauser Allee 124', 10243, 'Berlin', 'de');
+
+        $donator = $this->donation->getDonatorInformation();
+
+        $this->assertSame($donator['email'], 'hello@elefunds.de');
+        $this->assertSame($donator['firstName'], 'Christian');
+        $this->assertSame($donator['lastName'], 'Peters');
+        $this->assertSame($donator['streetAddress'], 'Schönhauser Allee 124');
+        $this->assertSame($donator['zip'], 10243);
+        $this->assertSame($donator['city'], 'Berlin');
+        $this->assertSame($donator['countryCode'], 'de');
+
+    }
+
+    /**
+     * @test
+     * @expectedException InvalidArgumentException
+     */
+    public function setDonatorNeedsAValidEmail() {
+        $this->donation->setDonator('hello@elefunds', 'Christian', 'Peters', 'Schönhauser Allee 124', 10243, 'Berlin', 'de');
+    }
+
+    /**
+     * @test
+     */
+    public function setDonatorDoesNotUseInvalidCountryCodes() {
+        $this->donation->setDonator('hello@elefunds.de', 'Christian', 'Peters', 'Schönhauser Allee 124', 10243, 'Berlin', 'invalid');
+
+        $donator = $this->donation->getDonatorInformation();
+        $this->assertSame(FALSE, isset($donator['countryCode']));
+    }
+
 }

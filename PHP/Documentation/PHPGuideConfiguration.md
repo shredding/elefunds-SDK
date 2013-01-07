@@ -56,7 +56,7 @@ Advanced
 --------
 
 You are free to configure the various files of this SDK yourself. For example, you may want to change the REST engine
-to something different other than curl. You'd then need to implement the `RestInterface` in your own engine. This can be configured
+to something different than curl. You'd then need to implement the `RestInterface` in your own engine. This can be configured
 like this:
 
     require_once dirname(__FILE__) . '/YourRestEngine.php';

@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <title>elefunds Shop Template</title>
+        
+        <link rel="stylesheet" href="css/style_white.css">
+        <link rel="stylesheet" href="css/tipTip.css">
+
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js" type="text/javascript"></script>
+        <script src="js/jquery.tipTip.js" type="text/javascript"></script>
+        <script src="js/script.js" type="text/javascript"></script>
+        <script type="text/javascript">
+            var elefundsVars = elefundsVars || {};
+            elefundsVars['grandTotal'] = 1880;
+            elefundsVars['roundSumContainer'] = '#elefunds_round_sum_container';
+            elefundsVars['roundSum'] = '#elefunds_round_sum';
+            elefundsVars['decimal'] = '.';
+            
+            //Preload images
+            $('<img src="https://bbbf9fd0e36d5cb36b93-c1fc539e0df6af03ccc14b5020ab4161.ssl.cf1.rackcdn.com/light/arrow_on.png"/>');
+            $('<img src="https://bbbf9fd0e36d5cb36b93-c1fc539e0df6af03ccc14b5020ab4161.ssl.cf1.rackcdn.com/light/arrow_on.png"/>');
+            $('<img src="https://bbbf9fd0e36d5cb36b93-c1fc539e0df6af03ccc14b5020ab4161.ssl.cf1.rackcdn.com/light/receiver_off_bg.png"/>');
+            $('<img src="https://bbbf9fd0e36d5cb36b93-c1fc539e0df6af03ccc14b5020ab4161.ssl.cf1.rackcdn.com/light/checkbox_off.png"/>');
+            $('<img src="https://bbbf9fd0e36d5cb36b93-c1fc539e0df6af03ccc14b5020ab4161.ssl.cf1.rackcdn.com/light/receipt_off.png"/>');
+        </script>
+    </head>
+    <body>
+        <!-- This would be the final step of the checkout process -->
+        <div class="container float_right">
+            <strong>Grand Total</strong>
+            <strong class="sum">18.80 €</strong>
+        </div>
+        
+        <!-- elefunds shop template starts here -->
+        <input type="hidden" id="elefunds_donation_cent" value="120"/>
+        <div id="elefunds_top">
+            <img src="https://bbbf9fd0e36d5cb36b93-c1fc539e0df6af03ccc14b5020ab4161.ssl.cf1.rackcdn.com/light/elefunds_logo.png" id="elefunds_logo" class="tiptip" title="elefunds" desc="elefunds is a charitable foundation proceeding 100% of your donation to the charieties of your choice." />
+            <span>
+                <div id="elefunds_arrow">
+                    <input type="checkbox" id="elefunds_checkbox" />
+                    <label for="elefunds_checkbox">I want to round up and donate with my order.</label>
+                    <span id="elefunds_arrow_end"></span>
+                </div>
+                <div id="elefunds_plus_minus">
+                    <a href="#" onclick="elefunds.decreaseDonation(); return false;" id="elefunds_decrease"><img src="https://bbbf9fd0e36d5cb36b93-c1fc539e0df6af03ccc14b5020ab4161.ssl.cf1.rackcdn.com/light/minus.png"></a> <a href="#" onclick="elefunds.increaseDonation(); return false;" id="elefunds_increase"><img src="https://bbbf9fd0e36d5cb36b93-c1fc539e0df6af03ccc14b5020ab4161.ssl.cf1.rackcdn.com/light/plus.png"></a>
+                </div>
+                <div id="elefunds_input_container">
+                    <span id="elefunds_currency">€</span>
+                    <input type="text" id="elefunds_input" onkeyup="elefunds.donationChange(this.value)" value="1.20" />
+                </div>
+            </span>
+        </div>
+        <div id="elefunds_bottom">
+            <div class="elefunds_receiver tiptip elefunds_receiver_selected" title="Example 01" desc="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent in erat at arcu consequat volutpat eu vitae tortor.">
+                <input type="checkbox" id="elefunds_receiver_01" checked="checked" />
+                <label for="elefunds_receiver_01"><img src="https://bbbf9fd0e36d5cb36b93-c1fc539e0df6af03ccc14b5020ab4161.ssl.cf1.rackcdn.com/receivers/sample_receiver_01h.png" /></label>
+            </div>
+            <div class="elefunds_receiver tiptip elefunds_receiver_selected" title="Example 02" desc="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent in erat at arcu consequat volutpat eu vitae tortor.">
+                <input type="checkbox" id="elefunds_receiver_02" checked="checked" />
+                <label for="elefunds_receiver_02"><img src="https://bbbf9fd0e36d5cb36b93-c1fc539e0df6af03ccc14b5020ab4161.ssl.cf1.rackcdn.com/receivers/sample_receiver_02h.png" /></label>
+            </div>
+            <div class="elefunds_receiver tiptip elefunds_receiver_selected" title="Example 03" desc="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent in erat at arcu consequat volutpat eu vitae tortor.">
+                <input type="checkbox" id="elefunds_receiver_03" checked="checked" />
+                <label for="elefunds_receiver_03"><img src="https://bbbf9fd0e36d5cb36b93-c1fc539e0df6af03ccc14b5020ab4161.ssl.cf1.rackcdn.com/receivers/sample_receiver_03h.png" /></label>
+            </div>
+        </div>
+        <!-- elefunds round sum -->
+        <div id="elefunds_round_sum_container" class="container float_right elefunds_hidden">
+            <div id="elefunds_receipt">
+                <input type="checkbox" id="elefunds_receipt_input" /><label for="elefunds_receipt_input">I want to receive a donation receipt.</label>
+            </div>
+            <strong>Round Sum</strong>
+            <strong id="elefunds_round_sum" class="sum">20.00</strong>
+            <strong>€</strong>
+        </div>
+        <!-- elefunds shop template ends here -->
+    </body>
+</html>

@@ -58,52 +58,72 @@ class Library_Elefunds_Model_Donation implements Library_Elefunds_Model_Donation
      * @var int
      */
     protected $foreignId;
-    
+
     /**
      * The amount that was donated (in Cents)
      *
      * @var int
      */
     protected $amount;
-    
+
     /**
      * The amount that was suggested during the checkout (in Cents)
      *
      * @var int
      */
      protected $suggestedAmount;
-     
+
      /**
-      * Array containing integers of receiver IDs. 
+      * Array containing integers of receiver IDs.
       *
-      * @var array 
+      * @var array
       */
      protected $receiverIds;
-     
+
      /**
       * Array containing integers of all available receivers.
-      * 
+      *
       * @var array
       */
      protected $availableReceiverIds;
-     
+
      /**
       * Grand total of the order / transaction that is associated with this donation (in Cents)
-      * 
+      *
       * @var int
       */
      protected $grandTotal;
-     
+
      /**
       * The time, when the donation was made.
-      * 
+      *
       * @var DateTime
       */
      protected $time;
-     
+
+    /**
+     * Donator information in the following structure
+     *
+     * <code>
+     *  array(
+     *      'email'          =>      'hello@elefunds.de',
+     *      'firstName'      =>      'Christian',
+     *      'lastName'       =>      'Peters',
+     *      'streetAddress'  =>      'Schönhauser Allee 124',
+     *      'zip'            =>      10437,
+     *      'city'           =>      'Berlin',
+     *      'countryCode'    =>      'de'
+     *  );
+     * </code>
+     *
+     * @var array
+     */
+    protected $donator;
+
      public function __construct() {
          $this->receivers = array();
          $this->availableReceiverIds = array();
+         $this->donator = array();
      }
 
     /**
@@ -151,11 +171,11 @@ class Library_Elefunds_Model_Donation implements Library_Elefunds_Model_Donation
      */
     public function setAmount($amount) {
         if (is_int($amount) || ctype_digit($amount)) {
-            $this->amount = $amount > 0 ? (int)$amount : 0 ;     
+            $this->amount = $amount > 0 ? (int)$amount : 0 ;
         } else {
             throw new InvalidArgumentException('Given amount was not of of a type that can be casted to integer.', 1347557226);
         }
-        return $this;     
+        return $this;
     }
 
     /**
@@ -166,10 +186,10 @@ class Library_Elefunds_Model_Donation implements Library_Elefunds_Model_Donation
     public function getSuggestedAmount() {
         return $this->suggestedAmount;
     }
-    
+
     /**
      * Sets the time when the donation took place.
-     * 
+     *
      * @param DateTime $time
      * @return Library_Elefunds_Model_DonationInterface
      */
@@ -177,10 +197,10 @@ class Library_Elefunds_Model_Donation implements Library_Elefunds_Model_Donation
         $this->time = $time;
         return $this;
     }
-    
+
     /**
      * Returns the time when the donation took place.
-     * 
+     *
      * @return DateTime
      */
     public function getTime() {
@@ -197,7 +217,7 @@ class Library_Elefunds_Model_Donation implements Library_Elefunds_Model_Donation
      */
     public function setSuggestedAmount($amount) {
         if (is_int($amount) || ctype_digit($amount)) {
-            $this->suggestedAmount = $amount > 0 ? (int)$amount : 0 ;     
+            $this->suggestedAmount = $amount > 0 ? (int)$amount : 0 ;
         } else {
             throw new InvalidArgumentException('Given amount was not of of a type that can be casted to integer.', 1347557226);
         }
@@ -230,17 +250,17 @@ class Library_Elefunds_Model_Donation implements Library_Elefunds_Model_Donation
      * @return Library_Elefunds_Model_DonationInterface
      */
     public function setReceiverIds(array $receiverIds) {
-        
+
         $isValidArray = $receiverIds === array_filter($receiverIds, create_function('$receiverIds', 'return is_int($receiverIds) && $receiverIds > 0;'));
-        
+
         if($isValidArray) {
             $this->receiverIds = $receiverIds;
         } else {
            throw new InvalidArgumentException('Given array may only contain positive integers.', 1347721363);
         }
-        
+
         return $this;
-      
+
     }
 
     /**
@@ -277,17 +297,17 @@ class Library_Elefunds_Model_Donation implements Library_Elefunds_Model_Donation
      * @return Library_Elefunds_Model_DonationInterface
      */
     public function setAvailableReceiverIds(array $receiverIds) {
-        
+
         $isValidArray = $receiverIds === array_filter($receiverIds, create_function('$receiverIds', 'return is_int($receiverIds) && $receiverIds > 0;'));
-        
+
         if($isValidArray) {
             $this->availableReceiverIds = $receiverIds;
         } else {
            throw new InvalidArgumentException('Given array may only contain positive integers.', 1347721363);
         }
-        
+
         return $this;
-        
+
     }
 
     /**
@@ -311,17 +331,70 @@ class Library_Elefunds_Model_Donation implements Library_Elefunds_Model_Donation
     /**
      * Sets the overall total of the process that is associated with the donation (in Cents).
      *
-     * @param int $grandTotal 
+     * @param int $grandTotal
      * @throws InvalidArgumentException if type can't be casted to integer
      * @return Library_Elefunds_Model_DonationInterface
      */
     public function setGrandTotal($grandTotal) {
         if (is_int($grandTotal) || ctype_digit($grandTotal)) {
-            $this->grandTotal = $grandTotal > 0 ? (int)$grandTotal : 0;                 
+            $this->grandTotal = $grandTotal > 0 ? (int)$grandTotal : 0;
         } else {
             throw new InvalidArgumentException('Given total was not of of a type that can be casted to integer.', 1347557227);
         }
         return $this;
     }
-    
+
+    /**
+     * Sets the donator information.
+     *
+     * The setting of the donator information is optional, but required if the donator want to get a donation receipt.
+     * If needed, all you need to do is to provide these information, everything else is taken care of be the
+     * elefunds foundation.
+     *
+     * @param string $email
+     * @param string $firstName
+     * @param string $lastName
+     * @param string $streetAddress
+     * @param int $zip
+     * @param string $city
+     * @param string $countryCode two digit country code; if not given, the code from your settings will be used
+     *
+     * @return Library_Elefunds_Model_Donation
+     * @throws InvalidArgumentException
+     */
+    public function setDonator($email, $firstName, $lastName, $streetAddress, $zip, $city, $countryCode = NULL) {
+        $validMail = filter_var($email, FILTER_VALIDATE_EMAIL) !== FALSE;
+
+        if($validMail && is_string($firstName) && is_string($lastName) && is_string($streetAddress) && is_int($zip) && is_string($city)) {
+
+            $this->donator = array(
+                'email'             =>  $email,
+                'firstName'         =>  $firstName,
+                'lastName'          =>  $lastName,
+                'streetAddress'     =>  $streetAddress,
+                'zip'               =>  $zip,
+                'city'              =>  $city,
+            );
+
+
+            if($countryCode !== NULL && is_string($countryCode) && strlen($countryCode) === 2) {
+                $this->donator['countryCode'] = $countryCode;
+            }
+
+        } else {
+            throw new InvalidArgumentException('Given donator information are not in the correct format.', 1352721709);
+        }
+
+        return $this;
+    }
+
+    /**
+     * Returns the array with donator information.
+     *
+     * @return array
+     */
+    public function getDonatorInformation() {
+        return $this->donator;
+    }
+
 }

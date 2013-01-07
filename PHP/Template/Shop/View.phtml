@@ -12,27 +12,34 @@
         </div>
         <div id="elefunds_input_container">
             <span id="elefunds_currency">€</span>
-            <input type="text" id="elefunds_input" onkeyup="elefunds.donationChange(this.value)" value="<?php echo $view['suggestedDonationAmount'];?>" />
+            <input type="text" id="elefunds_input" name="elefunds_round_up" onkeyup="elefunds.donationChange(this.value)" value="<?php echo $view['suggestedDonationAmount'];?>" />
+            <input type="hidden" id="<?php echo 'elefunds_suggested_round_up'; ?>" name="<?php echo 'elefunds_suggested_round_up'; ?>" value="<?php echo $view['suggestedDonationAmount'];?>"/>
+
         </div>
     </span>
 </div>
 
 <div id="elefunds_bottom" style="width: <?php echo $view['shopWidth']; ?>px;">
     <?php $numReceivers = count($view['receivers']); $i = 0; foreach ($view['receivers'] as $key => $receiver): ?>
-    <div class="elefunds_receiver elefunds_receiver_selected tiptip" desc="<?php echo $receiver->getDescription(); ?>" title="<?php echo $receiver->getName(); ?>">
-        <input type="checkbox" id="<?php echo 'elefunds_receiver_' . $receiver->getId(); ?>" checked="checked" />
+    <div class="elefunds_receiver tiptip" desc="<?php echo $receiver->getDescription(); ?>" title="<?php echo $receiver->getName(); ?>">
+        <input type="checkbox" id="<?php echo 'elefunds_receiver_' . $receiver->getId(); ?>" name="<?php echo 'elefunds_receiver_' . $receiver->getId(); ?>"/>
 
         <?php if(++$i === $numReceivers)  : ?>
             <label for="<?php echo 'elefunds_receiver_' . $receiver->getId(); ?>" style="padding: 12px <?php echo $view['paddingRight']; ?> 8px <?php echo $view['paddingLeft']; ?>;"><img src="<?php echo $receiver->getImage('horizontal', 'medium'); ?>" /></label>
             <input type="hidden" id="<?php echo 'elefunds_receiver_meta_' . $receiver->getId(); ?>" value="<?php echo $receiver->getName(); ?>"/>
         <?php else : ?>
-            <label for="<?php echo 'elefunds_receivers_' . $receiver->getId(); ?>" style="padding: 12px <?php echo $view['paddingRightLast']; ?> 8px <?php echo $view['paddingLeftLast']; ?>;"><img src="<?php echo $receiver->getImage('horizontal', 'medium'); ?>" /></label>
+            <label for="<?php echo 'elefunds_receiver_' . $receiver->getId(); ?>" style="padding: 12px <?php echo $view['paddingRightLast']; ?> 8px <?php echo $view['paddingLeftLast']; ?>;"><img src="<?php echo $receiver->getImage('horizontal', 'medium'); ?>" /></label>
         <?php endif; ?>
     </div>
     <?php endforeach; ?>
 </div>
 
-<div id="elefunds_sum" class="elefunds_hidden" style="width: <?php echo $view['shopWidth']; ?>px;">
+<div id="elefunds_round_sum_container" class="elefunds_hidden" style="width: <?php echo $view['shopWidth']; ?>px;">
+    <?php if ($view['offerDonationReceipt']): ?>
+        <div id="elefunds_receipt">
+            <input type="checkbox" id="elefunds_receipt_input" /><label for="elefunds_receipt_input"><?php echo $view['receipt_slogan'];?></label>
+        </div>
+    <?php endif; ?>
     <strong><?php echo $view['roundedSumString']; ?></strong>
     <strong id="elefunds_round_sum"><?php echo $view['roundedSum'];?></strong>
     <strong>€</strong>
@@ -41,4 +48,6 @@
 <script type="text/javascript">
     var elefundsVars = elefundsVars || {};
     elefundsVars['grandTotal'] = <?php echo $view['total']; ?>;
+    elefundsVars['roundSum'] = '#<?php echo $view['roundSum']; ?>';
+    elefundsVars['roundSumContainer'] = '#<?php echo $view['roundSumContainer']; ?>';
 </script>

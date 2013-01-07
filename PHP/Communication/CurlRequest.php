@@ -1,7 +1,7 @@
 <?php
 
 /**
- * elefunds API PHP Library 
+ * elefunds API PHP Library
  *
  * Copyright (c) 2012, elefunds GmbH <hello@elefunds.de>.
  * All rights reserved.
@@ -34,18 +34,18 @@
  * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
- * 
+ *
  */
- 
+
 require_once 'RestInterface.php';
- 
+
 /**
  * Curl Request
- * 
+ *
  * Connects to the elefunds API via curl.
- * 
+ *
  * Type validation is performed, but valid semantic input is forwarded to the API or curl itself.
- * 
+ *
  * @package    elefunds API PHP Library
  * @subpackage Communication
  * @author     Christian Peters <christian@elefunds.de>
@@ -60,7 +60,7 @@ class Library_Elefunds_Communication_CurlRequest implements Library_Elefunds_Com
      * @var resource
      */
     protected $curl;
-    
+
     /**
      * @var array
      */
@@ -72,34 +72,34 @@ class Library_Elefunds_Communication_CurlRequest implements Library_Elefunds_Com
     public function __construct() {
         if(!extension_loaded('curl')) {
             throw new Library_Elefunds_Exception_ElefundsException(
-                'You are using the curl request method without having curl installed on your server. 
+                'You are using the curl request method without having curl installed on your server.
                  Your options are to either use another implementation of the RestInterface or to install curl.',
                  1347875278);
         }
-        
+
         $this->curl = curl_init();
         $this->curlOptions = array();
-       
+
     }
-    
+
     /**
      * Performs a GET Request against a given URL.
-     * 
+     *
      * @param string $restUrl with fully qualified resource path
      * @throws Library_Elefunds_Exception_ElefundsCommunicationException if connection or authentication fails or retrieved http code is not 200
      * @return string the server response as JSON
-     */   
+     */
     public function get($restUrl) {
        $this->curlOptions[CURLOPT_CUSTOMREQUEST] = 'GET';
        $this->curlOptions[CURLOPT_URL] = (string)$restUrl;
 
        return $this->performRequest();
-        
+
     }
 
     /**
      * Performs a POST Request against a given URL.
-     * 
+     *
      * @param string $restUrl with fully qualified resource path
      * @param string $body the JSON body
      * @throws Library_Elefunds_Exception_ElefundsCommunicationException if connection or authentication fails or retrieved http code is not 200
@@ -110,34 +110,34 @@ class Library_Elefunds_Communication_CurlRequest implements Library_Elefunds_Com
         $this->curlOptions[CURLOPT_CUSTOMREQUEST] = 'POST';
         $this->curlOptions[CURLOPT_POSTFIELDS] = (string)$body;
         $this->curlOptions[CURLOPT_URL] = (string)$restUrl;
-        $this->curlOptions[CURLOPT_HTTPHEADER] = array('Content-type: application/json');
-                 
+        $this->curlOptions[CURLOPT_HTTPHEADER] = array('Content-Type: application/json');
+
         return $this->performRequest();
     }
-    
+
     /**
      * Performs a DELETE Request against a given URL.
-     * 
+     *
      * @param string $restUrl with fully qualified resource path
      * @param string $body the JSON body
      * @throws Library_Elefunds_Exception_ElefundsCommunicationException if connection or authentication fails or retrieved http code is not 200
      * @return string the server response as JSON
      */
     public function put($restUrl, $body) {
-        
+
         $this->curlOptions[CURLOPT_CUSTOMREQUEST] = 'PUT';
         $this->curlOptions[CURLOPT_POSTFIELDS] = (string)$body;
         $this->curlOptions[CURLOPT_URL] = (string)$restUrl;
-        $this->curlOptions[CURLOPT_HTTPHEADER] = array('Content-type: application/json');
-         
-        
+        $this->curlOptions[CURLOPT_HTTPHEADER] = array('Content-Type: application/json');
+
+
         return $this->performRequest();
     }
-    
-        
+
+
     /**
      * Performs a DELETE Request against a given URL.
-     * 
+     *
      * @param string $restUrl with fully qualified resource path
      * @throws Library_Elefunds_Exception_ElefundsCommunicationException if connection or authentication fails or retrieved http code is not 200
      * @return string the server response as JSON
@@ -145,26 +145,26 @@ class Library_Elefunds_Communication_CurlRequest implements Library_Elefunds_Com
     public function delete($restUrl) {
         $this->curlOptions[CURLOPT_CUSTOMREQUEST] = 'DELETE';
         $this->curlOptions[CURLOPT_URL] = (string)$restUrl;
-        
+
         return $this->performRequest();
     }
-    
+
     /**
      * Performs the actual curl request.
-     * 
+     *
      * @throws Library_Elefunds_Exception_ElefundsCommunicationException if connection or authentication fails or retrieved http code is not 200
      * @return string the server response as JSON
      */
     protected function performRequest() {
          $this->curlOptions[CURLOPT_RETURNTRANSFER] = TRUE;
          $this->curlOptions[CURLOPT_USERAGENT] = 'elefunds-php-1.0';
-         
+
          curl_setopt_array($this->curl, $this->curlOptions);
 
          $serverResponse = curl_exec($this->curl);
 
          if($serverResponse === FALSE) {
-             
+
              throw new Library_Elefunds_Exception_ElefundsCommunicationException(
                 'Unable to connect to the elefunds API',
                 1347878604,
@@ -172,27 +172,26 @@ class Library_Elefunds_Communication_CurlRequest implements Library_Elefunds_Com
                     'curlErrorCode'     => curl_errno($this->curl),
                     'curlErrorMessage'  => curl_error($this->curl)
                 )
-             );    
+             );
          }
-         
+
          $httpResponseCode = curl_getinfo($this->curl, CURLINFO_HTTP_CODE);
-         
-         if($httpResponseCode !== 200) {      
+
+         if($httpResponseCode !== 200) {
              throw new Library_Elefunds_Exception_ElefundsCommunicationException(
                 'An error occurred during the api call. Refer to additionalInformation of this exception for more details.',
                 1347899756668,
                 array(
                     'httpCode'          => $httpResponseCode,
-                    'serverResponse'    => (string)$serverResponse                   
-                )                                    
+                    'serverResponse'    => (string)$serverResponse
+                )
             );
          }
-         
+
          // Reset options
          $this->curlOptions = array();
-         
+
          return $serverResponse;
     }
 
-    
 }

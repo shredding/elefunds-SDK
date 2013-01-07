@@ -104,7 +104,16 @@ Only the basic authentication.
                  311
               ],
               "grandTotal":1000,
-              "donationAmountSuggested":30
+              "donationAmountSuggested":30,
+              "donator":{
+                   "email":"christian@elefunds.de",
+                   "firstName":"Christian",
+                   "lastName":"Peters",
+                   "streetAddress":"Sch\u00f6nhauser Allee 124",
+                   "zip":10243,
+                   "city":"Berlin",
+                   "countryCode":"en"
+              }
            }
     ]
 

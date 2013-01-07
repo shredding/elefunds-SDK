@@ -74,9 +74,10 @@ In order to have everything in place, you need to add CSS and Javascript snippet
 > We're working on a version, were you can set your javascript library of choice in your configuration.
 > At the moment, this template requires jQuery.
 
+
 **Success**
 
-When a checkout was successful, you can send back the donation and display our facebook share. This is as easy as:
+When a checkout was successful, you can send back the donation and display our facebook and twitter share. This is as easy as:
 
     require_once dirname(__FILE__) . '/../Facade.php';
     require_once dirname(__FILE__) . '/ShopExampleCheckoutSuccessConfiguration.php';
@@ -94,15 +95,19 @@ When a checkout was successful, you can send back the donation and display our f
     $snippet = $facade->renderTemplate('CheckoutSuccess');
 
 Notice that we do not need to create try / catch blocks here, as there are no API calls yet! You have to add the donation
-receivers and your foreignId to the view, as they are needed for the facebook share. `$snippet` now contains the data for the facebook share.
+receivers and your foreignId to the view, as they are needed for the facebook and twitter share. `$snippet` now contains the data for the facebook share.
 
-Since the share does not need Javascript, you're good to go with the following lines:
+Since the share does not need additionally Javascript files, you're good to go with the following lines:
 
     <!-- +++ HTML Snippet for your head section +++ -->
     <?php foreach($facade->getTemplateCssFiles() as $cssFile): ?>
         <link rel="stylesheet" type="text/css" href="<?php echo $cssFile; ?>">
     <?php endforeach; ?>
     <!-- ^^^ HTML Snippets for your head section ^^^ -->
+
+> You can configure the Share (like which ones are to display the hover title and much more directly in the init()
+> method of the CheckoutSuccessConfiguration, or - better - override it's values in your extending Configuration
+> file.
 
 All that's left to do no now is send us the donation data.
 
@@ -121,7 +126,7 @@ To get started create a new Folder named `Awesome` below the Template Folder and
 > `View` is the default, if you want to name your template differently, you have to add the name as parameter to the
 > `$facade->renderTemplate('YourDifferentName')` method.
 
-Create a `AwesomeConfiguration.php` file as well, with the following content:
+Create an `AwesomeConfiguration.php` file as well, with the following content:
 
     <?php
 
@@ -153,9 +158,9 @@ them to your template like this (assuming you are inside the configuration's `in
 
 > It's a good practise to provide minimized versions of your static files.
 
-Lets create a hook to multiply a number by ten. 
+Lets create a hook to multiply a number by ten.
 
-> You can see this trick in action if you are looking at the hooks in the shop template. For example, the suggested roundup gets 
+> You can see this trick in action if you are looking at the hooks in the shop template. For example, the suggested roundup gets
 > calculated that way when the total is assigned to the view.
 
 Create a file named `AwesomeHooks.php` and save it at `Template/Awesome/Hooks`. Then paste in the following content:
@@ -205,7 +210,7 @@ In order for this to work, the number must be set, an example would be:
     echo $facade->renderTemplate();
     ?>
 
-If the number is assigned, the multiplied version is assigned as well. 
+If the number is assigned, the multiplied version is assigned as well.
 
 > There's a whole lot more to explore. Be sure to check out the shop template to get an in-depth overview on what is
 > possible with this SDK's templating system.

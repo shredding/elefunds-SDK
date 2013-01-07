@@ -180,5 +180,32 @@ interface Library_Elefunds_Model_DonationInterface  {
      * @return Library_Elefunds_Model_DonationInterface
      */
     public function setGrandTotal($grandTotal);
+
+    /**
+     * Sets the donator information.
+     *
+     * The setting of the donator information is optional, but required if the donator want to get a donation receipt.
+     * If needed, all you need to do is to provide these information, everything else is taken care of be the
+     * elefunds foundation.
+     *
+     * @param string $email
+     * @param string $firstName
+     * @param string $lastName
+     * @param string $streetAddress
+     * @param int $zip
+     * @param string $city
+     * @param string $countryCode two digit country code; if not given, the code from your settings will be used
+     *
+     * @return Library_Elefunds_Model_Donation
+     * @throws InvalidArgumentException
+     */
+    public function setDonator($email, $firstName, $lastName, $streetAddress, $zip, $city, $countryCode = NULL);
+
+    /**
+     * Returns the array with donator information.
+     *
+     * @return array
+     */
+    public function getDonatorInformation();
     
 }

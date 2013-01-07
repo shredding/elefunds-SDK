@@ -1,7 +1,7 @@
 <?php
 
 /**
- * elefunds API PHP Library 
+ * elefunds API PHP Library
  *
  * Copyright (c) 2012, elefunds GmbH <hello@elefunds.de>.
  * All rights reserved.
@@ -36,14 +36,14 @@
  * POSSIBILITY OF SUCH DAMAGE.
  *
  */
- 
-require_once 'ConfigurationInterface.php'; 
-require_once dirname(__FILE__) .'/../Exception/ElefundsException.php';
+
+require_once 'ConfigurationInterface.php';
+require_once dirname(__FILE__) . '/../Exception/ElefundsException.php';
 
 
 /**
  * Base Configuration for the elefunds API.
- * 
+ *
  * @package    elefunds API PHP Library
  * @subpackage Configuration
  * @author     Christian Peters <christian@elefunds.de>
@@ -54,11 +54,16 @@ require_once dirname(__FILE__) .'/../Exception/ElefundsException.php';
  */
 class Library_Elefunds_Configuration_BaseConfiguration implements Library_Elefunds_Configuration_ConfigurationInterface {
 
+     /**
+      * @var array
+      */
+      protected $availableShareServices = array();
+
       /**
        * @var int
        */
       protected $clientId;
-      
+
       /**
        * @var string
        */
@@ -71,63 +76,63 @@ class Library_Elefunds_Configuration_BaseConfiguration implements Library_Elefun
        * @var string
        */
       protected $hashedKey;
-      
+
       /**
        * @var Library_Elefunds_Communication_RestInterface
        */
       protected $rest;
-      
+
       /**
        * @var string
        */
       protected $apiUrl;
-      
+
       /**
        * Class name of the donation implementation.
-       * 
+       *
        * @var string
        */
       protected $donationClassName;
-      
+
       /**
        * Class name of the receiver implementation.
-       * 
+       *
        * @var string
        */
       protected $receiverClassName;
-      
+
       /**
        * Two digit countrycode to use for calls.
-       * 
+       *
        * @var string
        */
       protected $countrycode = 'en';
-      
+
       /**
        * Instance of the facade.
-       * 
+       *
        * @var Library_Elefunds_Facade
        */
       protected $facade;
-      
+
       /**
        * @var Library_Elefunds_View_ViewInterface
        */
       protected $view;
-      
+
       /**
        * Setup configuration of an elefunds API Plugin.
-       * 
+       *
        * This function gets called after forwarding the configuration to the facade.
-       * 
+       *
        * @return void
        */
       public function init() {}
-      
+
       /**
-       * An instance of the facade. This is set by the facade itself, so you can access API functionality 
+       * An instance of the facade. This is set by the facade itself, so you can access API functionality
        * from within init()!
-       * 
+       *
        * @param Library_Elefunds_Facade $facade
        * @return Library_Elefunds_Configuration_ConfigurationInterface
        */
@@ -135,30 +140,30 @@ class Library_Elefunds_Configuration_BaseConfiguration implements Library_Elefun
           $this->facade = $facade;
           return $this;
       }
-      
+
       /**
        * Sets the view for this configuration.
-       * 
+       *
        * @param Library_Elefunds_View_ViewInterface $view
-       * @return Library_Elefunds_Configuration_ConfigurationInterface 
+       * @return Library_Elefunds_Configuration_ConfigurationInterface
        */
       public function setView(Library_Elefunds_View_ViewInterface $view) {
           $this->view = $view;
           return $this;
       }
-      
+
       /**
        * Returns the view that is configured for this configuration.
-       * 
+       *
        * @return Library_Elefunds_View_ViewInterface
        */
       public function getView() {
           return $this->view;
       }
-      
+
       /**
        * Sets the clientId.
-       * 
+       *
        * @param int $clientId
        * @return Library_Elefunds_Configuration_ConfigurationInterface
        */
@@ -167,13 +172,13 @@ class Library_Elefunds_Configuration_BaseConfiguration implements Library_Elefun
           if($this->apiKey !== NULL && $this->hashedKey === NULL) {
               $this->hashedKey = sha1($this->clientId . $this->apiKey);
           }
-          
+
           return $this;
       }
-      
+
       /**
        * Sets the apiKey.
-       * 
+       *
        * @param string $apiKey
        * @return Library_Elefunds_Configuration_ConfigurationInterface
        */
@@ -182,25 +187,25 @@ class Library_Elefunds_Configuration_BaseConfiguration implements Library_Elefun
           if($this->clientId !== NULL && $this->hashedKey === NULL) {
               $this->hashedKey = sha1($this->clientId . $this->apiKey);
           }
-          
+
           return $this;
       }
-      
+
       /**
        * Returns the ClientId.
-       * 
+       *
        * @return int
        */
       public function getClientId() {
           return $this->clientId;
       }
-      
+
       /**
        * The API Url.
-       * 
+       *
        * Url is not validated here, as it's dependent on the RestInterface Implementation. For example
        * the curl implementation adds it's error message to the additionalInformation of the ElefundsException.
-       * 
+       *
        * @param string $url
        * @return Library_Elefunds_Configuration_ConfigurationInterface
        */
@@ -208,19 +213,19 @@ class Library_Elefunds_Configuration_BaseConfiguration implements Library_Elefun
           $this->apiUrl = rtrim((string)$url, '/');
           return $this;
       }
-      
+
       /**
        * Returns the URL to the API without trailing slashes.
-       * 
+       *
        * @return string
        */
       public function getApiUrl() {
           return $this->apiUrl;
       }
-      
+
       /**
        * Returns the hashed key
-       * 
+       *
        * @throws Library_Elefunds_Exception_ElefundsException if hashedKey has not been calculated
        * @return string
        */
@@ -229,17 +234,17 @@ class Library_Elefunds_Configuration_BaseConfiguration implements Library_Elefun
                if ($this->apiKey === NULL || $this->clientId === NULL) {
                     throw new Library_Elefunds_Exception_ElefundsException('HashedKey could not been calculated. Make sure that either clientId and apiKey are set.', 1347889008107);
                } else {
-                   $this->hashedKey = sha1($this->clientId . $this->apiKey);                   
+                   $this->hashedKey = sha1($this->clientId . $this->apiKey);
                }
-          } 
+          }
           return $this->hashedKey;
       }
-      
+
       /**
        * The rest implementation to be used to connect to the api.
-       * 
+       *
        * If not changed in the configuration, this will be curl.
-       * 
+       *
        * @param Library_Elefunds_Communication_RestInterface $rest
        * @return Library_Elefunds_Configuration_ConfigurationInterface
        */
@@ -247,73 +252,73 @@ class Library_Elefunds_Configuration_BaseConfiguration implements Library_Elefun
           $this->rest = $rest;
           return $this;
       }
-      
+
       /**
        * Returns the rest implementation to use, by default, it's curl.
-       * 
+       *
        * @return Library_Elefunds_Communication_RestInterface
        */
       public function getRestImplementation() {
           return $this->rest;
       }
-      
+
       /**
        * Sets the donation class name a fully qualified string.
-       * 
+       *
        * Attention: Since we do not use autoloading, you have to require_once the class before
        * setting it.
-       * 
+       *
        * @param string $donationClassName
        * @throws Library_Elefunds_Exception_ElefundsException if given class does not exist
        * @return Library_Elefunds_Configuration_ConfigurationInterface
        */
       public function setDonationClassName($donationClassName) {
           if(!class_exists($donationClassName)) {
-                throw new Library_Elefunds_Exception_ElefundsException('Class ' . $donationClassName . ' does not exist. Did you called required_once on the file that hosts this class?', 1347893442819);       
+                throw new Library_Elefunds_Exception_ElefundsException('Class ' . $donationClassName . ' does not exist. Did you called required_once on the file that hosts this class?', 1347893442819);
           }
           $this->donationClassName = (string)$donationClassName;
           return $this;
       }
-      
+
       /**
        * Returns the donation class name.
-       * 
+       *
        * @return string
        */
       public function getDonationClassName() {
           return $this->donationClassName;
       }
-      
+
       /**
        * Sets the receiver class name a fully qualified string.
-       * 
+       *
        * Attention: Since we do not use auto-loading, you have to require_once the class before
        * setting it.
-       * 
+       *
        * @param string $receiverClassName
        * @throws Library_Elefunds_Exception_ElefundsException if given class does not exist
        * @return Library_Elefunds_Configuration_ConfigurationInterface
        */
       public function setReceiverClassName($receiverClassName) {
           if(!class_exists($receiverClassName)) {
-                throw new Library_Elefunds_Exception_ElefundsException('Class ' . $receiverClassName . ' does not exist. Did you called required_once on the file that hosts this class?', 1347893442820);       
+                throw new Library_Elefunds_Exception_ElefundsException('Class ' . $receiverClassName . ' does not exist. Did you called required_once on the file that hosts this class?', 1347893442820);
           }
           $this->receiverClassName = (string)$receiverClassName;
           return $this;
       }
-    
+
       /**
        * Returns the receiver class name.
-       * 
+       *
        * @return string
        */
       public function getReceiverClassName() {
           return $this->receiverClassName;
-      }      
-      
+      }
+
       /**
        * Sets the countrycode.
-       * 
+       *
        * @param string $countrycode two digit countrycode
        * @throws InvalidArgumentException if given string is not a countrycode
        * @return Library_Elefunds_Configuration_ConfigurationInterface
@@ -326,13 +331,14 @@ class Library_Elefunds_Configuration_BaseConfiguration implements Library_Elefun
           }
           return $this;
       }
-      
+
       /**
        * Returns the countrycode.
-       * 
+       *
        * @return string
        */
       public function getCountrycode() {
           return $this->countrycode;
       }
+
 }

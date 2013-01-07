@@ -1,7 +1,7 @@
 <?php
 
 /**
- * elefunds API PHP Library 
+ * elefunds API PHP Library
  *
  * Copyright (c) 2012, elefunds GmbH <hello@elefunds.de>.
  * All rights reserved.
@@ -36,14 +36,14 @@
  * POSSIBILITY OF SUCH DAMAGE.
  *
  */
- 
+
 require_once dirname(__FILE__) . '/../../Configuration/DefaultConfiguration.php';
 require_once dirname(__FILE__) . '/../../View/BaseView.php';
 require_once dirname(__FILE__) . '/Hooks/ShopHooks.php';
 
 /**
  * Base Configuration for the checkout success configuration of the shop template.
- * 
+ *
  * @package    elefunds API PHP Library
  * @subpackage Template\Shop
  * @author     Christian Peters <christian@elefunds.de>
@@ -73,12 +73,32 @@ class Library_Elefunds_Template_Shop_CheckoutSuccessConfiguration extends Librar
         parent::init();
 
         $this->setView(new Library_Elefunds_View_BaseView());
-        $this->view->setTemplate('Shop');
 
         $this->view->assign('clientId', $this->facade->getConfiguration()->getClientId());
         $this->view->assign('hashedKey', $this->facade->getConfiguration()->getHashedKey());
 
+        $this->view->assign('availableShareServices', array(
+            'facebook'      =>  array(
+                'image'     =>  'https://bbbf9fd0e36d5cb36b93-c1fc539e0df6af03ccc14b5020ab4161.ssl.cf1.rackcdn.com/default/share_on_facebook.png',
+                'width'     =>  660,
+                'height'    =>  350,
+                'title'     =>  $this->countrycode === 'de' ? 'Auf Facebook teilen' : 'Share on facebook'
+            ),
+            'twitter'      =>  array(
+                'image'     =>  'https://bbbf9fd0e36d5cb36b93-c1fc539e0df6af03ccc14b5020ab4161.ssl.cf1.rackcdn.com/default/tweet_on_twitter.png',
+                'width'     =>  620,
+                'height'    =>  415,
+                'title'     =>  $this->countrycode === 'de' ? 'Auf Twitter tweeten' : 'Tweet on twitter'
+            ),
+        ));
+
+        $this->view->assign('shareServices', array('facebook', 'twitter'));
+
+        $this->view->setTemplate('Shop');
+
         $this->view->addCssFile('elefunds.min.css');
+
+
 
         // L18n
         if($this->countrycode === 'de') {
@@ -90,8 +110,9 @@ class Library_Elefunds_Template_Shop_CheckoutSuccessConfiguration extends Librar
         }
 
         // Hooks
-       $this->view->registerAssignHook('foreignId', 'Library_Elefunds_Template_Shop_Hooks_ShopHooks', 'encryptFacebookShare');
-       $this->view->registerAssignHook('donationReceivers', 'Library_Elefunds_Template_Shop_Hooks_ShopHooks', 'calculateReceiversText');
+       $this->view->registerAssignHook('receivers', 'Library_Elefunds_Template_Shop_Hooks_ShopHooks', 'onReceiversAdded');
+       $this->view->registerAssignHook('foreignId', 'Library_Elefunds_Template_Shop_Hooks_ShopHooks', 'onForeignIdAdded');
 
     }
+
 }

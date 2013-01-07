@@ -1,7 +1,7 @@
 <?php
 
 /**
- * elefunds API PHP Library 
+ * elefunds API PHP Library
  *
  * Copyright (c) 2012, elefunds GmbH <hello@elefunds.de>.
  * All rights reserved.
@@ -43,7 +43,7 @@ require_once dirname(__FILE__) . '/../../../View/ViewInterface.php';
 
 /**
  * Unit Test for Library_Elefunds_Configuration_BaseConfiguration.
- * 
+ *
  * @package    elefunds API PHP Library
  * @subpackage Test
  * @author     Christian Peters <christian@elefunds.de>
@@ -53,34 +53,34 @@ require_once dirname(__FILE__) . '/../../../View/ViewInterface.php';
  * @since      File available since Release 1.0.0
  */
 class Library_Elefunds_Test_Unit_Configuration_BaseConfigurationTest extends PHPUnit_Framework_TestCase {
-   
+
    protected $baseConfiguration;
-   
+
    /**
     * @test
-    */ 
+    */
    public function setClientCalculatesHashedKeyIfApiKeyIsAlreadySetAndGettersForClientIdAndHashedKeyAreWorking() {
         $this->baseConfiguration = new Library_Elefunds_Configuration_BaseConfiguration();
         $this->baseConfiguration->setApiKey('asdfaAdf123ddddddddd');
         $this->baseConfiguration->setClientId(1234);
-        
+
         $this->assertSame(1234, $this->baseConfiguration->getClientId());
         $this->assertSame('3382a100edcb335c6af4efc1d5fb37b4ec264553', $this->baseConfiguration->getHashedKey());
    }
-   
-   
+
+
    /**
     * @test
     */
    public function setApiKeyCalculatesHashedKeyIfClientIdIsAlreadySet() {
        $this->baseConfiguration = new Library_Elefunds_Configuration_BaseConfiguration();
-       
+
        $this->baseConfiguration->setClientId(1234);
        $this->baseConfiguration->setApiKey('asdfaAdf123ddddddddd');
-        
+
        $this->assertSame('3382a100edcb335c6af4efc1d5fb37b4ec264553', $this->baseConfiguration->getHashedKey());
    }
-   
+
    /**
     * @test
     * @expectedException Library_Elefunds_Exception_ElefundsException
@@ -88,42 +88,42 @@ class Library_Elefunds_Test_Unit_Configuration_BaseConfigurationTest extends PHP
    public function getHashedKeyThrowsErrorIfNotClientIdAndApiKeyAreSet() {
        $this->baseConfiguration = new Library_Elefunds_Configuration_BaseConfiguration();
        $this->baseConfiguration->getHashedKey();
-       
+
    }
-   
+
    /**
     * @test
     */
    public function setViewWorks() {
        $this->baseConfiguration = new Library_Elefunds_Configuration_BaseConfiguration();
        $view = $this->getMock('Library_Elefunds_View_ViewInterface');
-       
+
        $this->baseConfiguration->setView($view);
        $this->assertSame($view, $this->baseConfiguration->getView());
    }
-   
+
    /**
     * @test
     */
    public function setRestImplementationWorks() {
        $this->baseConfiguration = new Library_Elefunds_Configuration_BaseConfiguration();
        $rest = $this->getMock('Library_Elefunds_Communication_RestInterface');
-       
+
        $this->baseConfiguration->setRestImplementation($rest);
        $this->assertSame($rest, $this->baseConfiguration->getRestImplementation());
    }
-   
+
    /**
     * @test
     */
    public function setDonationClassNameAcceptsOnlyLoadedClasses() {
        $this->baseConfiguration = new Library_Elefunds_Configuration_BaseConfiguration();
-    
-       // Interface reqs are tested by the factory, so we can pass any class here.       
+
+       // Interface reqs are tested by the factory, so we can pass any class here.
        $this->baseConfiguration->setDonationClassName('Library_Elefunds_Test_Unit_Configuration_BaseConfigurationTest');
        $this->assertSame('Library_Elefunds_Test_Unit_Configuration_BaseConfigurationTest', $this->baseConfiguration->getDonationClassName());
    }
-   
+
    /**
     * @test
     * @expectedException Library_Elefunds_Exception_ElefundsException
@@ -132,14 +132,14 @@ class Library_Elefunds_Test_Unit_Configuration_BaseConfigurationTest extends PHP
        $this->baseConfiguration = new Library_Elefunds_Configuration_BaseConfiguration();
        $this->baseConfiguration->setDonationClassName('Some_Made_Up_ClassName');
    }
-   
+
    /**
     * @test
     */
    public function setReceiverClassNameAcceptsOnlyLoadedClasses() {
        $this->baseConfiguration = new Library_Elefunds_Configuration_BaseConfiguration();
-    
-       // Interface reqs are tested by the factory, so we can pass any class here.       
+
+       // Interface reqs are tested by the factory, so we can pass any class here.
        $this->baseConfiguration->setReceiverClassName('Library_Elefunds_Test_Unit_Configuration_BaseConfigurationTest');
        $this->assertSame('Library_Elefunds_Test_Unit_Configuration_BaseConfigurationTest', $this->baseConfiguration->getReceiverClassName());
    }
@@ -152,7 +152,7 @@ class Library_Elefunds_Test_Unit_Configuration_BaseConfigurationTest extends PHP
        $this->baseConfiguration = new Library_Elefunds_Configuration_BaseConfiguration();
        $this->baseConfiguration->setReceiverClassName('Some_Made_Up_ClassName');
    }
-   
+
    /**
     * @test
     */
@@ -161,7 +161,7 @@ class Library_Elefunds_Test_Unit_Configuration_BaseConfigurationTest extends PHP
        $this->baseConfiguration->setCountrycode('de');
        $this->assertSame('de', $this->baseConfiguration->getCountrycode());
    }
-   
+
    /**
     * @test
     * @expectedException InvalidArgumentException
@@ -170,5 +170,6 @@ class Library_Elefunds_Test_Unit_Configuration_BaseConfigurationTest extends PHP
        $this->baseConfiguration = new Library_Elefunds_Configuration_BaseConfiguration();
        $this->baseConfiguration->setCountrycode('This is not a countrycode.');
    }
+
 
 }

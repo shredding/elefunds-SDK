@@ -1,7 +1,7 @@
 <?php
 
 /**
- * elefunds API PHP Library 
+ * elefunds API PHP Library
  *
  * Copyright (c) 2012, elefunds GmbH <hello@elefunds.de>.
  * All rights reserved.
@@ -39,7 +39,7 @@
 
 /**
  * Elefunds Configuration Interface
- * 
+ *
  * @package    elefunds API PHP Library
  * @subpackage Configuration
  * @author     Christian Peters <christian@elefunds.de>
@@ -49,130 +49,130 @@
  * @since      File available since Release 1.0.0
  */
 interface Library_Elefunds_Configuration_ConfigurationInterface  {
-    
+
       /**
        * Setup configuration of an elefunds API Plugin.
-       * 
+       *
        * This function gets called after forwarding the configuration to the facade.
-       * 
+       *
        * @param Library_Elefunds_Facade
        * @return void
        */
       public function init();
-      
+
       /**
-       * An instance of the facade. This is set by the facade itself, so you can access API functionality 
+       * An instance of the facade. This is set by the facade itself, so you can access API functionality
        * from within init()!
-       * 
+       *
        * @param Library_Elefunds_Facade $facade
-       * @return Library_Elefunds_Configuration_ConfigurationInterface 
-       * 
+       * @return Library_Elefunds_Configuration_ConfigurationInterface
+       *
        */
       public function setFacade(Library_Elefunds_Facade $facade);
-      
+
       /**
        * Sets the view for this configuration.
-       * 
+       *
        * @param Library_Elefunds_View_ViewInterface $view
-       * @return Library_Elefunds_Configuration_ConfigurationInterface 
+       * @return Library_Elefunds_Configuration_ConfigurationInterface
        */
       public function setView(Library_Elefunds_View_ViewInterface $view);
-      
+
       /**
        * Returns the view that is configured for this configuration.
-       * 
+       *
        * @return Library_Elefunds_View_ViewInterface
        */
       public function getView();
-      
+
       /**
        * Sets the clientId.
-       * 
+       *
        * @param int $clientId
        * @return Library_Elefunds_Configuration_ConfigurationInterface
        */
       public function setClientId($clientId);
-      
+
       /**
        * Sets the apiKey.
-       * 
+       *
        * @param string $apiKey
        * @return Library_Elefunds_Configuration_ConfigurationInterface
        */
       public function setApiKey($apiKey);
-      
+
       /**
        * Returns the ClientId.
-       * 
+       *
        * @return int
        */
       public function getClientId();
-      
+
        /**
        * Sets the countrycode.
-       * 
+       *
        * @param string $countrycode two digit countrycode
        * @throws InvalidArgumentException if given string is not a countrycode
        * @return Library_Elefunds_Configuration_ConfigurationInterface
        */
       public function setCountrycode($countrycode);
-      
+
       /**
        * Returns the countrycode.
-       * 
+       *
        * @return string
        */
       public function getCountrycode();
-      
+
       /**
        * The API Url.
-       * 
+       *
        * Url is not validated here, as it's dependent on the RestInterface Implementation. For example
        * the curl implementation adds it's error message to the additionalInformation of the ElefundsException.
-       * 
+       *
        * @param string $url
        * @return Library_Elefunds_Configuration_ConfigurationInterface
        */
       public function setApiUrl($url);
-      
+
       /**
        * Returns the URL to the API without trailing slashes.
-       * 
+       *
        * @return string
        */
       public function getApiUrl();
-      
+
       /**
        * Returns the hashed key
-       * 
+       *
        * @throws Library_Elefunds_Exception_ElefundsException if hashedKey has not been calculated
        * @return string
        */
       public function getHashedKey();
-      
+
       /**
        * The rest implementation to be used to connect to the api.
-       * 
+       *
        * If not changed in the configuration, this will be curl.
-       * 
+       *
        * @param Library_Elefunds_Communication_RestInterface $rest
        * @return Library_Elefunds_Configuration_ConfigurationInterface
        */
       public function setRestImplementation(Library_Elefunds_Communication_RestInterface $rest);
-      
+
       /**
        * Returns the rest implementation to use, by default, it's curl.
-       * 
+       *
        * @return Library_Elefunds_Communication_RestInterface
        */
       public function getRestImplementation();
-      
+
            /**
        * Sets the donation class name a fully qualified string.
-       * 
+       *
        * Attention: Since we do not use autoloading, you have to require_once the class before
        * setting it.
-       * 
+       *
        * @param string $donationClassName
        * @throws Library_Elefunds_Exception_ElefundsException if given class does not exist
        * @return Library_Elefunds_Configuration_ConfigurationInterface
@@ -181,28 +181,28 @@ interface Library_Elefunds_Configuration_ConfigurationInterface  {
 
       /**
        * Returns the donation class name.
-       * 
+       *
        * @return string
        */
       public function getDonationClassName();
-      
+
       /**
        * Sets the receiver class name a fully qualified string.
-       * 
+       *
        * Attention: Since we do not use auto-loading, you have to require_once the class before
        * setting it.
-       * 
+       *
        * @param string $receiverClassName
        * @throws Library_Elefunds_Exception_ElefundsException if given class does not exist
        * @return Library_Elefunds_Configuration_ConfigurationInterface
        */
       public function setReceiverClassName($receiverClassName);
-    
+
       /**
        * Returns the receiver class name.
-       * 
+       *
        * @return string
        */
       public function getReceiverClassName();
-    
+
 }

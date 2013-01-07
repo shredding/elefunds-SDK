@@ -1,7 +1,7 @@
 <?php
 
 /**
- * elefunds API PHP Library 
+ * elefunds API PHP Library
  *
  * Copyright (c) 2012, elefunds GmbH <hello@elefunds.de>.
  * All rights reserved.
@@ -36,13 +36,13 @@
  * POSSIBILITY OF SUCH DAMAGE.
  *
  */
- 
+
 require_once dirname(__FILE__) . '/BaseConfiguration.php';
- 
+
 
 /**
  * Default Configuration for the elefunds API.
- * 
+ *
  * @package    elefunds API PHP Library
  * @subpackage Configuration
  * @author     Christian Peters <christian@elefunds.de>
@@ -52,31 +52,29 @@ require_once dirname(__FILE__) . '/BaseConfiguration.php';
  * @since      File available since Release 1.0.0
  */
 class Library_Elefunds_Configuration_DefaultConfiguration extends Library_Elefunds_Configuration_BaseConfiguration {
-      
+
       protected $apiUrl = 'https://connect.elefunds.de';
-      
+
       /**
        * Default configuration settings.
-       * 
+       *
        * The default configuration uses the basic Donation and Receiver implementations that
        * ship with the library, as well as a curl based REST connection.
-       * 
+       *
        * @return void
        */
       public function init() {
           require_once dirname(__FILE__) . '/../Communication/CurlRequest.php';
-          $this->setRestImplementation(new Library_Elefunds_Communication_CurlRequest()); 
-          
+          $this->setRestImplementation(new Library_Elefunds_Communication_CurlRequest());
+
           require_once dirname(__FILE__) . '/../Model/Donation.php';
           $this->setDonationClassName('Library_Elefunds_Model_Donation');
-  
+
           require_once dirname(__FILE__) . '/../Model/Receiver.php';
-          $this->setReceiverClassName('Library_Elefunds_Model_Receiver');  
-          
+          $this->setReceiverClassName('Library_Elefunds_Model_Receiver');
+
           Library_Elefunds_Model_Factory::setReceiverImplementation($this->getReceiverClassName());
           Library_Elefunds_Model_Factory::setDonationImplementation($this->getDonationClassName());
       }
 
-      
-      
 }

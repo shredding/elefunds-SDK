@@ -1,4 +1,5 @@
 <?php
+
 /*
  * A sample successful order page
  */
@@ -17,7 +18,7 @@ $facade->setConfiguration(new Library_Elefunds_Example_ShopExampleCheckoutSucces
 // Like this: substr('elefunds_receiver_123', 18);
 //
 // We assume, that Care and UNO have been chosen.
-$facade->getConfiguration()->getView()->assign('donationReceivers', array(
+$facade->getConfiguration()->getView()->assign('receivers', array(
     2 => 'UNO',
     3 => 'Care'
 ));

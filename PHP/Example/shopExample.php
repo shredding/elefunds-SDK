@@ -6,11 +6,18 @@
 require_once dirname(__FILE__) . '/../Facade.php';
 require_once dirname(__FILE__) . '/ShopExampleConfiguration.php';
 
-$facade = new Library_Elefunds_Facade();
-
 try {
+    $facade = new Library_Elefunds_Facade();
 
     $facade->setConfiguration(new Library_Elefunds_Example_ShopExampleConfiguration());
+
+    // Assign the total at runtime.
+    //
+    // Normally this would be coming from the grand total in the checkout process.
+    // For our example, we'll hard-code the value.
+    $actualTotal = 960;
+    $facade->getConfiguration()->getView()->assign('total', $actualTotal);
+
     $snippet = $facade->renderTemplate();
 
 } catch (Library_Elefunds_Exception_ElefundsCommunicationException $error) {
@@ -19,13 +26,6 @@ try {
     $snippet = '';
 }
 
-
-// Assign the total at runtime.
-//
-// Normally this would be coming from the grand total in the checkout process.
-// For our example, we'll hard-code the value.
-$actualTotal = 950;
-$facade->getConfiguration()->getView()->assign('total', $actualTotal);
 ?>
 
 <!DOCTYPE HTML >
@@ -35,11 +35,11 @@ $facade->getConfiguration()->getView()->assign('total', $actualTotal);
 <title>My Shop</title>
 <?php foreach($facade->getTemplateCssFiles() as $cssFile): ?>
     <link rel="stylesheet" type="text/css" href="../<?php echo $cssFile; ?>">
-<?php endforeach; ?>  
+<?php endforeach; ?>
 </head>
 <body>
     <h2>My shop is awesome</h2>
-    
+
     <!-- Some other HTML here -->
 
     <!--
@@ -51,9 +51,9 @@ $facade->getConfiguration()->getView()->assign('total', $actualTotal);
         another implementation.
     -->
     <?php echo $snippet; ?>
-    
+
     <!-- Even more HTML here -->
-    
+
     <!-- Be sure to include jQuery as it's required by our JavaScript files -->
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"> </script>
     <?php foreach($facade->getTemplateJavascriptFiles() as $javascript): ?>

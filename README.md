@@ -1,5 +1,5 @@
-Elefunds API SDK's
-==================
+elefunds API SDK's v 1.1
+========================
 
 Welcome to the elefunds API.
 
@@ -11,6 +11,7 @@ is not supported yet or you're just interested in reference material (ie. HTML, 
 
 Best,  
 the elefunds team
+
 
 Dive in
 -------

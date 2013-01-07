@@ -54,6 +54,17 @@ require_once dirname(__FILE__) . '/Hooks/ShopHooks.php';
  */
 class Library_Elefunds_Template_Shop_CheckoutConfiguration extends Library_Elefunds_Configuration_DefaultConfiguration {
 
+    /**
+     * If set, receivers are autofetched from the API.
+     *
+     * Set this to FALSE if you want to assign the receivers for yourself
+     * (for example if you want to use caching).
+     *
+     * You should then call $this->view->assign('receivers', $receivers) for yourself.
+     *
+     * @var bool
+     */
+    protected $autoFetchReceivers = TRUE;
 
     /**
      * Assigns the receivers.
@@ -67,10 +78,14 @@ class Library_Elefunds_Template_Shop_CheckoutConfiguration extends Library_Elefu
         $this->setView(new Library_Elefunds_View_BaseView());
         $this->view->setTemplate('Shop');
 
-        $this->view->assign('clientId', $this->facade->getConfiguration()->getClientId());
-        $this->view->assign('hashedKey', $this->facade->getConfiguration()->getHashedKey());
+        // If set to FALSE, no donation receipt if offered.
+        // If TRUE you have to adjust T&Cs and send back donator information
+        // Refer to the documentation for further information.
+        $this->view->assign('offerDonationReceipt', TRUE);
 
-        $this->view->assign('receivers', $this->facade->getReceivers());
+        if($this->autoFetchReceivers) {
+            $this->view->assign('receivers', $this->facade->getReceivers());
+        }
 
         $this->view->addCssFile('elefunds.min.css');
         $this->view->addJavascriptFile('elefunds.jquery.min.js');
@@ -79,14 +94,19 @@ class Library_Elefunds_Template_Shop_CheckoutConfiguration extends Library_Elefu
         $this->view->assign('currency', '€');
         $this->view->assign('currencyDelimiter', '.');
 
+        $this->view->assign('roundSum', 'elefunds_round_sum');
+        $this->view->assign('roundSumContainer', 'elefunds_round_sum_container');
+
         // L18n
         if($this->countrycode === 'de') {
-            $this->view->assign('elefundsDescription', 'Die elefunds Stiftung leitet deine Spende zu 100% an die ausgewählten Organisationen weiter.');
+            $this->view->assign('elefundsDescription', 'Die elefunds Stiftung gUG leitet deine Spende zu 100% an die ausgewählten Organisationen weiter.');
             $this->view->assign('slogan', 'Ich möchte mit meinem Einkauf aufrunden und spenden!');
+            $this->view->assign('receipt_slogan', 'Ich möchte eine Spendenquittung erhalten.');
             $this->view->assign('roundedSumString', 'Runde Summe');
         } else {
             $this->view->assign('elefundsDescription', 'elefunds is a charitable foundation proceeding 100% of your donation to the charities of your choice.');
             $this->view->assign('slogan', 'I want to roundup my purchase!');
+            $this->view->assign('receipt_slogan', 'I want to receive a donation receipt.');
             $this->view->assign('roundedSumString', 'Round Sum');
         }
 

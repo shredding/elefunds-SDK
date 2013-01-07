@@ -87,7 +87,7 @@ You can use this to create a user-interface for choosing donation receivers. Thi
 Donations
 ---------
 
-Now that we are able to retrieve receivers, we'll want to collect donations and send those back to the API. Let's create a donation object now.
+Now that we are able to retrieve receivers, we want to collect donations and send those back to the API. Let's create a donation object now.
 
 > All setters in the library are chainable.
 
@@ -98,7 +98,9 @@ Now that we are able to retrieve receivers, we'll want to collect donations and 
                        ->setGrandTotal(1005)
                        ->setReceiverIds(array(2, 3))
                        ->setAvailableReceiverIds(array(1001, 1002, 1003))
-                       ->setTime(new DateTime());
+                       ->setTime(new DateTime())
+                       ->setDonator('christian@elefunds.de', 'Christian', 'Peters', 'Schönhauser Allee 124', 10243, 'Berlin');
+
 
 We use the facade to create an instance of the donation. Next, we set some values:
 
@@ -118,6 +120,9 @@ does not have something like a grand total at all, just omit this.
 
 - `time` is when the donation was made. If you do not send the donation directly after the checkout (e.g. to batch-send them at night),
 please provide the original time when the donation was made.
+
+- `donator` is the user that made the donation, you can send the information (optionally) along, when you want to provide donation receipts. In
+that case, elefunds and its foundation will take care of all the paperwork for you.
 
 That's it, now just send back the donation:
 

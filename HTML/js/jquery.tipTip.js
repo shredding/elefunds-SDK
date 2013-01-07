@@ -32,7 +32,7 @@
 			fadeOut: 100,
 			attribute: "title",
 			attribute2: "desc",
-			content: '',
+			content: '', // HTML or String to fill TipTIp with
 		  	enter: function(){},
 		  	exit: function(){}
 	  	};
@@ -46,6 +46,9 @@
 			var tiptip_arrow = $('<div id="tiptip_arrow"></div>');
 			$("body").append(tiptip_holder.html(tiptip_content).prepend(tiptip_arrow.html('<div id="tiptip_arrow_inner"></div>')));
 		} else {
+			var tiptip_holder = $("#tiptip_holder");
+			var tiptip_content = $("#tiptip_content");
+			var tiptip_inner = $('#tiptip_inner');
 			var tiptip_arrow = $("#tiptip_arrow");
 		}
 		
@@ -59,7 +62,14 @@
 			  var org_title = opts.title;
 			  var org_desc = opts.content;
 			}
-			
+			/*
+			if(opts.content){
+				var org_title = opts.content;
+			} else {
+				var org_title = org_elem.attr(opts.attribute);
+				var org_desc = org_elem.attr(opts.attribute2);
+			}
+			*/
 			if(org_title != ""){
 				if(!opts.content){
 					org_elem.removeAttr(opts.attribute); //remove original Attribute
@@ -138,8 +148,8 @@
                    	} else if(opts.defaultPosition == "right"){
                    		t_class = "_right";
                    	}
-					/*
-					var right_compare = (w_compare + left) < parseInt($(window).scrollLeft());
+					
+					var right_compare = (w_compare + left) < parseInt(0); //$(window).scrollLeft()
 					var left_compare = (tip_w + left) > parseInt($(window).width());
 					
 					if((right_compare && w_compare < 0) || (t_class == "_right" && !left_compare) || (t_class == "_left" && left < (tip_w + opts.edgeOffset + 5))){
@@ -155,20 +165,11 @@
 						marg_left = Math.round(left - (tip_w + opts.edgeOffset + 5));
 						marg_top = Math.round(top + h_compare);
 					}
-					*/
-					var top_compare = (top + org_height + opts.edgeOffset + tip_h + 8) > parseInt($(window).height() + $(window).scrollTop());
+
+					//var top_compare = (top + org_height + opts.edgeOffset + tip_h + 8) > parseInt($(window).height() + 0); //$(window).scrollTop());
+					var top_compare = true;
 					var bottom_compare = ((top + org_height) - (opts.edgeOffset + tip_h + 8)) < 0;
 					
-					//---
-					
-					arrow_top = tip_h;
-					marg_top = Math.round(top - (tip_h + 5 + opts.edgeOffset));
-					
-					tiptip_arrow.css({"margin-left": arrow_left+"px", "margin-top": arrow_top+"px"});
-					tiptip_holder.css({"margin-left": marg_left+"px", "margin-top": marg_top+"px"}).attr("class","tip"+t_class);
-					
-					//---
-					/*
 					if(top_compare || (t_class == "_bottom" && top_compare) || (t_class == "_top" && !bottom_compare)){
 						if(t_class == "_top" || t_class == "_bottom"){
 							t_class = "_top";
@@ -197,17 +198,17 @@
 					}
 					tiptip_arrow.css({"margin-left": arrow_left+"px", "margin-top": arrow_top+"px"});
 					tiptip_holder.css({"margin-left": marg_left+"px", "margin-top": marg_top+"px"}).attr("class","tip"+t_class);
-					*/
+					
 					if (timeout){ clearTimeout(timeout); }
-					timeout = setTimeout(function(){ tiptip_holder.stop(true,true).fadeIn(opts.fadeIn); }, opts.delay);
+					timeout = setTimeout(function(){ tiptip_holder.stop(true,true).show(); }, opts.delay);	//fadeIn(opts.fadeIn)
 				}
 				
 				function deactive_tiptip(){
 					opts.exit.call(this);
 					if (timeout){ clearTimeout(timeout); }
-					tiptip_holder.fadeOut(opts.fadeOut);
+					tiptip_holder.hide(); //fadeOut(opts.fadeOut);
 				}
 			}				
 		});
-	};
-})(window.jQuery);
+	}
+})(window.jQuery || window.Zepto);
