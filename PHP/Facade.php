@@ -57,11 +57,18 @@ class Library_Elefunds_Facade {
        */
       protected $configuration;
 
+     /**
+      * The cached receivers response - during one process there should only be one call.
+      *
+      * @var array
+      */
+     protected $cachedReceivers = array();
+
       /**
        * @param Library_Elefunds_Configuration_ConfigurationInterface $configuration
        */
       public function __construct(Library_Elefunds_Configuration_ConfigurationInterface $configuration = NULL) {
-          if($configuration !== NULL) {
+          if ($configuration !== NULL) {
               $this->setConfiguration($configuration);
           }
       }
@@ -112,14 +119,18 @@ class Library_Elefunds_Facade {
      * @throws Library_Elefunds_Exception_ElefundsCommunicationException
      * @return array
      */
-      public function getReceivers() {
-            $restUrl = $this->configuration->getApiUrl() . '/receivers/?clientId=' . $this->configuration->getClientId() . '&hashedKey=' . $this->configuration->getHashedKey();
-            $rawJson = $this->configuration->getRestImplementation()->get($restUrl);
+     public function getReceivers() {
 
-            $response = json_decode($rawJson, TRUE);
+            if (count($this->cachedReceivers) === 0) {
+                $restUrl = $this->configuration->getApiUrl() . '/receivers/?clientId=' . $this->configuration->getClientId() . '&hashedKey=' . $this->configuration->getHashedKey();
+                $rawJson = $this->configuration->getRestImplementation()->get($restUrl);
+
+                $response = json_decode($rawJson, TRUE);
+                $this->cachedReceivers = $response['receivers'];
+            }
 
             // Let's get the country specific receivers
-            if(!isset($response['receivers'][$this->configuration->getCountrycode()])) {
+            if (!isset($this->cachedReceivers[$this->configuration->getCountrycode()])) {
                 throw new Library_Elefunds_Exception_ElefundsCommunicationException(
                     'Requested countrycode was not available. Available country codes are: ' . implode(', ', array_keys($response['receivers'])) . '.',
                     1347966301
@@ -128,7 +139,7 @@ class Library_Elefunds_Facade {
 
             $receivers = array();
 
-            foreach ($response['receivers'][$this->configuration->getCountrycode()] as $rec) {
+            foreach ($this->cachedReceivers[$this->configuration->getCountrycode()] as $rec) {
                 $receiver = $this->createReceiver();
                 $receivers[] = $receiver->setId($rec['id'])
                                         ->setName($rec['name'])
@@ -164,7 +175,7 @@ class Library_Elefunds_Facade {
        * @return string Message returned from the API
        */
       public function deleteDonation($donationId) {
-          if(!is_int($donationId) || $donationId <= 0) {
+          if (!is_int($donationId) || $donationId <= 0) {
               throw new InvalidArgumentException('Given donationId must be of type integer.', 1348239496967);
           }
           $restUrl = $this->configuration->getApiUrl() . '/donation/' . $donationId . '/?clientId=' . $this->configuration->getClientId() . '&hashedKey=' . $this->configuration->getHashedKey();
@@ -182,17 +193,22 @@ class Library_Elefunds_Facade {
        * @return string Message returned from the API
        */
       public function addDonations(array $donations) {
-           $restUrl = $this->configuration->getApiUrl() . '/donations/?clientId=' . $this->configuration->getClientId() . '&hashedKey=' . $this->configuration->getHashedKey();
-           $donationsArray = array();
 
-           foreach ($donations as $donation) {
-               $donationsArray[] = $this->mapDonationToArray($donation);
-           }
+          if (count($donations) > 0) {
+              $restUrl = $this->configuration->getApiUrl() . '/donations/?clientId=' . $this->configuration->getClientId() . '&hashedKey=' . $this->configuration->getHashedKey();
+              $donationsArray = array();
 
-           $body = json_encode($donationsArray);
+              foreach ($donations as $donation) {
+                  $donationsArray[] = $this->mapDonationToArray($donation);
+              }
 
-           $response = json_decode($this->configuration->getRestImplementation()->post($restUrl, $body), TRUE);
-           return $response['message'];
+              $body = json_encode($donationsArray);
+
+              $response = json_decode($this->configuration->getRestImplementation()->post($restUrl, $body), TRUE);
+              return $response['message'];
+          } else {
+              return 'No donations given.';
+          }
       }
 
       /**
@@ -205,36 +221,41 @@ class Library_Elefunds_Facade {
        * @return string Message returned from the API
        */
       public function deleteDonations(array $donationIds) {
-          $isValidArray = $donationIds === array_filter($donationIds, create_function('$receiverIds', 'return is_int($receiverIds) && $receiverIds > 0;'));
 
-          if(!$isValidArray) {
-              throw new InvalidArgumentException('Given array is not made up of integers only', 1348237365947);
+          if (count($donationIds) > 0) {
+              $isValidArray = $donationIds === array_filter($donationIds, create_function('$donationIds', 'return is_int($donationIds) && $donationIds > 0;'));
+
+              if (!$isValidArray) {
+                  throw new InvalidArgumentException('Given array is not made up of integers only', 1348237365947);
+              }
+              $restUrl = $this->configuration->getApiUrl() . '/donations/delete/?clientId=' . $this->configuration->getClientId() . '&hashedKey=' . $this->configuration->getHashedKey();
+
+              $body = json_encode($donationIds);
+
+              $response = json_decode($this->configuration->getRestImplementation()->post($restUrl, $body), TRUE);
+              return $response['message'];
+          } else {
+              return 'No donations given.';
           }
-          $restUrl = $this->configuration->getApiUrl() . '/donations/delete/?clientId=' . $this->configuration->getClientId() . '&hashedKey=' . $this->configuration->getHashedKey();
-
-          $body = json_encode($donationIds);
-
-          $response = json_decode($this->configuration->getRestImplementation()->post($restUrl, $body), TRUE);
-          return $response['message'];
       }
 
     /**
      * Renders the template.
      *
      * @param string $templateName
-     *
-     * @throws Library_Elefunds_Exception_ElefundsException if template is not set
+     * @param bool $givenTemplateNameIsAbsolutePath
+     * @throws Library_Elefunds_Exception_ElefundsException
      * @return string The rendered HTML Snippet
      */
-      public function renderTemplate($templateName = 'View') {
+      public function renderTemplate($templateName = 'View', $givenTemplateNameIsAbsolutePath = FALSE) {
 
           $view = $this->getConfiguration()->getView();
 
-          if($view === NULL) {
+          if ($view === NULL) {
               throw new Library_Elefunds_Exception_ElefundsException('There is no template set in your configuration file. Please refer to the documentation or use one of the sample templates.', 1348051662593);
           }
 
-          return $view->render($templateName);
+          return $view->render($templateName, $givenTemplateNameIsAbsolutePath);
       }
 
       /**
@@ -245,7 +266,7 @@ class Library_Elefunds_Facade {
        */
       public function getTemplateCssFiles() {
            $view = $this->getConfiguration()->getView();
-            if($view === NULL) {
+            if ($view === NULL) {
                  throw new Library_Elefunds_Exception_ElefundsException('There is no template set in your configuration file. Please refer to the documentation or use one of the sample templates.', 1348051662593);
             } else {
                 return $view->getCssFiles();
@@ -260,7 +281,7 @@ class Library_Elefunds_Facade {
        */
       public function getTemplateJavascriptFiles() {
            $view = $this->getConfiguration()->getView();
-            if($view === NULL) {
+            if ($view === NULL) {
                  throw new Library_Elefunds_Exception_ElefundsException('There is no template set in your configuration file. Please refer to the documentation or use one of the sample templates.', 1348051662593);
             } else {
                 return $view->getJavascriptFiles();
@@ -276,38 +297,17 @@ class Library_Elefunds_Facade {
        */
       protected function mapDonationToArray(Library_Elefunds_Model_DonationInterface $donation) {
 
-          if($donation->getForeignId() === NULL || $donation->getTime() === NULL || $donation->getAmount() === NULL || $donation->getReceiverIds() === NULL || $donation->getAvailableReceiverIds() === NULL) {
+          if ($donation->getForeignId() === NULL || $donation->getTime() === NULL || $donation->getAmount() === NULL || $donation->getReceiverIds() === NULL || $donation->getAvailableReceiverIds() === NULL) {
               throw new Library_Elefunds_Exception_ElefundsException('Given donation does not contain all information needed to be send to the API.', 1347975987321);
           }
 
-          $donationAsArray = array(
-                'foreignId'             =>  $donation->getForeignId(),
-                'donationTimestamp'     =>  $donation->getTime()->format(DateTime::ISO8601),
-                'donationAmount'        =>  $donation->getAmount(),
-                'receivers'             =>  $donation->getReceiverIds(),
-                'receiversAvailable'    =>  $donation->getAvailableReceiverIds()
-           );
+          $donationAsArray = $donation->toArray();
 
-           // Optional vars
-          $donator = $donation->getDonatorInformation();
-           if(count($donator) > 0) {
+          if (isset($donationAsArray['donator']) && !isset($donationAsArray['donator']['countryCode'])) {
+              $donationAsArray['donator']['countryCode'] = $this->getConfiguration()->getCountrycode();
+          }
 
-               if(!isset($donator['countryCode'])) {
-                   $donator['countryCode'] = $this->getConfiguration()->getCountrycode();
-               }
-
-               $donationAsArray['donator'] = $donator;
-           }
-
-           if($donation->getGrandTotal() !== NULL) {
-               $donationAsArray['grandTotal'] = $donation->getGrandTotal();
-           }
-           if($donation->getSuggestedAmount() !== NULL) {
-               $donationAsArray['donationAmountSuggested'] = $donation->getSuggestedAmount();
-           }
-
-           return $donationAsArray;
-
+          return $donationAsArray;
       }
 
 }

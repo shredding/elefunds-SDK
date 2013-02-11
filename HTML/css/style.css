@@ -25,15 +25,6 @@
     margin-right: 10px;
 }
 
-#elefunds_agree_container {
-    position: relative;
-    float: left;
-    display: inline-block;
-    width: 48px;
-    height: 49px;
-    background: url('https://bbbf9fd0e36d5cb36b93-c1fc539e0df6af03ccc14b5020ab4161.ssl.cf1.rackcdn.com/default/arrow_off.png') no-repeat;
-}
-
 #elefunds_arrow {
     position: relative;
     display: inline-block;
@@ -205,7 +196,7 @@
 }
 
 #elefunds_round_sum_container {
-    background: url('https://bbbf9fd0e36d5cb36b93-c1fc539e0df6af03ccc14b5020ab4161.ssl.cf1.rackcdn.com/default/elefunds_highlight.png') right no-repeat;
+    background: url('https://bbbf9fd0e36d5cb36b93-c1fc539e0df6af03ccc14b5020ab4161.ssl.cf1.rackcdn.com/default/elefunds_highlight.png') right bottom no-repeat;
 }
 
 #elefunds_round_sum_container strong:last-child {
@@ -253,7 +244,7 @@
     display: none;
 }
 
-/* Misc style rules that can be ignored */
+/* Misc markup style rules */
 
 body {
     padding-top: 100px;

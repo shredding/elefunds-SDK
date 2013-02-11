@@ -207,5 +207,13 @@ interface Library_Elefunds_Model_DonationInterface  {
      * @return array
      */
     public function getDonatorInformation();
+
+    /**
+     * Returns an associative array with all available information
+     * about this donation instance.
+     *
+     * @return array
+     */
+    public function toArray();
     
 }

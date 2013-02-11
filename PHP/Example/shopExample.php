@@ -33,7 +33,7 @@ try {
 <head>
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
 <title>My Shop</title>
-<?php foreach($facade->getTemplateCssFiles() as $cssFile): ?>
+<?php foreach ($facade->getTemplateCssFiles() as $cssFile): ?>
     <link rel="stylesheet" type="text/css" href="../<?php echo $cssFile; ?>">
 <?php endforeach; ?>
 </head>
@@ -56,7 +56,7 @@ try {
 
     <!-- Be sure to include jQuery as it's required by our JavaScript files -->
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"> </script>
-    <?php foreach($facade->getTemplateJavascriptFiles() as $javascript): ?>
+    <?php foreach ($facade->getTemplateJavascriptFiles() as $javascript): ?>
      <script type="text/javascript" src="../<?php echo $javascript; ?>"></script>
     <?php endforeach; ?>
 </body>

@@ -103,14 +103,14 @@ class Library_Elefunds_Exception_ElefundsException extends Exception {
         $additionalInformation = '';
 
         foreach ($this->additionalInformation as $key => $value) {
-            if(is_string($value)) {
+            if (is_string($value)) {
                   $additionalInformation .= (string)$key . ' = ' . $value . PHP_EOL;   
             }
         }
         
         $string = __CLASS__ . ' [Errorcode: ' . $this->code . '] : ' . $this->message . PHP_EOL;
         
-        if(strlen($additionalInformation) > 0) {
+        if (strlen($additionalInformation) > 0) {
             $string .= 'Additional information:' . PHP_EOL . $additionalInformation;
         }
         

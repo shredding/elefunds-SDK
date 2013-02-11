@@ -169,7 +169,7 @@ class Library_Elefunds_Configuration_BaseConfiguration implements Library_Elefun
        */
       public function setClientId($clientId) {
           $this->clientId = (int)$clientId;
-          if($this->apiKey !== NULL && $this->hashedKey === NULL) {
+          if ($this->apiKey !== NULL && $this->hashedKey === NULL) {
               $this->hashedKey = sha1($this->clientId . $this->apiKey);
           }
 
@@ -184,7 +184,7 @@ class Library_Elefunds_Configuration_BaseConfiguration implements Library_Elefun
        */
       public function setApiKey($apiKey) {
           $this->apiKey = (string)$apiKey;
-          if($this->clientId !== NULL && $this->hashedKey === NULL) {
+          if ($this->clientId !== NULL && $this->hashedKey === NULL) {
               $this->hashedKey = sha1($this->clientId . $this->apiKey);
           }
 
@@ -230,7 +230,7 @@ class Library_Elefunds_Configuration_BaseConfiguration implements Library_Elefun
        * @return string
        */
       public function getHashedKey() {
-          if($this->hashedKey === NULL) {
+          if ($this->hashedKey === NULL) {
                if ($this->apiKey === NULL || $this->clientId === NULL) {
                     throw new Library_Elefunds_Exception_ElefundsException('HashedKey could not been calculated. Make sure that either clientId and apiKey are set.', 1347889008107);
                } else {
@@ -273,7 +273,7 @@ class Library_Elefunds_Configuration_BaseConfiguration implements Library_Elefun
        * @return Library_Elefunds_Configuration_ConfigurationInterface
        */
       public function setDonationClassName($donationClassName) {
-          if(!class_exists($donationClassName)) {
+          if (!class_exists($donationClassName)) {
                 throw new Library_Elefunds_Exception_ElefundsException('Class ' . $donationClassName . ' does not exist. Did you called required_once on the file that hosts this class?', 1347893442819);
           }
           $this->donationClassName = (string)$donationClassName;
@@ -300,7 +300,7 @@ class Library_Elefunds_Configuration_BaseConfiguration implements Library_Elefun
        * @return Library_Elefunds_Configuration_ConfigurationInterface
        */
       public function setReceiverClassName($receiverClassName) {
-          if(!class_exists($receiverClassName)) {
+          if (!class_exists($receiverClassName)) {
                 throw new Library_Elefunds_Exception_ElefundsException('Class ' . $receiverClassName . ' does not exist. Did you called required_once on the file that hosts this class?', 1347893442820);
           }
           $this->receiverClassName = (string)$receiverClassName;
@@ -324,7 +324,7 @@ class Library_Elefunds_Configuration_BaseConfiguration implements Library_Elefun
        * @return Library_Elefunds_Configuration_ConfigurationInterface
        */
       public function setCountrycode($countrycode) {
-          if(is_string($countrycode) && strlen($countrycode) === 2) {
+          if (is_string($countrycode) && strlen($countrycode) === 2) {
               $this->countrycode = $countrycode;
           } else {
                throw new InvalidArgumentException('Given countrycode must be a two digit string.', 1347965897);

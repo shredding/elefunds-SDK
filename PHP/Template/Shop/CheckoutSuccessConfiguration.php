@@ -101,7 +101,7 @@ class Library_Elefunds_Template_Shop_CheckoutSuccessConfiguration extends Librar
 
 
         // L18n
-        if($this->countrycode === 'de') {
+        if ($this->countrycode === 'de') {
             $this->view->assign('tellAboutIt', 'Begeister Deine Freunde, erzähl von deiner Guten Tat:');
             $this->view->assign('IDonatedAndWantToTellAboutIt', 'Ich habe gerade bei %shopname% eingekauft, aufgerundet und gemeinsam mit %receivers% etwas Gutes getan.');
         } else {

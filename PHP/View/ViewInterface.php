@@ -156,15 +156,16 @@ interface Library_Elefunds_View_ViewInterface  {
      * @return Library_Elefunds_View_BaseView
      */
     public function assignMultiple(array $values);
-    
+
     /**
      * Renders the given output.
      *
      * @param string $templateName name of the template to render
-     * @throws Library_Elefunds_Exception_ElefundsException
-     * @return string the rendered HTML 
+     * @param bool $givenTemplateNameIsAbsolutePathWithFullyQualifiedFilename
+     *
+     * @return string the rendered HTML
      */
-    public function render($templateName = 'View');
+    public function render($templateName = 'View', $givenTemplateNameIsAbsolutePathWithFullyQualifiedFilename = FALSE);
     
      /**
      * Add your css file with it's pure file name (e.g. 'styles.css') and save it

@@ -233,7 +233,7 @@ class Library_Elefunds_Model_Donation implements Library_Elefunds_Model_Donation
      * @return Library_Elefunds_Model_DonationInterface
      */
     public function addReceiverId($receiverId) {
-        if(is_int($receiverId) && $receiverId > 0) {
+        if (is_int($receiverId) && $receiverId > 0) {
             $this->receiverIds[] = $receiverId;
         } else {
             throw new InvalidArgumentException('Given value must be a positive integer.', 1347721362);
@@ -253,7 +253,7 @@ class Library_Elefunds_Model_Donation implements Library_Elefunds_Model_Donation
 
         $isValidArray = $receiverIds === array_filter($receiverIds, create_function('$receiverIds', 'return is_int($receiverIds) && $receiverIds > 0;'));
 
-        if($isValidArray) {
+        if ($isValidArray) {
             $this->receiverIds = $receiverIds;
         } else {
            throw new InvalidArgumentException('Given array may only contain positive integers.', 1347721363);
@@ -281,7 +281,7 @@ class Library_Elefunds_Model_Donation implements Library_Elefunds_Model_Donation
      * @return Library_Elefunds_Model_DonationInterface
      */
     public function addAvailableReceiverId($receiverId) {
-        if(is_int($receiverId) && $receiverId > 0) {
+        if (is_int($receiverId) && $receiverId > 0) {
             $this->availableReceiverIds[] = $receiverId;
         } else {
             throw new InvalidArgumentException('Given value must be a positive integer.', 1347721366);
@@ -300,7 +300,7 @@ class Library_Elefunds_Model_Donation implements Library_Elefunds_Model_Donation
 
         $isValidArray = $receiverIds === array_filter($receiverIds, create_function('$receiverIds', 'return is_int($receiverIds) && $receiverIds > 0;'));
 
-        if($isValidArray) {
+        if ($isValidArray) {
             $this->availableReceiverIds = $receiverIds;
         } else {
            throw new InvalidArgumentException('Given array may only contain positive integers.', 1347721363);
@@ -365,7 +365,7 @@ class Library_Elefunds_Model_Donation implements Library_Elefunds_Model_Donation
     public function setDonator($email, $firstName, $lastName, $streetAddress, $zip, $city, $countryCode = NULL) {
         $validMail = filter_var($email, FILTER_VALIDATE_EMAIL) !== FALSE;
 
-        if($validMail && is_string($firstName) && is_string($lastName) && is_string($streetAddress) && is_int($zip) && is_string($city)) {
+        if ($validMail && is_string($firstName) && is_string($lastName) && is_string($streetAddress) && is_int($zip) && is_string($city)) {
 
             $this->donator = array(
                 'email'             =>  $email,
@@ -377,7 +377,7 @@ class Library_Elefunds_Model_Donation implements Library_Elefunds_Model_Donation
             );
 
 
-            if($countryCode !== NULL && is_string($countryCode) && strlen($countryCode) === 2) {
+            if ($countryCode !== NULL && is_string($countryCode) && strlen($countryCode) === 2) {
                 $this->donator['countryCode'] = $countryCode;
             }
 
@@ -395,6 +395,39 @@ class Library_Elefunds_Model_Donation implements Library_Elefunds_Model_Donation
      */
     public function getDonatorInformation() {
         return $this->donator;
+    }
+
+    /**
+     * Returns an associative array with all available information
+     * about this donation instance.
+     *
+     * @return array
+     */
+    public function toArray() {
+
+        $donationAsArray = array(
+            'foreignId'             =>  $this->getForeignId(),
+            'donationTimestamp'     =>  $this->getTime()->format(DateTime::ISO8601),
+            'donationAmount'        =>  $this->getAmount(),
+            'receivers'             =>  $this->getReceiverIds(),
+            'receiversAvailable'    =>  $this->getAvailableReceiverIds()
+        );
+
+        // Optional vars
+        $donator = $this->getDonatorInformation();
+        if (count($donator) > 0) {
+            $donationAsArray['donator'] = $donator;
+        }
+
+        if ($this->getGrandTotal() !== NULL) {
+            $donationAsArray['grandTotal'] = $this->getGrandTotal();
+        }
+
+        if ($this->getSuggestedAmount() !== NULL) {
+            $donationAsArray['donationAmountSuggested'] = $this->getSuggestedAmount();
+        }
+
+        return $donationAsArray;
     }
 
 }

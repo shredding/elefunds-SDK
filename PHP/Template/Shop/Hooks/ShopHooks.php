@@ -61,6 +61,9 @@ class Library_Elefunds_Template_Shop_Hooks_ShopHooks {
      * @return void
      */
     public static function calculateRoundup(Library_Elefunds_View_ViewInterface $view, $total) {
+        
+        //Convert to float
+        $total = round(($total / 100), 2);
 
         //Checkout total price tiers
         $tiers = array(16, 100, 1000, 999999);
@@ -76,7 +79,7 @@ class Library_Elefunds_Template_Shop_Hooks_ShopHooks {
 
         //Determine checkout price tier
         foreach($tiers as $key => $value) {
-            if($total < $value) {
+            if ($total < $value) {
                 $tier = $key;
                 break;
             }
@@ -94,7 +97,7 @@ class Library_Elefunds_Template_Shop_Hooks_ShopHooks {
         //In case the suggestion is higher than the nearest $roundup, we subtract the nearest $roundup
         //and adjust the $roundTotal
 
-        if($donationSuggestion > $roundup[$tier] && $tier < count($tiers)-2) {
+        if ($donationSuggestion > $roundup[$tier] && $tier < count($tiers)-2) {
             $donationSuggestion -= $roundup[$tier];
         }
 
@@ -102,13 +105,13 @@ class Library_Elefunds_Template_Shop_Hooks_ShopHooks {
 
         $assigns = $view->getAssignments();
         $suggestedDonationAmount = round($donationSuggestion, 2);
-        $donationAmountString = number_format($suggestedDonationAmount / 100, 2, $assigns['currencyDelimiter'], '');
-        $roundedSum = number_format(($suggestedDonationAmount + $total) / 100, 2, $assigns['currencyDelimiter'], '');
+        $donationAmountString = number_format($suggestedDonationAmount, 2, $assigns['currencyDelimiter'], '');
+        $roundedSum = number_format(($suggestedDonationAmount + $total), 2, $assigns['currencyDelimiter'], '');
 
-        $view->assign('suggestedDonationAmountCent', $suggestedDonationAmount);
+        $view->assign('suggestedDonationAmountCent', $suggestedDonationAmount * 100);
         $view->assign('suggestedDonationAmount', $donationAmountString);
         $view->assign('roundedSum', $roundedSum);
-
+        $view->assign('currencyDelimiter', $assigns['currencyDelimiter']);
 
     }
 
@@ -120,11 +123,18 @@ class Library_Elefunds_Template_Shop_Hooks_ShopHooks {
      * @return void
      */
     public static function calculatePadding(Library_Elefunds_View_ViewInterface $view, $width) {
-
+        
+        // Max number of receivers that can be displayed
         $receiversCount = (int) floor($width / 210);
 
         // Adjust receivers & override assignments
         $assigns = $view->getAssignments();
+        
+        // If we have less receivers assigned than space available, reduce the count
+        if (count($assigns['receivers']) < $receiversCount) {
+            $receiversCount = count($assigns['receivers']);
+        }
+        
         $receivers = array_slice($assigns['receivers'], 0, $receiversCount);
         $view->assign('receivers', $receivers);
 
@@ -192,7 +202,7 @@ class Library_Elefunds_Template_Shop_Hooks_ShopHooks {
     public static function onReceiversAdded(Library_Elefunds_View_ViewInterface $view, array $receivers) {
         self::$receiverIds = array_keys($receivers);
 
-        if(self::$foreignId !== NULL) {
+        if (self::$foreignId !== NULL) {
             self::assignShares($view);
         }
         self::calculateReceiversText($view, $receivers);
@@ -209,7 +219,7 @@ class Library_Elefunds_Template_Shop_Hooks_ShopHooks {
     public static function onForeignIdAdded(Library_Elefunds_View_ViewInterface $view, $foreignId) {
         self::$foreignId = $foreignId;
 
-        if(self::$receiverIds !== NULL) {
+        if (self::$receiverIds !== NULL) {
             self::assignShares($view);
         }
     }
@@ -231,14 +241,14 @@ class Library_Elefunds_Template_Shop_Hooks_ShopHooks {
         $baseText = str_replace('%shopname%', $shopname, $baseText);
 
         $num = count($receivers);
-        if(count($receivers) === 1) {
+        if (count($receivers) === 1) {
             $baseText = str_replace('%receivers%', $receivers[0], $baseText);
         } else {
             $conjunctionText = '';
             $i = 0;
             foreach($receivers as $receiver) {
 
-                if($i < $num - 2) {
+                if ($i < $num - 2) {
                     $conjunctionText .= $receiver . ', ';
                 } else if ($i === $num - 2) {
                     $conjunctionText .= $receiver . ' & ';
@@ -261,7 +271,7 @@ class Library_Elefunds_Template_Shop_Hooks_ShopHooks {
      * @param Library_Elefunds_View_ViewInterface $view
      *
      * @throws InvalidArgumentException
-
+     *
      * @return void
      */
     private static function assignShares(Library_Elefunds_View_ViewInterface $view) {
@@ -269,7 +279,7 @@ class Library_Elefunds_Template_Shop_Hooks_ShopHooks {
         $assigns = $view->getAssignments();
 
         // No services are configured, hence we skip this.
-        if(!isset($assigns['shareServices'])) {
+        if (!isset($assigns['shareServices'])) {
             return;
         }
 
@@ -285,7 +295,7 @@ class Library_Elefunds_Template_Shop_Hooks_ShopHooks {
 
         foreach($services as $service) {
 
-            if(!array_key_exists($service, $availableShareServices)) {
+            if (!array_key_exists($service, $availableShareServices)) {
                 throw new InvalidArgumentException('Service must be one of the following: ' . implode(', ', $availableShareServices));
             }
             $serviceObj = new stdClass();

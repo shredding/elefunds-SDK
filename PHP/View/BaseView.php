@@ -189,7 +189,7 @@ class Library_Elefunds_View_BaseView implements Library_Elefunds_View_ViewInterf
      */
     public function registerAssignHook($name, $class, $method) {
 
-        if(method_exists($class, $method)) {
+        if (method_exists($class, $method)) {
             $this->assignHooks[$name] = array(
                     'class'     =>  $class,
                      'method'   =>  $method
@@ -217,10 +217,10 @@ class Library_Elefunds_View_BaseView implements Library_Elefunds_View_ViewInterf
      * @return Library_Elefunds_View_ViewInterface
      */
     public function assign($key, $value) {
-        if(is_string($key)) {
+        if (is_string($key)) {
             $this->view[$key] = $value;
 
-            if(isset($this->assignHooks[$key])) {
+            if (isset($this->assignHooks[$key])) {
                 call_user_func_array(
                     array(
                         $this->assignHooks[$key]['class'],
@@ -254,13 +254,20 @@ class Library_Elefunds_View_BaseView implements Library_Elefunds_View_ViewInterf
      * Renders the given output.
      *
      * @param string $templateName name of the template to render
+     * @param bool $givenTemplateNameIsAbsolutePathWithFullyQualifiedFilename
      * @throws Library_Elefunds_Exception_ElefundsException
+     *
      * @return string the rendered HTML
      */
-    public function render($templateName = 'View') {
-        $filepath = dirname(__FILE__) . '/../Template/' . $this->template . '/' . $templateName . '.phtml';
-        
-        if(file_exists($filepath)) {
+    public function render($templateName = 'View', $givenTemplateNameIsAbsolutePathWithFullyQualifiedFilename = FALSE) {
+
+        if ($givenTemplateNameIsAbsolutePathWithFullyQualifiedFilename) {
+            $filepath = $templateName;
+        } else {
+            $filepath = dirname(__FILE__) . '/../Template/' . $this->template . '/' . $templateName . '.phtml';
+        }
+
+        if (file_exists($filepath)) {
             $view = $this->view;
         
             ob_start();
@@ -287,7 +294,7 @@ class Library_Elefunds_View_BaseView implements Library_Elefunds_View_ViewInterf
     public function addCssFile($file) {
         $templateFolder = ucfirst(strtolower($this->template));
         $filepath = 'Template/' . $templateFolder . '/Css/' . $file;
-        if(file_exists(dirname(__FILE__) . '/../' .  $filepath)) {
+        if (file_exists(dirname(__FILE__) . '/../' .  $filepath)) {
             $this->cssFiles[] = $filepath;
         } else {
             throw new Library_Elefunds_Exception_ElefundsException('Given CSS file ' . $file . ' does not exist.', 
@@ -322,7 +329,7 @@ class Library_Elefunds_View_BaseView implements Library_Elefunds_View_ViewInterf
     public function addJavascriptFile($file) {
         $templateFolder = ucfirst(strtolower($this->template));
         $filepath = 'Template/' . $templateFolder . '/Javascript/' . $file;
-        if(file_exists(dirname(__FILE__) . '/../' . $filepath)) {
+        if (file_exists(dirname(__FILE__) . '/../' . $filepath)) {
             $this->javascriptFiles[] = $filepath;
         } else {
             throw new Library_Elefunds_Exception_ElefundsException('Given Javascript file ' . $file . ' does not exist.',
@@ -342,7 +349,7 @@ class Library_Elefunds_View_BaseView implements Library_Elefunds_View_ViewInterf
      */
     public function addJavascriptFiles(array $files) {
         foreach ($files as $file) {
-            $this->addCssFile($file);
+            $this->addJavascriptFile($file);
         }
     }
      

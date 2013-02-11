@@ -121,6 +121,9 @@ class Library_Elefunds_Test_Unit_Facade extends PHPUnit_Framework_TestCase {
         $this->facade->deleteDonation(array());
     }
 
+    /**
+     * @test
+     */
     public function deleteDonationCalculatesCorrectApiUrl() {
         $configuration = $this->getMock('Library_Elefunds_Configuration_ConfigurationInterface');
 
@@ -148,8 +151,9 @@ class Library_Elefunds_Test_Unit_Facade extends PHPUnit_Framework_TestCase {
                       ->will($this->returnValue($rest));
 
 
-        $result = $this->facade->setConfiguration($configuration);
+        $this->facade->setConfiguration($configuration);
 
+        $result = $this->facade->deleteDonation(1234);
         $this->assertSame('Works like a charm!', $result);
     }
 
@@ -210,6 +214,18 @@ class Library_Elefunds_Test_Unit_Facade extends PHPUnit_Framework_TestCase {
         $donation->expects($this->any())
                   ->method('getForeignId')
                   ->will($this->returnValue(1234));
+
+        $donation->expects($this->any())
+                  ->method('toArray')
+                  ->will($this->returnValue(
+                        array(
+                            'foreignId'             =>  1234,
+                            'donationTimestamp'     =>  $this->uniqueTimestampForAllTests->format(DateTime::ISO8601),
+                            'donationAmount'        =>  1000,
+                            'receivers'             =>  array(1,2,3),
+                            'receiversAvailable'    =>  array(1,2,3)
+                        )
+                   ));
 
 
         $donation->expects($this->any())
@@ -444,6 +460,5 @@ class Library_Elefunds_Test_Unit_Facade extends PHPUnit_Framework_TestCase {
         $this->facade->setConfiguration($configuration);
         $this->facade->getTemplateJavascriptFiles();
     }
-
 
 }

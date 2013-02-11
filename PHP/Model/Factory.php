@@ -94,7 +94,7 @@ class Library_Elefunds_Model_Factory {
      */
     public static function getDonation() {
         $donationPrototype = new self::$donationPrototype();
-        if($donationPrototype instanceof Library_Elefunds_Model_DonationInterface === FALSE) {
+        if ($donationPrototype instanceof Library_Elefunds_Model_DonationInterface === FALSE) {
             throw new Library_Elefunds_Exception_ElefundsException(
                 'Given prototype for donation does not implement Library_Elefunds_Model_DonationInterface',
                 1347883795444);
@@ -110,7 +110,7 @@ class Library_Elefunds_Model_Factory {
      */
     public static function getReceiver() {
         $receiverPrototype = new self::$receiverPrototype();
-        if($receiverPrototype instanceof Library_Elefunds_Model_ReceiverInterface === FALSE) {
+        if ($receiverPrototype instanceof Library_Elefunds_Model_ReceiverInterface === FALSE) {
             throw new Library_Elefunds_Exception_ElefundsException(
                 'Given prototype for donation does not implement Library_Elefunds_Model_ReceiverInterface',
                 1347883795444);

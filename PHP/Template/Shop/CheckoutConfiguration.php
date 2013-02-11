@@ -62,9 +62,17 @@ class Library_Elefunds_Template_Shop_CheckoutConfiguration extends Library_Elefu
      *
      * You should then call $this->view->assign('receivers', $receivers) for yourself.
      *
-     * @var bool
+     * @var boolean
      */
     protected $autoFetchReceivers = TRUE;
+
+    /**
+     * @param boolean $autoFetchReceivers
+     */
+    public function setAutoFetchReceivers($autoFetchReceivers)
+    {
+        $this->autoFetchReceivers = $autoFetchReceivers;
+    }
 
     /**
      * Assigns the receivers.
@@ -83,7 +91,7 @@ class Library_Elefunds_Template_Shop_CheckoutConfiguration extends Library_Elefu
         // Refer to the documentation for further information.
         $this->view->assign('offerDonationReceipt', TRUE);
 
-        if($this->autoFetchReceivers) {
+        if ($this->autoFetchReceivers) {
             $this->view->assign('receivers', $this->facade->getReceivers());
         }
 
@@ -98,7 +106,7 @@ class Library_Elefunds_Template_Shop_CheckoutConfiguration extends Library_Elefu
         $this->view->assign('roundSumContainer', 'elefunds_round_sum_container');
 
         // L18n
-        if($this->countrycode === 'de') {
+        if ($this->countrycode === 'de') {
             $this->view->assign('elefundsDescription', 'Die elefunds Stiftung gUG leitet deine Spende zu 100% an die ausgewählten Organisationen weiter.');
             $this->view->assign('slogan', 'Ich möchte mit meinem Einkauf aufrunden und spenden!');
             $this->view->assign('receipt_slogan', 'Ich möchte eine Spendenquittung erhalten.');

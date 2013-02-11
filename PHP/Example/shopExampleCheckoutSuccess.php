@@ -15,7 +15,7 @@ $facade->setConfiguration(new Library_Elefunds_Example_ShopExampleCheckoutSucces
 // Just check which receivers have been checked by the user and assign them here.
 //
 // You can get the id of the receiver from the checkbox input field id
-// Like this: substr('elefunds_receiver_123', 18);
+// Like this: $receiverIds = array_map(function($x) { return (int)$x; }, $params['elefunds_receiver']);
 //
 // We assume, that Care and UNO have been chosen.
 $facade->getConfiguration()->getView()->assign('receivers', array(
@@ -33,7 +33,7 @@ $facade->getConfiguration()->getView()->assign('foreignId', 1234);
 <head>
     <meta http-equiv="content-type" content="text/html; charset=utf-8" />
     <title>My Shop</title>
-    <?php foreach($facade->getTemplateCssFiles() as $cssFile): ?>
+    <?php foreach ($facade->getTemplateCssFiles() as $cssFile): ?>
     <link rel="stylesheet" type="text/css" href="../<?php echo $cssFile; ?>">
     <?php endforeach; ?>
 </head>

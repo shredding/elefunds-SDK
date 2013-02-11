@@ -1,8 +1,12 @@
-CHANGELOG VERSION 1.1
-=====================
+## CHANGELOG 
+### VERSION 1.1.1
 
-Breaking Changes
-----------------
+- small bug fixes
+
+
+### VERSION 1.1
+
+#### Breaking Changes
 
 - rewrite of the share API
 
@@ -10,8 +14,7 @@ In order to use the share API, you have to exchange the Facebook and Twitter Sha
 Templates, just update and you're good to go.
 
 
-Features
---------
+#### Features
 
 - added donation receipt to API as well as to the templates
 - added multiple HTML Templates for basic usage without PHP SDK

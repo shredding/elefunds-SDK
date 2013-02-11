@@ -176,7 +176,7 @@ class Library_Elefunds_Test_Unit_View_BaseViewTest extends PHPUnit_Framework_Tes
     /**
     * @test
     */ 
-   public function rendertCalculatesTheCorrectPathToViewPhtmlAndChecksForExistance() {       
+   public function renderCalculatesTheCorrectPathToViewPhtmlAndChecksForExistance() {
               
        try {
            $this->view->render('Test');
@@ -188,5 +188,19 @@ class Library_Elefunds_Test_Unit_View_BaseViewTest extends PHPUnit_Framework_Tes
        $this->assertSame(TRUE, $filepathExtractDoesMatch);
            
    }
+
+    /**
+     * @test
+     */
+    public function renderTakesFullpathIfFlagIsSet() {
+        try {
+            $this->view->render('FullyQualifiedGiven', TRUE);
+        } catch (Library_Elefunds_Exception_ElefundsException $exception) {
+            $additionalInformation = $exception->getAdditionalInformation();
+        }
+
+        $filepathExtractDoesMatch = strpos($additionalInformation['filepath'], 'FullyQualifiedGiven') !== FALSE;
+        $this->assertSame(TRUE, $filepathExtractDoesMatch);
+    }
 
 }

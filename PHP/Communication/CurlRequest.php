@@ -70,7 +70,7 @@ class Library_Elefunds_Communication_CurlRequest implements Library_Elefunds_Com
      * @throws Library_Elefunds_Exception_ElefundsException if curl is not installed
      */
     public function __construct() {
-        if(!extension_loaded('curl')) {
+        if (!extension_loaded('curl')) {
             throw new Library_Elefunds_Exception_ElefundsException(
                 'You are using the curl request method without having curl installed on your server.
                  Your options are to either use another implementation of the RestInterface or to install curl.',
@@ -163,7 +163,7 @@ class Library_Elefunds_Communication_CurlRequest implements Library_Elefunds_Com
 
          $serverResponse = curl_exec($this->curl);
 
-         if($serverResponse === FALSE) {
+         if ($serverResponse === FALSE) {
 
              throw new Library_Elefunds_Exception_ElefundsCommunicationException(
                 'Unable to connect to the elefunds API',
@@ -177,7 +177,7 @@ class Library_Elefunds_Communication_CurlRequest implements Library_Elefunds_Com
 
          $httpResponseCode = curl_getinfo($this->curl, CURLINFO_HTTP_CODE);
 
-         if($httpResponseCode !== 200) {
+         if ($httpResponseCode !== 200) {
              throw new Library_Elefunds_Exception_ElefundsCommunicationException(
                 'An error occurred during the api call. Refer to additionalInformation of this exception for more details.',
                 1347899756668,

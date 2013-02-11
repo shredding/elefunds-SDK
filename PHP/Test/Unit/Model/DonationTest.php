@@ -51,8 +51,11 @@ require_once dirname(__FILE__) . '/../../../Model/Donation.php';
  * @since      File available since Release 1.0.0
  */
 class Library_Elefunds_Test_Unit_Model_DonationTest extends PHPUnit_Framework_TestCase {
-   
-   protected $donation;
+
+    /**
+     * @var Library_Elefunds_Model_Donation
+     */
+    protected $donation;
    
    public function setUp() {
       $this->donation = new Library_Elefunds_Model_Donation(); 
@@ -322,6 +325,43 @@ class Library_Elefunds_Test_Unit_Model_DonationTest extends PHPUnit_Framework_Te
 
         $donator = $this->donation->getDonatorInformation();
         $this->assertSame(FALSE, isset($donator['countryCode']));
+    }
+
+    /**
+     * @test
+     */
+    public function toArrayReturnsArrayWithEverythingThatIsSet() {
+
+        $now = new DateTime();
+
+        $this->donation
+            ->setAmount(100)
+            ->setAvailableReceiverIds(array(1,2,3))
+            ->setForeignId(1234)
+            ->setReceiverIds(array(1,2))
+            ->setTime($now);
+
+        $array = $this->donation->toArray();
+
+        $this->assertSame($array['donationAmount'], 100);
+        $this->assertSame(implode(',', $array['receiversAvailable']), '1,2,3');
+        $this->assertSame($array['foreignId'], 1234);
+        $this->assertSame(implode(',', $array['receivers']), '1,2');
+        $this->assertSame($array['donationTimestamp'], $now->format(DateTime::ISO8601));
+
+        $this->assertSame(FALSE, isset($array['grandTotal']));
+        $this->assertSame(FALSE, isset($array['donationAmountSuggested']));
+        $this->assertSame(FALSE, isset($array['donator']));
+
+        $this->donation->setGrandTotal(999);
+        $this->donation->setSuggestedAmount(888);
+        $this->donation->setDonator('hello@elefunds.de', 'Christian', 'Peters', 'Schönhauser Allee 124', 10243, 'Berlin', 'invalid');
+
+        $array = $this->donation->toArray();
+        $this->assertSame($array['grandTotal'], 999);
+        $this->assertSame($array['donationAmountSuggested'], 888);
+        $this->assertSame(TRUE, isset($array['donator']));
+
     }
 
 }

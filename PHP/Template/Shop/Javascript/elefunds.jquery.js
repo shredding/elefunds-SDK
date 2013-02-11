@@ -16,6 +16,10 @@ elefunds = (function($) {
       $('#elefunds_checkbox').prop('checked', true);
       $("#elefunds_input").addClass('elefunds_input_active');
       roundSumContainer.removeClass('elefunds_hidden');
+      
+      $.event.trigger({
+        type: 'elefunds_enabled'
+      });
       enabled = true;
     };
     
@@ -23,6 +27,10 @@ elefunds = (function($) {
       $('#elefunds_checkbox').prop('checked', false);
       $("#elefunds_input").removeClass('elefunds_input_active');
       roundSumContainer.addClass('elefunds_hidden');
+      
+      $.event.trigger({
+        type: 'elefunds_disabled'
+      });
       enabled = false;
     }
     
@@ -51,6 +59,19 @@ elefunds = (function($) {
       if($("#elefunds_checkbox").attr('checked') && $('#elefunds_bottom input[type="checkbox"]:checked').length == 0) {
         $('#elefunds_bottom input[type="checkbox"]').prop('checked', true);
         $('#elefunds_bottom input[type="checkbox"]').parent().toggleClass("elefunds_receiver_selected");
+      }
+      
+      if(enabled) {
+        $.event.trigger({
+          type: 'elefunds_disabled'
+        });
+        enabled = false;
+        
+      } else {
+        $.event.trigger({
+          type: 'elefunds_enabled'
+        });
+        enabled = true;
       }
       
       $("#elefunds_input").toggleClass("elefunds_input_active");

@@ -123,7 +123,7 @@ class Library_Elefunds_Model_Receiver implements Library_Elefunds_Model_Receiver
       * @return Library_Elefunds_Model_ReceiverInterface
       */
       public function setId($id) {
-          if(is_int($id) && $id > 0) {
+          if (is_int($id) && $id > 0) {
             $this->id = $id;   
           } else {
             throw new InvalidArgumentException('Given value must be a positive integer.', 1347734104);
@@ -149,7 +149,7 @@ class Library_Elefunds_Model_Receiver implements Library_Elefunds_Model_Receiver
       * @return Library_Elefunds_Model_ReceiverInterface
       */
      public function setName($name) {
-         if(is_string($name)) {
+         if (is_string($name)) {
              $this->name = $name;
          } else {
              throw new InvalidArgumentException('Given value must be of type string.', 1347734105);
@@ -175,7 +175,7 @@ class Library_Elefunds_Model_Receiver implements Library_Elefunds_Model_Receiver
       * @return Library_Elefunds_Model_ReceiverInterface
       */
      public function setDescription($description) {
-         if(is_string($description)) {
+         if (is_string($description)) {
              $this->description = $description;
          } else {
              throw new InvalidArgumentException('Given value must be of type string.', 1347734105);
@@ -206,7 +206,7 @@ class Library_Elefunds_Model_Receiver implements Library_Elefunds_Model_Receiver
          
          $validUrl = filter_var($url, FILTER_VALIDATE_URL) !== FALSE;
 
-         if($validUrl && isset($this->images[$orientation]) && isset($this->images[$orientation][$size])) {
+         if ($validUrl && isset($this->images[$orientation]) && isset($this->images[$orientation][$size])) {
              $this->images[$orientation][$size] = $url;
          } else {
              throw new InvalidArgumentException('URL, orientation and size have to be valid. Please refer to documentation for permitted input.', 1347872590);
@@ -224,7 +224,7 @@ class Library_Elefunds_Model_Receiver implements Library_Elefunds_Model_Receiver
       * @return string URL to the image
       */
      public function getImage($orientation, $size) {
-         if(isset($this->images[$orientation]) && isset($this->images[$orientation][$size])) {
+         if (isset($this->images[$orientation]) && isset($this->images[$orientation][$size])) {
             return $this->images[$orientation][$size];
          } else {
              throw new InvalidArgumentException('Orientation and size have to be valid. Please refer to documentation for permitted input.', 1347872591);
@@ -257,7 +257,7 @@ class Library_Elefunds_Model_Receiver implements Library_Elefunds_Model_Receiver
       */
      public function setImages(array $images) {
          foreach ($images as $orientation => $sizes) {
-             if(is_array($sizes)) {
+             if (is_array($sizes)) {
                  foreach ($sizes as $size => $url) {
                      $this->addImage($url, $orientation, $size);
                  }        

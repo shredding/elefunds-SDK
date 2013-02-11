@@ -53,7 +53,7 @@ require_once dirname(__FILE__) . '/BaseConfiguration.php';
  */
 class Library_Elefunds_Configuration_DefaultConfiguration extends Library_Elefunds_Configuration_BaseConfiguration {
 
-      protected $apiUrl = 'https://connect.elefunds.de';
+    protected $apiUrl = 'https://connect.elefunds.de';
 
       /**
        * Default configuration settings.
