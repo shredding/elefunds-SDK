@@ -21,4 +21,8 @@ http://share.elefunds.de/on/facebook/1001/99/4,5,6/c98ec3d33e99bcf08e161519a4aff
 http://share.elefunds.de/on/twitter/1001/99/4,5,6/c98ec3d33e99bcf08e161519a4aff3fcb7217b77
 ```
 
+<<<<<<< HEAD
     sha1( 1001994,5,6eb85fa24f23b7ade5224a036b39556d65e764653 ) == c98ec3d33e99bcf08e161519a4aff3fcb7217b77
+=======
+    sha1( 1001994,5,6eb85fa24f23b7ade5224a036b39556d65e764653 ) == c98ec3d33e99bcf08e161519a4aff3fcb7217b77
+>>>>>>> 262d6beb7853f65b2b92b756dcceb01898410d2d

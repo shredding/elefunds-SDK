@@ -126,11 +126,11 @@ class Library_Elefunds_Facade {
                 $rawJson = $this->configuration->getRestImplementation()->get($restUrl);
 
                 $response = json_decode($rawJson, TRUE);
-                $this->cachedReceivers = $response['receivers'];
+                $this->cachedReceivers = $response;
             }
 
             // Let's get the country specific receivers
-            if (!isset($this->cachedReceivers[$this->configuration->getCountrycode()])) {
+            if (!isset($this->cachedReceivers['receivers'][$this->configuration->getCountrycode()])) {
                 throw new Library_Elefunds_Exception_ElefundsCommunicationException(
                     'Requested countrycode was not available. Available country codes are: ' . implode(', ', array_keys($response['receivers'])) . '.',
                     1347966301
@@ -139,13 +139,13 @@ class Library_Elefunds_Facade {
 
             $receivers = array();
 
-            foreach ($this->cachedReceivers[$this->configuration->getCountrycode()] as $rec) {
+            foreach ($this->cachedReceivers['receivers'][$this->configuration->getCountrycode()] as $rec) {
                 $receiver = $this->createReceiver();
                 $receivers[] = $receiver->setId($rec['id'])
                                         ->setName($rec['name'])
                                         ->setDescription($rec['description'])
                                         ->setImages($rec['images'])
-                                        ->setValidTime(new DateTime($response['meta']['valid']));
+                                        ->setValidTime(new DateTime($this->cachedReceivers['meta']['valid']));
             }
 
             return $receivers;
