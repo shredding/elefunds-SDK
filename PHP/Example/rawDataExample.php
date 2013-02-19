@@ -13,6 +13,7 @@ $facade->setConfiguration(new Library_Elefunds_Example_RawDataConfiguration());
 
 // Get receivers
 $receivers = $facade->getReceivers();
+var_dump($receivers);
 
 // Send donation
 $response = $facade->addDonations(
