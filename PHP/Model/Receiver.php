@@ -204,6 +204,10 @@ class Library_Elefunds_Model_Receiver implements Library_Elefunds_Model_Receiver
       */
      public function addImage($url, $orientation, $size) {
          
+         // Fix for PHP <= 5.3.2
+         // https://bugs.php.net/bug.php?id=51192
+         $url = str_replace('-', '', $url);
+         
          $validUrl = filter_var($url, FILTER_VALIDATE_URL) !== FALSE;
 
          if ($validUrl && isset($this->images[$orientation]) && isset($this->images[$orientation][$size])) {
