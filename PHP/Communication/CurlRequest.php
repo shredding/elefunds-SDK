@@ -158,6 +158,7 @@ class Library_Elefunds_Communication_CurlRequest implements Library_Elefunds_Com
     protected function performRequest() {
          $this->curlOptions[CURLOPT_RETURNTRANSFER] = TRUE;
          $this->curlOptions[CURLOPT_USERAGENT] = 'elefunds-php-1.0';
+         $this->curlOptions[CURLOPT_CAINFO] = dirname(__FILE__) . '/certificate/GandiProSSLCA.pem';
 
          curl_setopt_array($this->curl, $this->curlOptions);
 

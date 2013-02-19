@@ -1,16 +1,15 @@
-elefunds = (function($) {
+var elefunds = (function(parent, $) {
   
-  // Final round sum (Total + Donation)
-  var roundSum;
+  var roundSumContainer, roundSum, decimal, decimalAlt, total;
   
-  // Currency decimal symbols
-  var decimal, decimalAlt;
-  
-  var enabled = false;
-  
-  $(function(){
-    roundSum = $(elefundsVars['roundSum']);
-    roundSumContainer = $(elefundsVars['roundSumContainer']);
+  function init(options) {
+    roundSumContainer = options.roundSumContainer;
+    roundSum = options.roundSum;
+    decimal = options.decimal;
+    decimalAlt = options.deciamlAlt;
+    total = options.total;
+    
+    var enabled = false;
     
     function enable() {
       $('#elefunds_checkbox').prop('checked', true);
@@ -34,14 +33,6 @@ elefunds = (function($) {
       enabled = false;
     }
     
-    if(elefundsVars['decimal'] === ',') {
-      decimal = ',';
-      decimalAlt = '.';
-    } else {
-      decimal = '.';
-      decimalAlt = ',';
-    }
-    
     // Change button backgrounds when (un)selected
     $(".elefunds_receiver > input").on('change', function() {
       //If all are unchecked
@@ -56,7 +47,7 @@ elefunds = (function($) {
     
     // When the plugin is (de)activated
     $("#elefunds_checkbox").on('change', function() {
-      if($("#elefunds_checkbox").attr('checked') && $('#elefunds_bottom input[type="checkbox"]:checked').length == 0) {
+      if($("#elefunds_checkbox").prop('checked') && $('#elefunds_bottom input[type="checkbox"]:checked').length == 0) {
         $('#elefunds_bottom input[type="checkbox"]').prop('checked', true);
         $('#elefunds_bottom input[type="checkbox"]').parent().toggleClass("elefunds_receiver_selected");
       }
@@ -84,9 +75,15 @@ elefunds = (function($) {
       edgeOffset: -12,
       delay: 200
     });
-  });
+  } //END INIT
   
-  // Convert float sum to cents
+  //Check if elefunds has already been created in the view
+  (function() {
+    if(parent.hasOwnProperty('options')) {
+      init(parent.options);
+    }
+  })();
+  
   function convertToCent(floatValue) {
     var centValue;
     var centArray;
@@ -151,11 +148,14 @@ elefunds = (function($) {
     $("#elefunds_donation_cent").val(centValue);
     
     // Update the Round Sum (Grand Total + donation)
-    roundSum.html(convertToFloat(elefundsVars['grandTotal'] + centValue));
+    roundSum.html(convertToFloat(total + centValue));
   }
   
-  // Public functions needed for the user interaction
   return {
+    
+    init: function(options) {
+      init(options);
+    },
     
     // Decrease the donation sum by 1.00
     decreaseDonation: function() {
@@ -186,5 +186,6 @@ elefunds = (function($) {
       render(centValue);
       return centValue;
     }
+    
   };
-})(window.jQuery);
+}(elefunds || {}, jQuery));

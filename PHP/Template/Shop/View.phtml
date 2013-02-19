@@ -2,7 +2,7 @@
     <input type="hidden" id="elefunds_donation_cent" value="<?php echo $view['suggestedDonationAmountCent']; ?>" name="elefunds_donation_cent"/>
     <input type="hidden" id="<?php echo 'elefunds_suggested_round_up_cent'; ?>" name="<?php echo 'elefunds_suggested_round_up_cent'; ?>" value="<?php echo $view['suggestedDonationAmountCent'];?>"/>
     <div id="elefunds_top" style="width: <?php echo $view['shopWidth']; ?>px;">
-        <img src="https://bbbf9fd0e36d5cb36b93-c1fc539e0df6af03ccc14b5020ab4161.ssl.cf1.rackcdn.com/default/elefunds_logo.png" id="elefunds_logo" class="tiptip" desc="<?php echo $view['elefundsDescription']; ?>" title="elefunds" />
+        <img src="https://bbbf9fd0e36d5cb36b93-c1fc539e0df6af03ccc14b5020ab4161.ssl.cf1.rackcdn.com/light/elefunds_logo.png" id="elefunds_logo" class="tiptip" desc="<?php echo $view['elefundsDescription']; ?>" title="elefunds" />
         <span>
             <div id="elefunds_arrow">
                 <input type="checkbox" id="elefunds_checkbox" name="elefunds_checkbox"/>
@@ -10,10 +10,10 @@
                 <span id="elefunds_arrow_end"></span>
             </div>
             <div id="elefunds_plus_minus">
-                <a href="#" onclick="elefunds.decreaseDonation(); return false;" id="elefunds_decrease"><img src="https://bbbf9fd0e36d5cb36b93-c1fc539e0df6af03ccc14b5020ab4161.ssl.cf1.rackcdn.com/default/minus.png"></a> <a href="#" onclick="elefunds.increaseDonation(); return false;" id="elefunds_increase"><img src="https://bbbf9fd0e36d5cb36b93-c1fc539e0df6af03ccc14b5020ab4161.ssl.cf1.rackcdn.com/default/plus.png"></a>
+                <a href="#" onclick="elefunds.decreaseDonation(); return false;" id="elefunds_decrease"><img src="https://bbbf9fd0e36d5cb36b93-c1fc539e0df6af03ccc14b5020ab4161.ssl.cf1.rackcdn.com/light/minus.png"></a> <a href="#" onclick="elefunds.increaseDonation(); return false;" id="elefunds_increase"><img src="https://bbbf9fd0e36d5cb36b93-c1fc539e0df6af03ccc14b5020ab4161.ssl.cf1.rackcdn.com/light/plus.png"></a>
             </div>
             <div id="elefunds_input_container">
-                <span id="elefunds_currency">€</span>
+                <span id="elefunds_currency"><?php echo $view['currency']; ?></span>
                 <input type="text" id="elefunds_input" name="elefunds_round_up" onkeyup="elefunds.donationChange(this.value)" value="<?php echo $view['suggestedDonationAmount'];?>" />
             </div>
         </span>
@@ -41,14 +41,49 @@
         <?php endif; ?>
         <strong><?php echo $view['roundedSumString']; ?></strong>
         <strong id="elefunds_round_sum"><?php echo $view['roundedSum'];?></strong>
-        <strong>€</strong>
+        <strong><?php echo $view['currency']; ?></strong>
     </div>
 </div>
 
 <script type="text/javascript">
-    var elefundsVars = elefundsVars || {};
-    elefundsVars['grandTotal'] = <?php echo $view['total']; ?>;
-    elefundsVars['roundSum'] = '#<?php echo $view['roundSum']; ?>';
-    elefundsVars['roundSumContainer'] = '#<?php echo $view['roundSumContainer']; ?>';
-    elefundsVars['decimal'] = '<?php echo $view['currencyDelimiter']; ?>';
+$('<img src="https://bbbf9fd0e36d5cb36b93-c1fc539e0df6af03ccc14b5020ab4161.ssl.cf1.rackcdn.com/light/arrow_on.png"/>');
+$('<img src="https://bbbf9fd0e36d5cb36b93-c1fc539e0df6af03ccc14b5020ab4161.ssl.cf1.rackcdn.com/light/checkbox_on.png"/>');
+$('<img src="https://bbbf9fd0e36d5cb36b93-c1fc539e0df6af03ccc14b5020ab4161.ssl.cf1.rackcdn.com/light/receiver_on_bg.png"/>');
+$('<img src="https://bbbf9fd0e36d5cb36b93-c1fc539e0df6af03ccc14b5020ab4161.ssl.cf1.rackcdn.com/light/receipt_on.png"/>');
+
+var elefunds = (function(parent, $) {
+    
+    var options = {
+        roundSumContainer: $('#<?php echo $view["roundSumContainer"]; ?>'),
+        roundSum: $('#<?php echo $view["roundSum"]; ?>'),
+        decimal: '<?php echo $view["currencyDelimiter"]; ?>',
+        decimalAlt: ',',
+        total: <?php echo $view['total']; ?>
+    };
+    
+    if(options.decimal === options.decimalAlt) {
+        options.decimalAlt = '.';
+    }
+    
+    if(parent.hasOwnProperty('init')) {
+        parent.init(options);
+    }
+    
+    return {
+        options: options,
+        
+        decreaseDonation: function() {
+            return parent.decreaseDonation();
+        },
+        
+        increaseDonation: function() {
+            return parent.increaseDonation();
+        },
+        
+        donationChange: function(floatValue) {
+            return parent.donationChange(floatValue);
+        },
+    }
+    
+}(elefunds || {}, jQuery));
 </script>

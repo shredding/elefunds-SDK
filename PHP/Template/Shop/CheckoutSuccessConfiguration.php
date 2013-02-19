@@ -61,7 +61,7 @@ class Library_Elefunds_Template_Shop_CheckoutSuccessConfiguration extends Librar
      *
      *  * create a new Folder /Template/MyTemplate
      *  * copy View.phtml and CheckoutSuccess.phtml in it (and adjust them)
-     *  * create a MyTemplateBaseConfiguration class, that extends this claa (and adjust it)
+     *  * create a MyTemplateBaseConfiguration class, that extends this class (and adjust it)
      */
 
     /**

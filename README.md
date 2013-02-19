@@ -1,4 +1,4 @@
-elefunds API SDK's v1.1.1
+elefunds API SDK v1.1.1
 ========================
 
 Welcome to the elefunds API.
