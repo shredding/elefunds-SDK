@@ -51,7 +51,7 @@ require_once dirname(__FILE__) . '/BaseConfiguration.php';
  * @link       http://www.elefunds.de
  * @since      File available since Release 1.0.0
  */
-class Library_Elefunds_Configuration_DefaultConfiguration extends Library_Elefunds_Configuration_BaseConfiguration {
+class Elefunds_Configuration_DefaultConfiguration extends Elefunds_Configuration_BaseConfiguration {
 
     protected $apiUrl = 'https://connect.elefunds.de';
 
@@ -65,16 +65,16 @@ class Library_Elefunds_Configuration_DefaultConfiguration extends Library_Elefun
        */
       public function init() {
           require_once dirname(__FILE__) . '/../Communication/CurlRequest.php';
-          $this->setRestImplementation(new Library_Elefunds_Communication_CurlRequest());
+          $this->setRestImplementation(new Elefunds_Communication_CurlRequest());
 
           require_once dirname(__FILE__) . '/../Model/Donation.php';
-          $this->setDonationClassName('Library_Elefunds_Model_Donation');
+          $this->setDonationClassName('Elefunds_Model_Donation');
 
           require_once dirname(__FILE__) . '/../Model/Receiver.php';
-          $this->setReceiverClassName('Library_Elefunds_Model_Receiver');
+          $this->setReceiverClassName('Elefunds_Model_Receiver');
 
-          Library_Elefunds_Model_Factory::setReceiverImplementation($this->getReceiverClassName());
-          Library_Elefunds_Model_Factory::setDonationImplementation($this->getDonationClassName());
+          Elefunds_Model_Factory::setReceiverImplementation($this->getReceiverClassName());
+          Elefunds_Model_Factory::setDonationImplementation($this->getDonationClassName());
       }
 
 }

@@ -40,7 +40,7 @@
 require_once dirname(__FILE__) . '/../../../Model/Donation.php';
 
 /**
- * Unit Test for Library_Elefunds_Models_Donation.
+ * Unit Test for Elefunds_Models_Donation.
  * 
  * @package    elefunds API PHP Library
  * @subpackage Test
@@ -50,18 +50,23 @@ require_once dirname(__FILE__) . '/../../../Model/Donation.php';
  * @link       http://www.elefunds.de
  * @since      File available since Release 1.0.0
  */
-class Library_Elefunds_Test_Unit_Model_DonationTest extends PHPUnit_Framework_TestCase {
+class Elefunds_Test_Unit_Model_DonationTest extends PHPUnit_Framework_TestCase {
 
-    /**
-     * @var Library_Elefunds_Model_Donation
-     */
-    protected $donation;
-   
-   public function setUp() {
-      $this->donation = new Library_Elefunds_Model_Donation(); 
+   /**
+    * @var Elefunds_Model_Donation
+    */
+   protected $donation;
+
+   /**
+    * Sets up the class under test.
+    */
+    public function setUp() {
+      $this->donation = new Elefunds_Model_Donation();
    }
    
    /**
+    * setForeignIdAcceptsNumbersOrDigitOnlyString
+    *
     * @test
     */ 
    public function setForeignIdAcceptsNumbersOrDigitOnlyString() {
@@ -73,6 +78,8 @@ class Library_Elefunds_Test_Unit_Model_DonationTest extends PHPUnit_Framework_Te
    }
    
    /**
+    * setAmountMustBeOfTypeIntegerOrADigitOnlyString
+    *
     * @test
     */
    public function setAmountMustBeOfTypeIntegerOrADigitOnlyString() {
@@ -85,6 +92,8 @@ class Library_Elefunds_Test_Unit_Model_DonationTest extends PHPUnit_Framework_Te
    }
    
    /**
+    * setAmountReturnsZeroIfANegativeValueIsGiven
+    *
     * @test
     */
    public function setAmountReturnsZeroIfANegativeValueIsGiven() {
@@ -93,6 +102,8 @@ class Library_Elefunds_Test_Unit_Model_DonationTest extends PHPUnit_Framework_Te
    }
    
    /**
+    * setAmountThrowsErrorIfGivenStringIsNotCastableToInt
+    *
     * @test
     * @expectedException InvalidArgumentException
     */
@@ -101,6 +112,8 @@ class Library_Elefunds_Test_Unit_Model_DonationTest extends PHPUnit_Framework_Te
    }
 
    /**
+    * setAmountThrowsErrorIfGivenValueIsNeitherCastableStringOrInt
+    *
     * @test
     * @expectedException InvalidArgumentException
     */
@@ -108,7 +121,9 @@ class Library_Elefunds_Test_Unit_Model_DonationTest extends PHPUnit_Framework_Te
        $this->donation->setAmount(array());
    }
    
-    /**
+   /**
+    * setSuggestedAmountMustBeOfTypeIntOrADigitOnlyString
+    *
     * @test
     */
    public function setSuggestedAmountMustBeOfTypeIntOrADigitOnlyString() {
@@ -120,6 +135,8 @@ class Library_Elefunds_Test_Unit_Model_DonationTest extends PHPUnit_Framework_Te
    }
    
    /**
+    * setSuggestedAmountReturnsZeroIfANegativeValueIsGiven
+    *
     * @test
     */
    public function setSuggestedAmountReturnsZeroIfANegativeValueIsGiven() {
@@ -128,6 +145,8 @@ class Library_Elefunds_Test_Unit_Model_DonationTest extends PHPUnit_Framework_Te
    }
    
    /**
+    * setSuggestedAmountThrowsErrorIfGivenStringIsNotCastableToInt
+    *
     * @test
     * @expectedException InvalidArgumentException
     */
@@ -137,6 +156,8 @@ class Library_Elefunds_Test_Unit_Model_DonationTest extends PHPUnit_Framework_Te
    
    
    /**
+    * setSuggestedAmountThrowsErrorIfGivenValueIsNeitherCastableStringOrInt
+    *
     * @test
     * @expectedException InvalidArgumentException
     */
@@ -145,6 +166,8 @@ class Library_Elefunds_Test_Unit_Model_DonationTest extends PHPUnit_Framework_Te
    }
    
    /**
+    * addReceiverIdAddsAnIntToTheArrayOfReceiverIds
+    *
     * @test
     */
    public function addReceiverIdAddsAnIntToTheArrayOfReceiverIds() {
@@ -153,6 +176,8 @@ class Library_Elefunds_Test_Unit_Model_DonationTest extends PHPUnit_Framework_Te
    }
    
    /**
+    * addReceiverThrowsErrorIfGivenTypeIsNotInt
+    *
     * @test
     * @expectedException InvalidArgumentException
     */
@@ -161,6 +186,8 @@ class Library_Elefunds_Test_Unit_Model_DonationTest extends PHPUnit_Framework_Te
    }
    
    /**
+    * addReceiverThrowsErrorIfGivenTypeNegativeInt
+    *
     * @test
     * @expectedException InvalidArgumentException
     */
@@ -169,6 +196,8 @@ class Library_Elefunds_Test_Unit_Model_DonationTest extends PHPUnit_Framework_Te
    }
    
    /**
+    * setReceiverIdsSetsIdsIfAllArrayValuesArePositiveInteger
+    *
     * @test
     */
    public function setReceiverIdsSetsIdsIfAllArrayValuesArePositiveInteger() {
@@ -178,6 +207,8 @@ class Library_Elefunds_Test_Unit_Model_DonationTest extends PHPUnit_Framework_Te
    }
    
    /**
+    * setReceiverIdsThrowsErrorIfNotAllArrayValuesArePositiveInteger
+    *
     * @test
     * @expectedException InvalidArgumentException
     */
@@ -187,6 +218,8 @@ class Library_Elefunds_Test_Unit_Model_DonationTest extends PHPUnit_Framework_Te
    }
    
    /**
+    * setReceiverIdsThrowsErrorIfNotAllArrayValuesAreInteger
+    *
     * @test
     * @expectedException InvalidArgumentException
     */
@@ -195,7 +228,9 @@ class Library_Elefunds_Test_Unit_Model_DonationTest extends PHPUnit_Framework_Te
        $this->donation->setReceiverIds($ids);
    }
    
-    /**
+   /**
+    * addAvailableReceiverIdAddsAnIntToTheArrayOfReceiverIds
+    *
     * @test
     */
    public function addAvailableReceiverIdAddsAnIntToTheArrayOfReceiverIds() {
@@ -204,6 +239,8 @@ class Library_Elefunds_Test_Unit_Model_DonationTest extends PHPUnit_Framework_Te
    }
    
    /**
+    * addAvailableReceiverThrowsErrorIfGivenTypeIsNotInt
+    *
     * @test
     * @expectedException InvalidArgumentException
     */
@@ -212,6 +249,8 @@ class Library_Elefunds_Test_Unit_Model_DonationTest extends PHPUnit_Framework_Te
    }
    
    /**
+    * addAvailableReceiverThrowsErrorIfGivenTypeNegativeInt
+    *
     * @test
     * @expectedException InvalidArgumentException
     */
@@ -220,6 +259,8 @@ class Library_Elefunds_Test_Unit_Model_DonationTest extends PHPUnit_Framework_Te
    }
    
    /**
+    * setAvailableReceiverIdsSetsIdsIfAllArrayValuesArePositiveInteger
+    *
     * @test
     */
    public function setAvailableReceiverIdsSetsIdsIfAllArrayValuesArePositiveInteger() {
@@ -229,6 +270,8 @@ class Library_Elefunds_Test_Unit_Model_DonationTest extends PHPUnit_Framework_Te
    }
    
    /**
+    * setAvailableReceiverIdsThrowsErrorIfNotAllArrayValuesArePositiveInteger
+    *
     * @test
     * @expectedException InvalidArgumentException
     */
@@ -238,6 +281,8 @@ class Library_Elefunds_Test_Unit_Model_DonationTest extends PHPUnit_Framework_Te
    }
    
    /**
+    * setAvailableReceiverIdsThrowsErrorIfNotAllArrayValuesAreInteger
+    *
     * @test
     * @expectedException InvalidArgumentException
     */
@@ -247,6 +292,8 @@ class Library_Elefunds_Test_Unit_Model_DonationTest extends PHPUnit_Framework_Te
    }
    
    /**
+    * setGrandTotalMustBeOfTypeIntOrDigitOnlyString
+    *
     * @test
     */
    public function setGrandTotalMustBeOfTypeIntOrDigitOnlyString() {
@@ -258,6 +305,8 @@ class Library_Elefunds_Test_Unit_Model_DonationTest extends PHPUnit_Framework_Te
    }
    
    /**
+    * setGrandTotaReturnsZeroIfANegativeValueIsGiven
+    *
     * @test
     */
    public function setGrandTotaReturnsZeroIfANegativeValueIsGiven() {
@@ -266,6 +315,8 @@ class Library_Elefunds_Test_Unit_Model_DonationTest extends PHPUnit_Framework_Te
    }
    
    /**
+    * setGrandTotalThrowsErrorIfGivenStringIsNotCastableToInt
+    *
     * @test
     * @expectedException InvalidArgumentException
     */
@@ -274,6 +325,8 @@ class Library_Elefunds_Test_Unit_Model_DonationTest extends PHPUnit_Framework_Te
    }
     
    /**
+    * setGrandTotalThrowsErrorIfGivenValueIsNeitherCastableStringOrInt
+    *
     * @test
     * @expectedException InvalidArgumentException
     */
@@ -282,6 +335,8 @@ class Library_Elefunds_Test_Unit_Model_DonationTest extends PHPUnit_Framework_Te
    }
    
    /**
+    * setTimeStoresTimeInProperty
+    *
     * @test
     */
    public function setTimeStoresTimeInProperty() {
@@ -292,6 +347,8 @@ class Library_Elefunds_Test_Unit_Model_DonationTest extends PHPUnit_Framework_Te
    }
 
     /**
+     * setDonatorAcceptsAValidUser
+     *
      * @test
      */
     public function setDonatorAcceptsAValidUser() {
@@ -310,6 +367,8 @@ class Library_Elefunds_Test_Unit_Model_DonationTest extends PHPUnit_Framework_Te
     }
 
     /**
+     * setDonatorNeedsAValidEmail
+     *
      * @test
      * @expectedException InvalidArgumentException
      */
@@ -318,6 +377,8 @@ class Library_Elefunds_Test_Unit_Model_DonationTest extends PHPUnit_Framework_Te
     }
 
     /**
+     * setDonatorDoesNotUseInvalidCountryCodes
+     *
      * @test
      */
     public function setDonatorDoesNotUseInvalidCountryCodes() {
@@ -328,6 +389,8 @@ class Library_Elefunds_Test_Unit_Model_DonationTest extends PHPUnit_Framework_Te
     }
 
     /**
+     * toArrayReturnsArrayWithEverythingThatIsSet
+     *
      * @test
      */
     public function toArrayReturnsArrayWithEverythingThatIsSet() {

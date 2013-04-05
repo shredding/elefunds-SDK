@@ -53,13 +53,13 @@ Only the basic authentication.
                 "images":{
                    "horizontal":{
                       "small":"https://bbbf9fd0e36d5cb36b93-c1fc539e0df6af03ccc14b5020ab4161.ssl.cf1.rackcdn.com/receivers/sample_receiver_01h.png",
-                      "large":"https://bbbf9fd0e36d5cb36b93-c1fc539e0df6af03ccc14b5020ab4161.ssl.cf1.rackcdn.com/receivers/sample_receiver_02h.png",
-                      "medium":"https://bbbf9fd0e36d5cb36b93-c1fc539e0df6af03ccc14b5020ab4161.ssl.cf1.rackcdn.com/receivers/sample_receiver_03h.png"
+                      "large":"https://bbbf9fd0e36d5cb36b93-c1fc539e0df6af03ccc14b5020ab4161.ssl.cf1.rackcdn.com/receivers/sample_receiver_01h.png",
+                      "medium":"https://bbbf9fd0e36d5cb36b93-c1fc539e0df6af03ccc14b5020ab4161.ssl.cf1.rackcdn.com/receivers/sample_receiver_01h.png"
                    },
                    "vertical":{
                       "small":"https://bbbf9fd0e36d5cb36b93-c1fc539e0df6af03ccc14b5020ab4161.ssl.cf1.rackcdn.com/receivers/sample_receiver_01v.png",
-                      "large":"https://bbbf9fd0e36d5cb36b93-c1fc539e0df6af03ccc14b5020ab4161.ssl.cf1.rackcdn.com/receivers/sample_receiver_02v.png",
-                      "medium":"https://bbbf9fd0e36d5cb36b93-c1fc539e0df6af03ccc14b5020ab4161.ssl.cf1.rackcdn.com/receivers/sample_receiver_03v.png"
+                      "large":"https://bbbf9fd0e36d5cb36b93-c1fc539e0df6af03ccc14b5020ab4161.ssl.cf1.rackcdn.com/receivers/sample_receiver_01v.png",
+                      "medium":"https://bbbf9fd0e36d5cb36b93-c1fc539e0df6af03ccc14b5020ab4161.ssl.cf1.rackcdn.com/receivers/sample_receiver_01v.png"
                    }
                 },
                 "description":"A description of the receiver.",
@@ -71,9 +71,10 @@ Only the basic authentication.
     }
 
 
-## Donations POST /donations
+## Donations
+### POST /donations
 
-Creates multiple donations. The JSON must be sent as raw POST body.
+Creates a single or multiple donation(s). The JSON must be sent as raw POST body.
 
 **Resource URL**
 
@@ -85,7 +86,7 @@ Only the basic authentication.
 
 **Example Request**
 
-    https://connect.elefunds.de/donations/?clientId=1001&hashedKey=eb85fa24f23b7ade5224a036b39556d65e764653
+    POST https://connect.elefunds.de/donations/?clientId=1001&hashedKey=eb85fa24f23b7ade5224a036b39556d65e764653
 
 *Example POST body*
 
@@ -125,11 +126,70 @@ To improve performance, we update the status of donations and process them later
 status response as soon as the donation information has been received.
 
     {
-        "success":true,
-        "message":"2 of 2 donation(s) have been saved. 0 donation(s) failed the validation. 0 donation(s) failed due to a server problem."
+        "success": true,
+        "message": "2 of 2 donation(s) have been saved. 0 donation(s) failed the validation. 0 donation(s) failed due to a server problem."
     }
 
-## Donations POST /donations/delete
+
+### PUT /donations/:foreignIds
+
+Sets the status of one or multiple donation(s) to completed. You should use the this call once an order has been finalized. For example, when the money has been received and the product was shipped.
+
+**Resource URL**
+
+    https://connect.elefunds.de/donations/:foreignIds
+    
+**Parameters**
+
+- `foreignIds` Unique or comma separated list of unique identifier(s) of the made donation(s). The origin of the foreignId is up to you (ie. order ID, transaction ID), but it has to be a unique identifier for each donation.
+
+**Example Request**
+
+    PUT https://connect.elefunds.de/donations/123,124,125/?clientId=1001&hashedKey=eb85fa24f23b7ade5224a036b39556d65e764653
+
+**Response**
+
+*HTTP Code:* 200
+
+To improve performance, we update the status of donations and process them later in the background. Hence, you get a
+status response as soon as the donation information has been received.
+
+    {
+        "success": true,
+        "message": "3 of 3 donation(s) have been saved. 0 donation(s) failed the validation. 0 donation(s) failed due to a server problem."
+    }
+
+
+### DELETE /donations/:foreignIds
+
+Cancels a single or multiple donations identified by a comma separated list of foreignIds that you provided during the initial post. You should use the call if an erroneous donation has been made or an order was canceled.
+
+**Resource URL**
+
+    https://connect.elefunds.de/donations/:foreignIds
+
+**Parameters**
+
+- `foreignIds` Unique or comma separated list of unique identifier(s) of the made donation(s). The origin of the foreignId is up to you (ie. order ID, transaction ID), but it has to be unique for each donation.
+
+**Example Request**
+
+    DELETE https://connect.elefunds.de/donations/123,124,125/?clientId=1001&hashedKey=eb85fa24f23b7ade5224a036b39556d65e764653
+
+**Response**
+
+*HTTP Code:* 200
+
+To improve performance, we update the status of donations and process them later in the background. Hence, you get a
+status response as soon as the donation information has been received.
+
+    {
+        "success": true,
+        "message": "3 of 3 donation(s) have been saved. 0 donation(s) failed the validation. 0 donation(s) failed due to a server problem."
+    }
+    
+
+### ~~POST /donations/delete~~ ** DEPRECATED ** (Use [DELETE /donations/:foreignIds](#delete-donationsforeignids) instead)
 
 Deletes multiple donations. The JSON must be sent as raw POST body and must contain an array of foreignIds.
 
@@ -159,35 +219,6 @@ To improve performance, we update the status of donations and process them later
 status response as soon as the donation information has been received.
 
     {
-        "success":true,
-        "message":"2 of 2 donation(s) have been saved. 0 donation(s) failed the validation. 0 donation(s) failed due to a server problem."
-    }
-
-
-## Donation DELETE /donations/:foreignId
-
-Deletes a single donation identified by the foreignId that you provided during the inital post.
-
-**Resource URL**
-
-    https://connect.elefunds.de/donation/:foreignId
-
-**Parameters**
-
-- `foreignId` Unique identifier of the made donation. The origin of the foreignId is up to you (ie. order ID, transaction ID), but it has to be an integer to identify the donation.
-
-**Example Request**
-
-    https://connect.elefunds.de/donation/123/?clientId=1001&hashedKey=eb85fa24f23b7ade5224a036b39556d65e764653
-
-**Response**
-
-*HTTP Code:* 200
-
-To improve performance, we update the status of donations and process them later in the background. Hence, you get a
-status response as soon as the donation information has been received.
-
-    {
-        "success":true,
-        "message":"1 of 1 donation(s) have been saved. 0 donation(s) failed the validation. 0 donation(s) failed due to a server problem."
+        "success": true,
+        "message": "2 of 2 donation(s) have been saved. 0 donation(s) failed the validation. 0 donation(s) failed due to a server problem."
     }

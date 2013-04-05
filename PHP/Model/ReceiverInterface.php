@@ -48,14 +48,14 @@
  * @link       http://www.elefunds.de
  * @since      File available since Release 1.0.0
  */
-interface Library_Elefunds_Model_ReceiverInterface  {
+interface Elefunds_Model_ReceiverInterface  {
      
      /**
       * Sets the ID of the receiver.
       * 
       * @param int
       * @throws InvalidArgumentException if given type is not int
-      * @return Library_Elefunds_Model_ReceiverInterface
+      * @return Elefunds_Model_ReceiverInterface
       */
       public function setId($id);
      
@@ -71,7 +71,7 @@ interface Library_Elefunds_Model_ReceiverInterface  {
       * 
       * @param string $name
       * @throws InvalidArgumentException if given type is not string
-      * @return Library_Elefunds_Model_ReceiverInterface
+      * @return Elefunds_Model_ReceiverInterface
       */
      public function setName($name);
      /**
@@ -86,7 +86,7 @@ interface Library_Elefunds_Model_ReceiverInterface  {
       * 
       * @param int
       * @throws InvalidArgumentException if given type is not string
-      * @return Library_Elefunds_Model_ReceiverInterface
+      * @return Elefunds_Model_ReceiverInterface
       */
      public function setDescription($description);
      
@@ -104,7 +104,7 @@ interface Library_Elefunds_Model_ReceiverInterface  {
       * @param string $orientation must be either 'horizontal' or 'vertical'
       * @param string $size either 'small', 'medium' or 'large'
       * @throws InvalidArgumentException if url, orientation or size are not in correct format#
-      * @return Library_Elefunds_Model_ReceiverInterface 
+      * @return Elefunds_Model_ReceiverInterface
       */
      public function addImage($url, $orientation, $size);
      
@@ -140,7 +140,7 @@ interface Library_Elefunds_Model_ReceiverInterface  {
       * 
       * @param array $images
       * @throws InvalidArgumentException if array is not of correct structure
-      * @return Library_Elefunds_Model_ReceiverInterface
+      * @return Elefunds_Model_ReceiverInterface
       */
      public function setImages(array $images);
      
@@ -194,7 +194,7 @@ interface Library_Elefunds_Model_ReceiverInterface  {
      *
      * @param DateTime $validTime
      *
-     * @return Library_Elefunds_Model_ReceiverInterface
+     * @return Elefunds_Model_ReceiverInterface
      */
     public function setValidTime(DateTime $validTime);
     

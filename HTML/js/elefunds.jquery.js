@@ -1,37 +1,36 @@
-elefunds = (function($) {
+var elefunds = (function(parent, $) {
   
-  // Final round sum (Total + Donation)
-  var roundSum;
+  var roundSumContainer, roundSum, decimal, decimalAlt, total;
   
-  // Currency decimal symbols
-  var decimal, decimalAlt;
-  
-  var enabled = false;
-  
-  $(function(){
-    roundSum = $(elefundsVars['roundSum']);
-    roundSumContainer = $(elefundsVars['roundSumContainer']);
+  function init(options) {
+    roundSumContainer = options.roundSumContainer;
+    roundSum = options.roundSum;
+    decimal = options.decimal;
+    decimalAlt = options.deciamlAlt;
+    total = options.total;
+    
+    var enabled = false;
     
     function enable() {
       $('#elefunds_checkbox').prop('checked', true);
       $("#elefunds_input").addClass('elefunds_input_active');
       roundSumContainer.removeClass('elefunds_hidden');
+      
+      $.event.trigger({
+        type: 'elefunds_enabled'
+      });
       enabled = true;
-    };
+    }
     
     function disable() {
       $('#elefunds_checkbox').prop('checked', false);
       $("#elefunds_input").removeClass('elefunds_input_active');
       roundSumContainer.addClass('elefunds_hidden');
+      
+      $.event.trigger({
+        type: 'elefunds_disabled'
+      });
       enabled = false;
-    }
-    
-    if(elefundsVars['decimal'] === ',') {
-      decimal = ',';
-      decimalAlt = '.';
-    } else {
-      decimal = '.';
-      decimalAlt = ',';
     }
     
     // Change button backgrounds when (un)selected
@@ -48,24 +47,48 @@ elefunds = (function($) {
     
     // When the plugin is (de)activated
     $("#elefunds_checkbox").on('change', function() {
-      if($("#elefunds_checkbox").attr('checked') && $('#elefunds_bottom input[type="checkbox"]:checked').length == 0) {
+      if($("#elefunds_checkbox").prop('checked') && $('#elefunds_bottom input[type="checkbox"]:checked').length == 0) {
         $('#elefunds_bottom input[type="checkbox"]').prop('checked', true);
         $('#elefunds_bottom input[type="checkbox"]').parent().toggleClass("elefunds_receiver_selected");
+      }
+      
+      if(enabled) {
+        $.event.trigger({
+          type: 'elefunds_disabled'
+        });
+        enabled = false;
+        
+      } else {
+        $.event.trigger({
+          type: 'elefunds_enabled'
+        });
+        enabled = true;
       }
       
       $("#elefunds_input").toggleClass("elefunds_input_active");
       roundSumContainer.toggleClass("elefunds_hidden");
     });
-    
+
+    $('#elefunds_input').keyup(function(e){
+      if(e.which == 13) e.preventDefault();
+    });
+
+
     // Enable tooltips
     $(".tiptip").tipTip({
       defaultPosition: 'top',
       edgeOffset: -12,
       delay: 200
     });
-  });
+  } //END INIT
   
-  // Convert float sum to cents
+  //Check if elefunds has already been created in the view
+  (function() {
+    if(parent.hasOwnProperty('options')) {
+      init(parent.options);
+    }
+  })();
+  
   function convertToCent(floatValue) {
     var centValue;
     var centArray;
@@ -130,11 +153,14 @@ elefunds = (function($) {
     $("#elefunds_donation_cent").val(centValue);
     
     // Update the Round Sum (Grand Total + donation)
-    roundSum.html(convertToFloat(elefundsVars['grandTotal'] + centValue));
+    roundSum.html(convertToFloat(total + centValue));
   }
   
-  // Public functions needed for the user interaction
   return {
+    
+    init: function(options) {
+      init(options);
+    },
     
     // Decrease the donation sum by 1.00
     decreaseDonation: function() {
@@ -165,5 +191,6 @@ elefunds = (function($) {
       render(centValue);
       return centValue;
     }
+    
   };
-})(window.jQuery);
+}(elefunds || {}, jQuery));

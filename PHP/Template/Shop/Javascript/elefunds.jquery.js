@@ -20,7 +20,7 @@ var elefunds = (function(parent, $) {
         type: 'elefunds_enabled'
       });
       enabled = true;
-    };
+    }
     
     function disable() {
       $('#elefunds_checkbox').prop('checked', false);
@@ -68,7 +68,12 @@ var elefunds = (function(parent, $) {
       $("#elefunds_input").toggleClass("elefunds_input_active");
       roundSumContainer.toggleClass("elefunds_hidden");
     });
-    
+
+    $('#elefunds_input').keyup(function(e){
+      if(e.which == 13) e.preventDefault();
+    });
+
+
     // Enable tooltips
     $(".tiptip").tipTip({
       defaultPosition: 'top',

@@ -1,0 +1,6 @@
+{
+  "theme": {
+    "light": ["blue", "green", "orange", "purple"],
+    "dark": ["blue", "green", "orange", "purple"]
+  }
+}

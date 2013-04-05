@@ -50,7 +50,7 @@
  * @link       http://www.elefunds.de
  * @since      File available since Release 1.0.0
  */
-class Library_Elefunds_Exception_ElefundsException extends Exception {
+class Elefunds_Exception_ElefundsException extends Exception {
          
     /**
      * An elefunds error.
@@ -71,7 +71,7 @@ class Library_Elefunds_Exception_ElefundsException extends Exception {
      * Add additional information.
      * 
      * @param array $additionalInformation
-     * @return Library_Elefunds_Exception_ElefundsException
+     * @return Elefunds_Exception_ElefundsException
      */
     public function addAdditionalInformation(array $additionalInformation) {
        $this->additionalInformation = array_merge($this->additionalInformation, $additionalInformation);

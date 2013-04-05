@@ -49,7 +49,7 @@ require_once dirname(__FILE__) . '/../Template/Shop/CheckoutSuccessConfiguration
  * @link       http://www.elefunds.de
  * @since      File available since Release 1.0.0
  */
-class Library_Elefunds_Example_ShopExampleCheckoutSuccessConfiguration extends Library_Elefunds_Template_Shop_CheckoutSuccessConfiguration {
+class Elefunds_Example_ShopExampleCheckoutSuccessConfiguration extends Elefunds_Template_Shop_CheckoutSuccessConfiguration {
 
     //Insert your clientID and apiKey
     protected $clientId = 1001;
@@ -57,9 +57,13 @@ class Library_Elefunds_Example_ShopExampleCheckoutSuccessConfiguration extends L
 
     protected $countrycode = 'de';
 
+    /**
+     * Assigns the name of the shop.
+     *
+     * @return void
+     */
     public function init() {
         parent::init();
-        $this->view->assign('shopName', 'My awesome shop');
     }
 
 }

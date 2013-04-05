@@ -10,7 +10,7 @@ Accounts
 
 > Have you already read the general Getting Started guide in the root Documentation folder of this repository?
 
-In order to integrate electronic fundraising into your app, you just need an API key and a Client ID. You can contact us at <hello@elefunds.de> to receive your own authentication keys and get started collecting donations.
+In order to integrate elefunds into your app, you just need an API key and a Client ID. You can contact us at <hello@elefunds.de> to receive your own authentication keys and get started collecting donations.
 In the meantime you can grab a test account from the `testaccounts.csv` in the root's documentation folder!
 
 Let's assume, you choose to use the client ID `1001` with the associated API Key of `ay3456789gg234561234`.
@@ -25,7 +25,7 @@ Library (next to `Facade.php`) and enter the following lines:
     <?php
         require_once dirname(__FILE__) . '/Configuration/DefaultConfiguration.php';
 
-        class Library_Elefunds_SampleConfiguration extends Library_Elefunds_Configuration_DefaultConfiguration {
+        class Elefunds_SampleConfiguration extends Configuration_DefaultConfiguration {
 
             protected $clientId = 1001;
             protected $apiKey = 'ay3456789gg234561234';
@@ -42,7 +42,7 @@ Create a file named `sample.php` within the same folder and add the following li
     require_once dirname(__FILE__) . '/Facade.php';
     require_once dirname(__FILE__) . '/SampleConfiguration.php';
 
-    $facade = new Library_Elefunds_Facade(new Library_Elefunds_SampleConfiguration());
+    $facade = new Elefunds_Facade(new Elefunds_SampleConfiguration());
     ?>
 
 Now the facade is up, running and connected to the elefunds API. Let's retrieve some charities.
@@ -56,7 +56,7 @@ Add these (and all upcoming) lines before the closing PHP tag:
 
     try {
         $receivers = $facade->getReceivers();
-    } catch (Library_Elefunds_Exception_ElefundsCommunicationException $exception) {
+    } catch (Elefunds_Exception_ElefundsCommunicationException $exception) {
 
         // The API is not available!
         // Kick in fallback or omit the service if you retrieve in real time
@@ -64,7 +64,7 @@ Add these (and all upcoming) lines before the closing PHP tag:
     }
 
     foreach($receivers as $receiver) {
-        /** @var  Library_Elefunds_Model_ReceiverInterface $receiver */
+        /** @var  Elefunds_Model_ReceiverInterface $receiver */
 
         echo '<p data-id="' . $receiver->getId(). '">' . $receiver->getName() . '</p>';
         echo '<img src="' .$receiver->getImage('horizontal', 'medium') . '" alt="' . $receiver->getDescription() .'"/>';
@@ -128,7 +128,7 @@ That's it, now just send back the donation:
 
     try {
          $responseMessage = $facade->addDonation($donation);
-    } catch (Library_Elefunds_Exception_ElefundsCommunicationException $exception) {
+    } catch (Elefunds_Exception_ElefundsCommunicationException $exception) {
          $message = $exception->getMessage();
     }
 
@@ -140,3 +140,21 @@ If everything went well, you'll retrieve a status code of `200` and a response m
 If you get an error, simply send the donation again later. If you used the `$facade->addDonations()` method to
 add multiple donations, you can send them all again later as well - if some of them were saved before something went wrong,
 the API is smart enough to sort things out.
+
+At this stage, the donation has a status of `pending` in our API. You can set it to completed, once you got your money by just
+sending in the `foreignId`, that you used when adding the donation:
+
+    // One donation:
+    $facade->completeDonation($foreignId);
+
+    // Multiple donations:
+    $facade->completeDonations(array($foreignId, $anotherForeignId));
+
+If you have to cancel the donation, you can do so by calling the cancel donation method:
+
+    // One donation:
+    $facade->cancelDonation($foreignId);
+
+    // Multiple donations:
+    $facade->cancelDonations(array($foreignId, $anotherForeignId));
+

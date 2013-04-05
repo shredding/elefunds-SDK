@@ -6,8 +6,8 @@
 require_once dirname(__FILE__) . '/../Facade.php';
 require_once dirname(__FILE__) . '/ShopExampleCheckoutSuccessConfiguration.php';
 
-$facade = new Library_Elefunds_Facade();
-$facade->setConfiguration(new Library_Elefunds_Example_ShopExampleCheckoutSuccessConfiguration());
+$facade = new Elefunds_Facade();
+$facade->setConfiguration(new Elefunds_Example_ShopExampleCheckoutSuccessConfiguration());
 
 // We've prepared this for you: The names of all receivers are given as hidden field
 // in the checkout template and you get the ids of the receivers via the checked fields.
@@ -25,6 +25,16 @@ $facade->getConfiguration()->getView()->assign('receivers', array(
 
 // Assign current orderId as foreignId
 $facade->getConfiguration()->getView()->assign('foreignId', 1234);
+
+// Define the skin of the module. Currently, the skin is made up of the following...
+// theme: 'light', 'dark'
+// color: 'orange', 'blue', 'green', 'purple'
+$facade->getConfiguration()->getView()->assign('skin',
+    array(
+        'theme' =>  'dark',
+        'color' =>  'blue'
+    )
+);
 
 ?>
 

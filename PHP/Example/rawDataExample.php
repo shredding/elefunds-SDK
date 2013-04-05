@@ -4,8 +4,8 @@ require_once dirname(__FILE__) . '/../Facade.php';
 require_once dirname(__FILE__) . '/RawDataConfiguration.php';
 
 // Set up API
-$facade = new Library_Elefunds_Facade();
-$facade->setConfiguration(new Library_Elefunds_Example_RawDataConfiguration());
+$facade = new Elefunds_Facade();
+$facade->setConfiguration(new Example_RawDataConfiguration());
 
 /**
  * BASIC ACTIONS
@@ -43,9 +43,9 @@ $response = $facade->addDonations(
 echo('<p>Added: ' . $response . '</p>');
 
 // Some users did not pay or an order got canceled? Just delete their donations with the corresponding foreignId
-$response = $facade->deleteDonation(123);
+$response = $facade->cancelDonation(123);
 // Or Multiple
-# $response = $facade->deleteDonations(array(123, 124));
+# $response = $facade->cancelDonations(array(123, 124));
 
 // Sample server response
 echo('<p>Deleted: ' . $response . '</p>');
@@ -53,7 +53,7 @@ echo('<p>Deleted: ' . $response . '</p>');
 // NOTE: Normally you should wrap API calls around try ... catch! Like this:
 try {
     $receivers = $facade->getReceivers();
-} catch (Library_Elefunds_Exception_ElefundsCommunicationException $exception) {
+} catch (Elefunds_Exception_ElefundsCommunicationException $exception) {
     $message = $exception->getMessage();
     $additionalInformation = $exception->getAdditionalInformation();
 }
@@ -83,7 +83,7 @@ try {
 // You want to have the donation class be a part of your backend, so it gets auto persisted after retrieving?
 // You want to decide at runtime, which backend to use?
 
-// 1. Generate a donation class for your backend and implement the Library_Elefunds_Model_DonationInterface
+// 1. Generate a donation class for your backend and implement the Elefunds_Model_DonationInterface
 // 2. Use the full power of your persistence backend of choice
 // 3. Set the backend at runtime like this (assumes that your shop / framework uses autoloading for the persistence backend)
 // 4. That's it.

@@ -52,7 +52,7 @@ require_once dirname(__FILE__) . '/../Exception/ElefundsException.php';
  * @link       http://www.elefunds.de
  * @since      File available since Release 1.0.0
  */
-class Library_Elefunds_Configuration_BaseConfiguration implements Library_Elefunds_Configuration_ConfigurationInterface {
+class Elefunds_Configuration_BaseConfiguration implements Elefunds_Configuration_ConfigurationInterface {
 
      /**
       * @var array
@@ -78,7 +78,7 @@ class Library_Elefunds_Configuration_BaseConfiguration implements Library_Elefun
       protected $hashedKey;
 
       /**
-       * @var Library_Elefunds_Communication_RestInterface
+       * @var Elefunds_Communication_RestInterface
        */
       protected $rest;
 
@@ -111,12 +111,12 @@ class Library_Elefunds_Configuration_BaseConfiguration implements Library_Elefun
       /**
        * Instance of the facade.
        *
-       * @var Library_Elefunds_Facade
+       * @var Elefunds_Facade
        */
       protected $facade;
 
       /**
-       * @var Library_Elefunds_View_ViewInterface
+       * @var Elefunds_View_ViewInterface
        */
       protected $view;
 
@@ -133,10 +133,10 @@ class Library_Elefunds_Configuration_BaseConfiguration implements Library_Elefun
        * An instance of the facade. This is set by the facade itself, so you can access API functionality
        * from within init()!
        *
-       * @param Library_Elefunds_Facade $facade
-       * @return Library_Elefunds_Configuration_ConfigurationInterface
+       * @param Elefunds_Facade $facade
+       * @return Elefunds_Configuration_ConfigurationInterface
        */
-      public function setFacade(Library_Elefunds_Facade $facade) {
+      public function setFacade(Elefunds_Facade $facade) {
           $this->facade = $facade;
           return $this;
       }
@@ -144,10 +144,10 @@ class Library_Elefunds_Configuration_BaseConfiguration implements Library_Elefun
       /**
        * Sets the view for this configuration.
        *
-       * @param Library_Elefunds_View_ViewInterface $view
-       * @return Library_Elefunds_Configuration_ConfigurationInterface
+       * @param Elefunds_View_ViewInterface $view
+       * @return Elefunds_Configuration_ConfigurationInterface
        */
-      public function setView(Library_Elefunds_View_ViewInterface $view) {
+      public function setView(Elefunds_View_ViewInterface $view) {
           $this->view = $view;
           return $this;
       }
@@ -155,7 +155,7 @@ class Library_Elefunds_Configuration_BaseConfiguration implements Library_Elefun
       /**
        * Returns the view that is configured for this configuration.
        *
-       * @return Library_Elefunds_View_ViewInterface
+       * @return Elefunds_View_ViewInterface
        */
       public function getView() {
           return $this->view;
@@ -165,7 +165,7 @@ class Library_Elefunds_Configuration_BaseConfiguration implements Library_Elefun
        * Sets the clientId.
        *
        * @param int $clientId
-       * @return Library_Elefunds_Configuration_ConfigurationInterface
+       * @return Elefunds_Configuration_ConfigurationInterface
        */
       public function setClientId($clientId) {
           $this->clientId = (int)$clientId;
@@ -180,7 +180,7 @@ class Library_Elefunds_Configuration_BaseConfiguration implements Library_Elefun
        * Sets the apiKey.
        *
        * @param string $apiKey
-       * @return Library_Elefunds_Configuration_ConfigurationInterface
+       * @return Elefunds_Configuration_ConfigurationInterface
        */
       public function setApiKey($apiKey) {
           $this->apiKey = (string)$apiKey;
@@ -207,7 +207,7 @@ class Library_Elefunds_Configuration_BaseConfiguration implements Library_Elefun
        * the curl implementation adds it's error message to the additionalInformation of the ElefundsException.
        *
        * @param string $url
-       * @return Library_Elefunds_Configuration_ConfigurationInterface
+       * @return Elefunds_Configuration_ConfigurationInterface
        */
       public function setApiUrl($url) {
           $this->apiUrl = rtrim((string)$url, '/');
@@ -226,13 +226,13 @@ class Library_Elefunds_Configuration_BaseConfiguration implements Library_Elefun
       /**
        * Returns the hashed key
        *
-       * @throws Library_Elefunds_Exception_ElefundsException if hashedKey has not been calculated
+       * @throws Elefunds_Exception_ElefundsException if hashedKey has not been calculated
        * @return string
        */
       public function getHashedKey() {
           if ($this->hashedKey === NULL) {
                if ($this->apiKey === NULL || $this->clientId === NULL) {
-                    throw new Library_Elefunds_Exception_ElefundsException('HashedKey could not been calculated. Make sure that either clientId and apiKey are set.', 1347889008107);
+                    throw new Elefunds_Exception_ElefundsException('HashedKey could not been calculated. Make sure that either clientId and apiKey are set.', 1347889008107);
                } else {
                    $this->hashedKey = sha1($this->clientId . $this->apiKey);
                }
@@ -245,10 +245,10 @@ class Library_Elefunds_Configuration_BaseConfiguration implements Library_Elefun
        *
        * If not changed in the configuration, this will be curl.
        *
-       * @param Library_Elefunds_Communication_RestInterface $rest
-       * @return Library_Elefunds_Configuration_ConfigurationInterface
+       * @param Elefunds_Communication_RestInterface $rest
+       * @return Elefunds_Configuration_ConfigurationInterface
        */
-      public function setRestImplementation(Library_Elefunds_Communication_RestInterface $rest) {
+      public function setRestImplementation(Elefunds_Communication_RestInterface $rest) {
           $this->rest = $rest;
           return $this;
       }
@@ -256,7 +256,7 @@ class Library_Elefunds_Configuration_BaseConfiguration implements Library_Elefun
       /**
        * Returns the rest implementation to use, by default, it's curl.
        *
-       * @return Library_Elefunds_Communication_RestInterface
+       * @return Elefunds_Communication_RestInterface
        */
       public function getRestImplementation() {
           return $this->rest;
@@ -269,12 +269,12 @@ class Library_Elefunds_Configuration_BaseConfiguration implements Library_Elefun
        * setting it.
        *
        * @param string $donationClassName
-       * @throws Library_Elefunds_Exception_ElefundsException if given class does not exist
-       * @return Library_Elefunds_Configuration_ConfigurationInterface
+       * @throws Elefunds_Exception_ElefundsException if given class does not exist
+       * @return Elefunds_Configuration_ConfigurationInterface
        */
       public function setDonationClassName($donationClassName) {
           if (!class_exists($donationClassName)) {
-                throw new Library_Elefunds_Exception_ElefundsException('Class ' . $donationClassName . ' does not exist. Did you called required_once on the file that hosts this class?', 1347893442819);
+                throw new Elefunds_Exception_ElefundsException('Class ' . $donationClassName . ' does not exist. Did you called required_once on the file that hosts this class?', 1347893442819);
           }
           $this->donationClassName = (string)$donationClassName;
           return $this;
@@ -296,12 +296,12 @@ class Library_Elefunds_Configuration_BaseConfiguration implements Library_Elefun
        * setting it.
        *
        * @param string $receiverClassName
-       * @throws Library_Elefunds_Exception_ElefundsException if given class does not exist
-       * @return Library_Elefunds_Configuration_ConfigurationInterface
+       * @throws Elefunds_Exception_ElefundsException if given class does not exist
+       * @return Elefunds_Configuration_ConfigurationInterface
        */
       public function setReceiverClassName($receiverClassName) {
           if (!class_exists($receiverClassName)) {
-                throw new Library_Elefunds_Exception_ElefundsException('Class ' . $receiverClassName . ' does not exist. Did you called required_once on the file that hosts this class?', 1347893442820);
+                throw new Elefunds_Exception_ElefundsException('Class ' . $receiverClassName . ' does not exist. Did you called required_once on the file that hosts this class?', 1347893442820);
           }
           $this->receiverClassName = (string)$receiverClassName;
           return $this;
@@ -321,7 +321,7 @@ class Library_Elefunds_Configuration_BaseConfiguration implements Library_Elefun
        *
        * @param string $countrycode two digit countrycode
        * @throws InvalidArgumentException if given string is not a countrycode
-       * @return Library_Elefunds_Configuration_ConfigurationInterface
+       * @return Elefunds_Configuration_ConfigurationInterface
        */
       public function setCountrycode($countrycode) {
           if (is_string($countrycode) && strlen($countrycode) === 2) {

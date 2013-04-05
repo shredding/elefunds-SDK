@@ -28,12 +28,12 @@ Configuring your app is as easy as:
     require_once dirname(__FILE__) . '/Facade.php';
     require_once dirname(__FILE__) . '/Configuration/DefaultConfiguration.php';
 
-    $configuration = new Library_Elefunds_Configuration_DefaultConfiguration();
+    $configuration = new Configuration_DefaultConfiguration();
     $configuration->setClientId(1001)
                   ->setApiKey('ay3456789gg234561234')
                   ->setCountrycode('de');
 
-    $facade = new Library_Elefunds_Facade($configuration);
+    $facade = new Elefunds_Facade($configuration);
     ?>
 
 Another scenario would be, to implement a class, to extend the DefaultConfiguration:
@@ -41,7 +41,7 @@ Another scenario would be, to implement a class, to extend the DefaultConfigurat
     <?php
             require_once dirname(__FILE__) . '/Configuration/DefaultConfiguration.php';
 
-            class Library_Elefunds_YourCustomConfiguration extends Library_Elefunds_Configuration_DefaultConfiguration {
+            class Elefunds_YourCustomConfiguration extends Configuration_DefaultConfiguration {
 
                 protected $clientId = 1001;
                 protected $hashedKey = 'eb85fa24f23b7ade5224a036b39556d65e764653';
@@ -78,7 +78,7 @@ Here's a very basic example for `Doctrine`:
      * @ORM\Entity
      * @ORM\Table(name="donation")
      */
-    class Donation extends Library_Elefunds_Model_Donation
+    class Donation extends Elefunds_Model_Donation
     {
         /**
          * @ORM\Id

@@ -48,14 +48,14 @@
  * @link       http://www.elefunds.de
  * @since      File available since Release 1.0.0
  */
-interface Library_Elefunds_Model_DonationInterface  {
+interface Elefunds_Model_DonationInterface  {
     
     /**
      * Sets the foreign ID. A unique ID to identify the order or transaction.
      *
      * @param int $foreignId
      * @throws InvalidArgumentException if type can't be casted to integer
-     * @return Library_Elefunds_Model_DonationInterface
+     * @return Elefunds_Model_DonationInterface
      */
     public function setForeignId($foreignId);
     
@@ -70,7 +70,7 @@ interface Library_Elefunds_Model_DonationInterface  {
      * Sets the time when the donation took place.
      *
      * @param DateTime $time
-     * @return Library_Elefunds_Model_DonationInterface
+     * @return Elefunds_Model_DonationInterface
      */
     public function setTime(DateTime $time);
 
@@ -85,7 +85,7 @@ interface Library_Elefunds_Model_DonationInterface  {
      * Sets the donated amount.
      *
      * @param int $amount
-     * @return Library_Elefunds_Model_DonationInterface
+     * @return Elefunds_Model_DonationInterface
      */
     public function setAmount($amount);
   
@@ -100,7 +100,7 @@ interface Library_Elefunds_Model_DonationInterface  {
      * Sets the amount that was suggested to the customer.
      *
      * @param int $amount
-     * @return Library_Elefunds_Model_DonationInterface
+     * @return Elefunds_Model_DonationInterface
      */
     public function setSuggestedAmount($amount);
     
@@ -117,7 +117,7 @@ interface Library_Elefunds_Model_DonationInterface  {
      *
      * @param int $receiverId
      * @throws InvalidArgumentException if given id is not a positive integer
-     * @return Library_Elefunds_Model_DonationInterface
+     * @return Elefunds_Model_DonationInterface
      */
     public function addReceiverId($receiverId);
     
@@ -127,7 +127,7 @@ interface Library_Elefunds_Model_DonationInterface  {
      *
      * @param array $receiverIds array with receiverIds (integers)
      * @throws InvalidArgumentException if given array contains a value that is not a positive integer
-     * @return Library_Elefunds_Model_DonationInterface
+     * @return Elefunds_Model_DonationInterface
      */
     public function setReceiverIds(array $receiverIds);
     
@@ -144,7 +144,7 @@ interface Library_Elefunds_Model_DonationInterface  {
      *
      * @param int $receiverId
      * @throws InvalidArgumentException if given id is not a positive integer
-     * @return Library_Elefunds_Model_DonationInterface
+     * @return Elefunds_Model_DonationInterface
      */
     public function addAvailableReceiverId($receiverId);
     
@@ -153,7 +153,7 @@ interface Library_Elefunds_Model_DonationInterface  {
      *
      * @param array $receiverIds array with receiverIds (integers)
      * @throws InvalidArgumentException if given array contains a value that is not a positive integer
-     * @return Library_Elefunds_Model_DonationInterface
+     * @return Elefunds_Model_DonationInterface
      */
     public function setAvailableReceiverIds(array $receiverIds);
     
@@ -177,7 +177,7 @@ interface Library_Elefunds_Model_DonationInterface  {
      *
      * @param int $grandTotal 
      * @throws InvalidArgumentException if type can't be casted to integer
-     * @return Library_Elefunds_Model_DonationInterface
+     * @return Elefunds_Model_DonationInterface
      */
     public function setGrandTotal($grandTotal);
 
@@ -196,7 +196,7 @@ interface Library_Elefunds_Model_DonationInterface  {
      * @param string $city
      * @param string $countryCode two digit country code; if not given, the code from your settings will be used
      *
-     * @return Library_Elefunds_Model_Donation
+     * @return Elefunds_Model_Donation
      * @throws InvalidArgumentException
      */
     public function setDonator($email, $firstName, $lastName, $streetAddress, $zip, $city, $countryCode = NULL);

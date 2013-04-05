@@ -40,7 +40,7 @@
 require_once dirname(__FILE__) . '/../../../Exception/ElefundsException.php';
 
 /**
- * Unit Test for Library_Elefunds_Exception_ElefundsException.
+ * Unit Test for Elefunds_Exception_ElefundsException.
  * 
  * @package    elefunds API PHP Library
  * @subpackage Test
@@ -50,21 +50,26 @@ require_once dirname(__FILE__) . '/../../../Exception/ElefundsException.php';
  * @link       http://www.elefunds.de
  * @since      File available since Release 1.0.0
  */
-class Library_Elefunds_Test_Unit_Exception_ElefundsExceptionTest extends PHPUnit_Framework_TestCase {
+class Elefunds_Test_Unit_Exception_ElefundsExceptionTest extends PHPUnit_Framework_TestCase {
    
    protected $elefundsException;
-   
-   public function setUp() {
-      $this->elefundsException = new Library_Elefunds_Exception_ElefundsException('Test Message', 12345, array("error" => "Hello World!!!")); 
+
+    /**
+     * Sets up the class under test.
+     */
+    public function setUp() {
+      $this->elefundsException = new Elefunds_Exception_ElefundsException('Test Message', 12345, array("error" => "Hello World!!!"));
    }
    
    /**
+    * toStringReturnsValuableInformation
+    *
     * @test
     */ 
    public function toStringReturnsValuableInformation() {
 
       $this->assertSame(
-            'Library_Elefunds_Exception_ElefundsException [Errorcode: 12345] : Test Message' . PHP_EOL 
+            'Elefunds_Exception_ElefundsException [Errorcode: 12345] : Test Message' . PHP_EOL
             . 'Additional information:' . PHP_EOL 
             . 'error = Hello World!!!' . PHP_EOL
             
@@ -73,6 +78,8 @@ class Library_Elefunds_Test_Unit_Exception_ElefundsExceptionTest extends PHPUnit
    }
    
    /**
+    * addAdditionalInformationMergesNewArraysToTheOldOne
+    *
     * @test
     */
     public function addAdditionalInformationMergesNewArraysToTheOldOne() {

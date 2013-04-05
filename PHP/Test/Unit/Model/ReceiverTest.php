@@ -40,7 +40,7 @@
 require_once dirname(__FILE__) . '/../../../Model/Receiver.php';
 
 /**
- * Unit Test for Library_Elefunds_Model_Receiver.
+ * Unit Test for Elefunds_Model_Receiver.
  * 
  * @package    elefunds API PHP Library
  * @subpackage Test
@@ -50,18 +50,23 @@ require_once dirname(__FILE__) . '/../../../Model/Receiver.php';
  * @link       http://www.elefunds.de
  * @since      File available since Release 1.0.0
  */
-class Library_Elefunds_Test_Unit_Model_ReceiverTest extends PHPUnit_Framework_TestCase {
+class Elefunds_Test_Unit_Model_ReceiverTest extends PHPUnit_Framework_TestCase {
 
     /**
-     * @var Library_Elefunds_Model_Receiver
+     * @var Elefunds_Model_Receiver
      */
     protected $receiver;
-   
-   public function setUp() {
-      $this->receiver = new Library_Elefunds_Model_Receiver(); 
+
+    /**
+     * Sets up the class under test.
+     */
+    public function setUp() {
+      $this->receiver = new Elefunds_Model_Receiver();
    }
    
    /**
+    * setIdAcceptsPositiveIntegerValuesAsId
+    *
     * @test
     */
    public function setIdAcceptsPositiveIntegerValuesAsId() {
@@ -70,6 +75,8 @@ class Library_Elefunds_Test_Unit_Model_ReceiverTest extends PHPUnit_Framework_Te
    }
    
    /**
+    * setIdThrowsErrorIfNonPositiveIdIsGiven
+    *
     * @test
     * @expectedException InvalidArgumentException
     */
@@ -78,6 +85,8 @@ class Library_Elefunds_Test_Unit_Model_ReceiverTest extends PHPUnit_Framework_Te
    }
    
    /**
+    * setIdThrowsErrorIfGivenTypeIsNotInt
+    *
     * @test
     * @expectedException InvalidArgumentException
     */
@@ -86,6 +95,8 @@ class Library_Elefunds_Test_Unit_Model_ReceiverTest extends PHPUnit_Framework_Te
    }
    
    /**
+    * setNameAcceptsString
+    *
     * @test
     */
    public function setNameAcceptsString() {
@@ -95,6 +106,8 @@ class Library_Elefunds_Test_Unit_Model_ReceiverTest extends PHPUnit_Framework_Te
    
    
    /**
+    * setNameThrowsErrorIfGivenTypeIsNotString
+    *
     * @test
     * @expectedException InvalidArgumentException
     */
@@ -103,6 +116,8 @@ class Library_Elefunds_Test_Unit_Model_ReceiverTest extends PHPUnit_Framework_Te
    }
    
    /**
+    * setDescriptionAcceptsString
+    *
     * @test
     */
    public function setDescriptionAcceptsString() {
@@ -112,6 +127,8 @@ class Library_Elefunds_Test_Unit_Model_ReceiverTest extends PHPUnit_Framework_Te
    
    
    /**
+    * setDescriptionThrowsErrorIfGivenTypeIsNotString
+    *
     * @test
     * @expectedException InvalidArgumentException
     */
@@ -120,6 +137,8 @@ class Library_Elefunds_Test_Unit_Model_ReceiverTest extends PHPUnit_Framework_Te
    }
    
    /**
+    * addImagesAddsAnImageToTheArrayOfImages
+    *
     * @test
     */
    public function addImagesAddsAnImageToTheArrayOfImages() {
@@ -129,6 +148,8 @@ class Library_Elefunds_Test_Unit_Model_ReceiverTest extends PHPUnit_Framework_Te
    }
    
    /**
+    * addImagesAcceptsOnlyVerticalOrHorizontalAsFirstKey
+    *
     * @test
     * @expectedException InvalidArgumentException
     */
@@ -138,6 +159,8 @@ class Library_Elefunds_Test_Unit_Model_ReceiverTest extends PHPUnit_Framework_Te
    }
    
    /**
+    * addImagesAcceptsOnlySmallMediumAndLargeAsSecondKey
+    *
     * @test
     * @expectedException InvalidArgumentException
     */
@@ -147,6 +170,8 @@ class Library_Elefunds_Test_Unit_Model_ReceiverTest extends PHPUnit_Framework_Te
    }
    
    /**
+    * getImagesAcceptsOnlyVerticalOrHorizontalAsFirstKey
+    *
     * @test
     * @expectedException InvalidArgumentException
     */
@@ -155,6 +180,8 @@ class Library_Elefunds_Test_Unit_Model_ReceiverTest extends PHPUnit_Framework_Te
    }
    
    /**
+    * getImagesAcceptsOnlySmallMediumAndLargeAsSecondKey
+    *
     * @test
     * @expectedException InvalidArgumentException
     */
@@ -163,6 +190,8 @@ class Library_Elefunds_Test_Unit_Model_ReceiverTest extends PHPUnit_Framework_Te
    }
 
     /**
+     * setImagesAcceptsAValidStructuredArrayOfImages
+     *
      * @test
      */
     public function setImagesAcceptsAValidStructuredArrayOfImages() {
@@ -225,6 +254,8 @@ class Library_Elefunds_Test_Unit_Model_ReceiverTest extends PHPUnit_Framework_Te
    }
 
    /**
+    * setImagesThrowsErrorOnInvalidArrayStructure
+    *
     * @test
     * @expectedException InvalidArgumentException
     */
@@ -252,6 +283,8 @@ class Library_Elefunds_Test_Unit_Model_ReceiverTest extends PHPUnit_Framework_Te
   }
    
    /**
+    * setImagesThrowsErrorIfNoMultidimensionalArrayGiven
+    *
     * @test
     * @expectedException InvalidArgumentException
     */
@@ -273,6 +306,8 @@ class Library_Elefunds_Test_Unit_Model_ReceiverTest extends PHPUnit_Framework_Te
    }
 
     /**
+     * isValidReturnsTrueIfValidTimeIsInTheFuture
+     *
      * @test
      */
     public function isValidReturnsTrueIfValidTimeIsInTheFuture() {
@@ -287,6 +322,8 @@ class Library_Elefunds_Test_Unit_Model_ReceiverTest extends PHPUnit_Framework_Te
    }
 
     /**
+     * isValidReturnsFalseIfValidTimeIsInThePast
+     *
      * @test
      */
     public function isValidReturnsFalseIfValidTimeIsInThePast() {

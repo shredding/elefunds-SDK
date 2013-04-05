@@ -18,7 +18,7 @@ The shop example has a configuration like this:
     <?php
     require_once dirname(__FILE__) . '/Template/Shop/CheckoutConfiguration.php';
 
-    class Library_Elefunds_Example_ShopExampleConfiguration extends Library_Elefunds_Template_Shop_CheckoutConfiguration {
+    class Elefunds_Example_ShopExampleConfiguration extends Template_Shop_CheckoutConfiguration {
 
         protected $clientId = 1001;
         protected $apiKey = 'ay3456789gg234561234';
@@ -41,12 +41,12 @@ So what's left to do:
     require_once dirname(__FILE__) . '/../Facade.php';
     require_once dirname(__FILE__) . '/ShopExampleConfiguration.php';
 
-    $facade = new Library_Elefunds_Facade();
+    $facade = new Elefunds_Facade();
 
     try {
-        $facade->setConfiguration(new Library_Elefunds_Example_ShopExampleConfiguration());
+        $facade->setConfiguration(new Elefunds_Example_ShopExampleConfiguration());
         $snippet = $facade->renderTemplate();
-    } catch (Library_Elefunds_Exception_ElefundsCommunicationException $error) {
+    } catch (Elefunds_Exception_ElefundsCommunicationException $error) {
         $snippet = '';
     }
     ?>
@@ -75,6 +75,20 @@ In order to have everything in place, you need to add CSS and Javascript snippet
 > At the moment, this template requires jQuery.
 
 
+If you use the `ShopConfiguration`, you can easily change the theme!
+
+    // Let's assume, that the facade is already configured!
+    $configuration = $facade->getConfiguration();
+
+    /** @var Elefunds_Template_Shop_ShopConfiguration $configuration  */
+    $configuration->getView()
+                  ->assign('skin'
+                      array(
+                          'theme'  =>  'light',
+                          'color'  =>  'purple'
+                      )
+                  );
+
 **Success**
 
 When a checkout was successful, you can send back the donation and display our facebook and twitter share. This is as easy as:
@@ -82,8 +96,8 @@ When a checkout was successful, you can send back the donation and display our f
     require_once dirname(__FILE__) . '/../Facade.php';
     require_once dirname(__FILE__) . '/ShopExampleCheckoutSuccessConfiguration.php';
 
-    $facade = new Library_Elefunds_Facade();
-    $facade->setConfiguration(new Library_Elefunds_Example_ShopExampleCheckoutSuccessConfiguration());
+    $facade = new Elefunds_Facade();
+    $facade->setConfiguration(new Elefunds_Example_ShopExampleCheckoutSuccessConfiguration());
 
 
     $facade->getConfiguration()->getView()->assign('donationReceivers', array(
@@ -133,12 +147,12 @@ Create an `AwesomeConfiguration.php` file as well, with the following content:
     require_once dirname(__FILE__) . '/../../Configuration/DefaultConfiguration.php';
     require_once dirname(__FILE__) . '/../../View/BaseView.php';
 
-    class Library_Elefunds_Template_Awesome_AwesomeConfiguration extends Library_Elefunds_Configuration_DefaultConfiguration {
+    class Elefunds_Template_Awesome_AwesomeConfiguration extends Configuration_DefaultConfiguration {
 
         public function init() {
             parent::init();
 
-            $this->setView(new Library_Elefunds_View_BaseView());
+            $this->setView(new Elefunds_View_BaseView());
             $this->view->setTemplate('Awesome');
             $this->view->assign('number', 42);
         }
@@ -166,7 +180,7 @@ Lets create a hook to multiply a number by ten.
 Create a file named `AwesomeHooks.php` and save it at `Template/Awesome/Hooks`. Then paste in the following content:
 
     <?php
-    class Library_Elefunds_Template_Awesome_Hooks_AwesomeHooks {
+    class Elefunds_Template_Awesome_Hooks_AwesomeHooks {
         public static function mulitplyByTen($view, $number) {
             $view->assign('number', $number * 10);
         }
@@ -180,13 +194,13 @@ Now adjust your Configuration file like this:
     require_once dirname(__FILE__) . '/../../View/BaseView.php';
     require_once dirname(__FILE__) . '/Hooks/AwesomeHooks.php';
 
-    class Library_Elefunds_Template_Awesome_AwesomeConfiguration extends Library_Elefunds_Configuration_DefaultConfiguration {
+    class Elefunds_Template_Awesome_AwesomeConfiguration extends Configuration_DefaultConfiguration {
         public function init() {
             parent::init();
 
-            $this->setView(new Library_Elefunds_View_BaseView());
+            $this->setView(new Elefunds_View_BaseView());
             $this->view->setTemplate('Awesome');
-            $this->view->registerAssignHook('number', 'Library_Elefunds_Template_Awesome_Hooks_AwesomeHooks', 'mulitplyByTen');
+            $this->view->registerAssignHook('number', 'Elefunds_Template_Awesome_Hooks_AwesomeHooks', 'mulitplyByTen');
         }
     }
     ?>
@@ -205,7 +219,7 @@ In order for this to work, the number must be set, an example would be:
     require_once 'Facade.php';
     require_once 'Template/Awesome/AwesomeConfiguration.php';
 
-    $facade = new Library_Elefunds_Facade(new Library_Elefunds_Template_Awesome_AwesomeConfiguration());
+    $facade = new Elefunds_Facade(new Elefunds_Template_Awesome_AwesomeConfiguration());
     $facade->getConfiguration()->getView()->assign('number', 42);
     echo $facade->renderTemplate();
     ?>

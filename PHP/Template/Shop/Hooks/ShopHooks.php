@@ -48,7 +48,7 @@
  * @link       http://www.elefunds.de
  * @since      File available since Release 1.0.0
  */
-class Library_Elefunds_Template_Shop_Hooks_ShopHooks {
+class Elefunds_Template_Shop_Hooks_ShopHooks {
 
     private static $foreignId;
     private static $receiverIds;
@@ -56,11 +56,11 @@ class Library_Elefunds_Template_Shop_Hooks_ShopHooks {
     /**
      * Calculates the suggested roundup to be displayed in the shop.
      *
-     * @param Library_Elefunds_View_ViewInterface $view
+     * @param Elefunds_View_ViewInterface $view
      * @param int $total in the smallest unit of currency
      * @return void
      */
-    public static function calculateRoundup(Library_Elefunds_View_ViewInterface $view, $total) {
+    public static function calculateRoundup(Elefunds_View_ViewInterface $view, $total) {
         
         //Convert to float
         $total = round(($total / 100), 2);
@@ -118,11 +118,11 @@ class Library_Elefunds_Template_Shop_Hooks_ShopHooks {
     /**
      * Calculates number of providers displayed and their sizes
      *
-     * @param Library_Elefunds_View_ViewInterface $view
+     * @param Elefunds_View_ViewInterface $view
      * @param int $width
      * @return void
      */
-    public static function calculatePadding(Library_Elefunds_View_ViewInterface $view, $width) {
+    public static function calculatePadding(Elefunds_View_ViewInterface $view, $width) {
         
         // Max number of receivers that can be displayed
         $receiversCount = (int) floor($width / 210);
@@ -144,7 +144,7 @@ class Library_Elefunds_Template_Shop_Hooks_ShopHooks {
             $paddingLeft = 9;
         }
 
-        $paddingRight = 35;
+        $paddingRight = 0;
 
         //subtract the borders between the buttons
         $padding = $width - ($receiversCount - 1);
@@ -188,6 +188,34 @@ class Library_Elefunds_Template_Shop_Hooks_ShopHooks {
         );
 
     }
+    
+    /**
+     * Chooses the correct CSS to load in the view based on the theme and color defined in $skin
+     *
+     * @param Elefunds_View_ViewInterface $view
+     * @param array $skin
+     */
+    public static function chooseCssFile(Elefunds_View_ViewInterface $view, array $skin) {
+
+        $default_theme = 'light';
+        $default_color = 'orange';
+        
+        if(!isset($skin['theme']) || !isset($skin['color'])) {
+            $theme = $default_theme;
+            $color = $default_color;
+        } else {
+            $theme = $skin['theme'];
+            $color = $skin['color'];
+        }
+        
+        //Set theme & color to use in the view
+        $view->assign('theme', $theme);
+        $view->assign('color', $color);
+        
+        //Reset the css array in case assign('skin') has already been invoked
+        $view->flushCssFiles();
+        $view->addCssFile('elefunds_' . $theme . '_' . $color . '.min.css');
+    }
 
     /**
      * Forwards the handling to the assignShares method if foreignId is already set. If not,
@@ -196,16 +224,15 @@ class Library_Elefunds_Template_Shop_Hooks_ShopHooks {
      *
      * Invokes as well calculateReceiversText.
      *
-     * @param Library_Elefunds_View_ViewInterface $view
+     * @param Elefunds_View_ViewInterface $view
      * @param array $receivers
      */
-    public static function onReceiversAdded(Library_Elefunds_View_ViewInterface $view, array $receivers) {
+    public static function onReceiversAdded(Elefunds_View_ViewInterface $view, array $receivers) {
         self::$receiverIds = array_keys($receivers);
 
         if (self::$foreignId !== NULL) {
             self::assignShares($view);
         }
-        self::calculateReceiversText($view, $receivers);
     }
 
     /**
@@ -213,10 +240,10 @@ class Library_Elefunds_Template_Shop_Hooks_ShopHooks {
      * it just assigns the foreignId to a private property. The action will then be invoked
      * once receivers are added.
      *
-     * @param Library_Elefunds_View_ViewInterface $view
+     * @param Elefunds_View_ViewInterface $view
      * @param $foreignId
      */
-    public static function onForeignIdAdded(Library_Elefunds_View_ViewInterface $view, $foreignId) {
+    public static function onForeignIdAdded(Elefunds_View_ViewInterface $view, $foreignId) {
         self::$foreignId = $foreignId;
 
         if (self::$receiverIds !== NULL) {
@@ -225,56 +252,15 @@ class Library_Elefunds_Template_Shop_Hooks_ShopHooks {
     }
 
     /**
-     * Hooks in after receivers are set and calculates the text that will be displayed
-     * in the facebook share.
-     *
-     * @param Library_Elefunds_View_ViewInterface $view
-     * @param array $receivers
-     * @return void
-     */
-    public static function calculateReceiversText(Library_Elefunds_View_ViewInterface $view, array $receivers) {
-        $assigns = $view->getAssignments();
-
-        $shopname = $assigns['shopName'];
-
-        $baseText = $assigns['IDonatedAndWantToTellAboutIt'];
-        $baseText = str_replace('%shopname%', $shopname, $baseText);
-
-        $num = count($receivers);
-        if (count($receivers) === 1) {
-            $baseText = str_replace('%receivers%', $receivers[0], $baseText);
-        } else {
-            $conjunctionText = '';
-            $i = 0;
-            foreach($receivers as $receiver) {
-
-                if ($i < $num - 2) {
-                    $conjunctionText .= $receiver . ', ';
-                } else if ($i === $num - 2) {
-                    $conjunctionText .= $receiver . ' & ';
-                } else {
-                    $conjunctionText .= $receiver;
-                }
-
-                ++$i;
-            }
-            $baseText = str_replace('%receivers%', $conjunctionText, $baseText);
-        }
-
-        // Override with calculated text.
-        $view->assign('IDonatedAndWantToTellAboutIt', $baseText);
-    }
-
-    /**
      * Assigns shares to the success page!
      *
-     * @param Library_Elefunds_View_ViewInterface $view
+     * @param Elefunds_View_ViewInterface $view
      *
      * @throws InvalidArgumentException
      *
      * @return void
      */
-    private static function assignShares(Library_Elefunds_View_ViewInterface $view) {
+    private static function assignShares(Elefunds_View_ViewInterface $view) {
 
         $assigns = $view->getAssignments();
 

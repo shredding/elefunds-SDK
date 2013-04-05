@@ -32,7 +32,7 @@
 			fadeOut: 100,
 			attribute: "title",
 			attribute2: "desc",
-			content: '', // HTML or String to fill TipTIp with
+			content: '',
 		  	enter: function(){},
 		  	exit: function(){}
 	  	};
@@ -41,14 +41,11 @@
 	 	// Setup tip tip elements and render them to the DOM
 	 	if($("#tiptip_holder").length <= 0){
 	 		var tiptip_holder = $('<div id="tiptip_holder" style="max-width:'+ opts.maxWidth +';"></div>');
-			var tiptip_content = $('<div id="tiptop_content"></div>');
-			var tiptip_inner = $('<div id="tiptop_inner"></div>');
+			var tiptip_content = $('<div id="tiptip_content"></div>');
+			var tiptip_inner = $('<div id="tiptip_inner"></div>');
 			var tiptip_arrow = $('<div id="tiptip_arrow"></div>');
 			$("body").append(tiptip_holder.html(tiptip_content).prepend(tiptip_arrow.html('<div id="tiptip_arrow_inner"></div>')));
 		} else {
-			var tiptip_holder = $("#tiptip_holder");
-			var tiptip_content = $("#tiptip_content");
-			var tiptip_inner = $('#tiptip_inner');
 			var tiptip_arrow = $("#tiptip_arrow");
 		}
 		
@@ -62,17 +59,10 @@
 			  var org_title = opts.title;
 			  var org_desc = opts.content;
 			}
-			/*
-			if(opts.content){
-				var org_title = opts.content;
-			} else {
-				var org_title = org_elem.attr(opts.attribute);
-				var org_desc = org_elem.attr(opts.attribute2);
-			}
-			*/
+			
 			if(org_title != ""){
 				if(!opts.content){
-					org_elem.removeAttr(opts.attribute); //remove original Attribute
+					org_elem.removeAttr(opts.attribute);
 					org_elem.removeAttr(opts.attribute2);
 				}
 				var timeout = false;
@@ -115,7 +105,7 @@
 				function active_tiptip(){
 					opts.enter.call(this);
 					
-					tiptip_content.html('<h3 id="tiptop_title">'+org_title+'</h3>');
+					tiptip_content.html('<h3 id="tiptip_title">'+org_title+'</h3>');
 					tiptip_inner.html(org_desc);
 					tiptip_content.append(tiptip_inner);
 					tiptip_holder.hide().removeAttr("class").css("margin","0");
@@ -148,67 +138,27 @@
                    	} else if(opts.defaultPosition == "right"){
                    		t_class = "_right";
                    	}
-					
-					var right_compare = (w_compare + left) < parseInt(0); //$(window).scrollLeft()
-					var left_compare = (tip_w + left) > parseInt($(window).width());
-					
-					if((right_compare && w_compare < 0) || (t_class == "_right" && !left_compare) || (t_class == "_left" && left < (tip_w + opts.edgeOffset + 5))){
-						t_class = "_right";
-						arrow_top = Math.round(tip_h - 13) / 2;
-						arrow_left = -12;
-						marg_left = Math.round(left + org_width + opts.edgeOffset);
-						marg_top = Math.round(top + h_compare);
-					} else if((left_compare && w_compare < 0) || (t_class == "_left" && !right_compare)){
-						t_class = "_left";
-						arrow_top = Math.round(tip_h - 13) / 2;
-						arrow_left =  Math.round(tip_w);
-						marg_left = Math.round(left - (tip_w + opts.edgeOffset + 5));
-						marg_top = Math.round(top + h_compare);
-					}
-
-					//var top_compare = (top + org_height + opts.edgeOffset + tip_h + 8) > parseInt($(window).height() + 0); //$(window).scrollTop());
-					var top_compare = true;
+					var top_compare = (top + org_height + opts.edgeOffset + tip_h + 8) > parseInt($(window).height() + $(window).scrollTop());
 					var bottom_compare = ((top + org_height) - (opts.edgeOffset + tip_h + 8)) < 0;
 					
-					if(top_compare || (t_class == "_bottom" && top_compare) || (t_class == "_top" && !bottom_compare)){
-						if(t_class == "_top" || t_class == "_bottom"){
-							t_class = "_top";
-						} else {
-							t_class = t_class+"_top";
-						}
-						arrow_top = tip_h;
-						marg_top = Math.round(top - (tip_h + 5 + opts.edgeOffset));
-					} else if(bottom_compare | (t_class == "_top" && bottom_compare) || (t_class == "_bottom" && !top_compare)){
-						if(t_class == "_top" || t_class == "_bottom"){
-							t_class = "_bottom";
-						} else {
-							t_class = t_class+"_bottom";
-						}
-						arrow_top = -12;						
-						marg_top = Math.round(top + org_height + opts.edgeOffset);
-					}
-				
-					if(t_class == "_right_top" || t_class == "_left_top"){
-						marg_top = marg_top + 5;
-					} else if(t_class == "_right_bottom" || t_class == "_left_bottom"){		
-						marg_top = marg_top - 5;
-					}
-					if(t_class == "_left_top" || t_class == "_left_bottom"){	
-						marg_left = marg_left + 5;
-					}
+					//---
+					
+					arrow_top = tip_h;
+					marg_top = Math.round(top - (tip_h + 5 + opts.edgeOffset));
+					
 					tiptip_arrow.css({"margin-left": arrow_left+"px", "margin-top": arrow_top+"px"});
 					tiptip_holder.css({"margin-left": marg_left+"px", "margin-top": marg_top+"px"}).attr("class","tip"+t_class);
 					
 					if (timeout){ clearTimeout(timeout); }
-					timeout = setTimeout(function(){ tiptip_holder.stop(true,true).show(); }, opts.delay);	//fadeIn(opts.fadeIn)
+					timeout = setTimeout(function(){ tiptip_holder.stop(true,true).fadeIn(opts.fadeIn); }, opts.delay);
 				}
 				
 				function deactive_tiptip(){
 					opts.exit.call(this);
 					if (timeout){ clearTimeout(timeout); }
-					tiptip_holder.hide(); //fadeOut(opts.fadeOut);
+					tiptip_holder.fadeOut(opts.fadeOut);
 				}
 			}				
 		});
-	}
-})(window.jQuery || window.Zepto);
+	};
+})(window.jQuery);

@@ -53,13 +53,13 @@ require_once dirname(__FILE__) . '/../Exception/ElefundsCommunicationException.p
  * @link       http://www.elefunds.de
  * @since      File available since Release 1.0.0
  */
-interface Library_Elefunds_Communication_RestInterface  {
+interface Elefunds_Communication_RestInterface  {
 
     /**
      * Performs a GET Request against a given URL.
      *
      * @param string $restUrl with fully qualified resource path
-     * @throws Library_Elefunds_Exception_ElefundsCommunicationException if connection or authentication fails or retrieved http code is not 200
+     * @throws Elefunds_Exception_ElefundsCommunicationException if connection or authentication fails or retrieved http code is not 200
      * @return string the server response as JSON
      */
     public function get($restUrl);
@@ -69,7 +69,7 @@ interface Library_Elefunds_Communication_RestInterface  {
      *
      * @param string $restUrl with fully qualified resource path
      * @param string $body the JSON body
-     * @throws Library_Elefunds_Exception_ElefundsCommunicationException if connection or authentication fails or retrieved http code is not 200
+     * @throws Elefunds_Exception_ElefundsCommunicationException if connection or authentication fails or retrieved http code is not 200
      * @return string the server response as JSON
      */
     public function post($restUrl, $body);
@@ -79,16 +79,16 @@ interface Library_Elefunds_Communication_RestInterface  {
      *
      * @param string $restUrl with fully qualified resource path
      * @param string $body the JSON body
-     * @throws Library_Elefunds_Exception_ElefundsCommunicationException if connection or authentication fails or retrieved http code is not 200
+     * @throws Elefunds_Exception_ElefundsCommunicationException if connection or authentication fails or retrieved http code is not 200
      * @return string the server response as JSON
      */
-    public function put($restUrl, $body);
+    public function put($restUrl, $body = '');
 
     /**
      * Performs a DELETE Request against a given URL.
      *
      * @param string $restUrl with fully qualified resource path
-     * @throws Library_Elefunds_Exception_ElefundsCommunicationException if connection or authentication fails or retrieved http code is not 200
+     * @throws Elefunds_Exception_ElefundsCommunicationException if connection or authentication fails or retrieved http code is not 200
      * @return string the server response as JSON
      */
     public function delete($restUrl);

@@ -1,5 +1,5 @@
-elefunds API SDK v1.1.1
-========================
+elefunds API SDK v1.2
+======================
 
 Welcome to the elefunds API.
 
@@ -22,6 +22,8 @@ Dive in
 
 [API Reference](https://github.com/elefunds/elefunds-SDK/blob/master/Documentation/APIReference.md)
 
+[Social Media Share](https://github.com/elefunds/elefunds-SDK/blob/master/Documentation/SocialMediaShare.md)
+
 
 PHP SDK
 -------
@@ -32,3 +34,8 @@ PHP SDK
 
 [Templating](https://github.com/elefunds/elefunds-SDK/blob/master/PHP/Documentation/PHPGuideTemplating.md)
 
+
+License
+-------
+
+The elefunds API SDK is licensed under the [New BSD license](https://github.com/elefunds/elefunds-SDK/blob/master/LICENSE).

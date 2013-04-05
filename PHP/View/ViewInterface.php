@@ -49,14 +49,14 @@
  * @link       http://www.elefunds.de
  * @since      File available since Release 1.0.0
  */
-interface Library_Elefunds_View_ViewInterface  {
+interface Elefunds_View_ViewInterface {
     
     /**
      * Sets the name of the template. This must be corresponding to
      * the name of a folder in the Template folder.
      * 
      * @param string $template
-     * @return Library_Elefunds_View_BaseView
+     * @return Elefunds_View_BaseView
      */
     public function setTemplate($template);
     
@@ -128,7 +128,7 @@ interface Library_Elefunds_View_ViewInterface  {
      * @param mixed $class string (class name) or instance
      * @param string $method
      * @throws InvalidArgumentException
-     * @return Library_Elefunds_View_ViewInterface
+     * @return Elefunds_View_ViewInterface
      */
     public function registerAssignHook($name, $class, $method);
 
@@ -145,7 +145,7 @@ interface Library_Elefunds_View_ViewInterface  {
      * @param string $key
      * @param mixed $value
      * @throws InvalidArgumentException if given key is not a string
-     * @return Library_Elefunds_View_BaseView
+     * @return Elefunds_View_BaseView
      */
     public function assign($key, $value);
     
@@ -153,7 +153,7 @@ interface Library_Elefunds_View_ViewInterface  {
      * Add multiple variables to the view.
      *
      * @param array $values array in the format array(key1 => value1, key2 => value2).
-     * @return Library_Elefunds_View_BaseView
+     * @return Elefunds_View_BaseView
      */
     public function assignMultiple(array $values);
 
@@ -172,8 +172,8 @@ interface Library_Elefunds_View_ViewInterface  {
      * as /Template/YourTemplateFolder/Css/styles.css
      * 
      * @param string $file
-     * @throws Library_Elefunds_Exception_ElefundsException if file does not exist
-     * @return Library_Elefunds_View_BaseView
+     * @throws Elefunds_Exception_ElefundsException if file does not exist
+     * @return Elefunds_View_BaseView
      */
     public function addCssFile($file);
     
@@ -183,8 +183,8 @@ interface Library_Elefunds_View_ViewInterface  {
      * Wrapper for addCss($file).
      * 
      * @param array $files
-     * @throws Library_Elefunds_Exception_ElefundsException if file does not exist
-     * @return Library_Elefunds_View_BaseView
+     * @throws Elefunds_Exception_ElefundsException if file does not exist
+     * @return Elefunds_View_BaseView
      */
     public function addCssFiles(array $files);
         
@@ -194,7 +194,7 @@ interface Library_Elefunds_View_ViewInterface  {
      * 
      * @param string $file
      * @throws InvalidArgumentException if given key is not a string
-     * @return Library_Elefunds_View_BaseView
+     * @return Elefunds_View_BaseView
      */
     public function addJavascriptFile($file);
     
@@ -204,9 +204,16 @@ interface Library_Elefunds_View_ViewInterface  {
      * Wrapper for addJavascriptFiles($file).
      * 
      * @param array $files
-     * @throws Library_Elefunds_Exception_ElefundsException if file does not exist
-     * @return Library_Elefunds_View_BaseView
+     * @throws Elefunds_Exception_ElefundsException if file does not exist
+     * @return Elefunds_View_BaseView
      */
     public function addJavascriptFiles(array $files);
+
+    /**
+     * Removes all css files.
+     *
+     * @return void
+     */
+    public function flushCssFiles();
 
 }

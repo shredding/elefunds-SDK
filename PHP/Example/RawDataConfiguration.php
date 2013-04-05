@@ -50,7 +50,7 @@ require_once dirname(__FILE__) . '/../Configuration/DefaultConfiguration.php';
  * @link       http://www.elefunds.de
  * @since      File available since Release 1.0.0
  */
-class Library_Elefunds_Example_RawDataConfiguration extends Library_Elefunds_Configuration_DefaultConfiguration {
+class Elefunds_Example_RawDataConfiguration extends Elefunds_Configuration_DefaultConfiguration {
     
     //Insert your clientID and apiKey
     protected $clientId = 1001;

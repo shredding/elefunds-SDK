@@ -37,7 +37,7 @@
  *
  */
 
-require_once dirname(__FILE__) . '/../../Configuration/DefaultConfiguration.php';
+require_once dirname(__FILE__) . '/ShopConfiguration.php';
 require_once dirname(__FILE__) . '/../../View/BaseView.php';
 require_once dirname(__FILE__) . '/Hooks/ShopHooks.php';
 
@@ -52,7 +52,7 @@ require_once dirname(__FILE__) . '/Hooks/ShopHooks.php';
  * @link       http://www.elefunds.de
  * @since      File available since Release 1.0.0
  */
-class Library_Elefunds_Template_Shop_CheckoutSuccessConfiguration extends Library_Elefunds_Configuration_DefaultConfiguration {
+class Elefunds_Template_Shop_CheckoutSuccessConfiguration extends Elefunds_Template_Shop_ShopConfiguration {
 
     /*
      * NOTE:
@@ -72,47 +72,44 @@ class Library_Elefunds_Template_Shop_CheckoutSuccessConfiguration extends Librar
     public function init() {
         parent::init();
 
-        $this->setView(new Library_Elefunds_View_BaseView());
-
         $this->view->assign('clientId', $this->facade->getConfiguration()->getClientId());
         $this->view->assign('hashedKey', $this->facade->getConfiguration()->getHashedKey());
 
         $this->view->assign('availableShareServices', array(
             'facebook'      =>  array(
-                'image'     =>  'https://bbbf9fd0e36d5cb36b93-c1fc539e0df6af03ccc14b5020ab4161.ssl.cf1.rackcdn.com/default/share_on_facebook.png',
+                'image'     =>  'https://0ce8ff584bf613ee6639-c1fc539e0df6af03ccc14b5020ab4161.ssl.cf1.rackcdn.com/share_on_facebook.png',
                 'width'     =>  660,
                 'height'    =>  350,
                 'title'     =>  $this->countrycode === 'de' ? 'Auf Facebook teilen' : 'Share on facebook'
             ),
             'twitter'      =>  array(
-                'image'     =>  'https://bbbf9fd0e36d5cb36b93-c1fc539e0df6af03ccc14b5020ab4161.ssl.cf1.rackcdn.com/default/tweet_on_twitter.png',
+                'image'     =>  'https://0ce8ff584bf613ee6639-c1fc539e0df6af03ccc14b5020ab4161.ssl.cf1.rackcdn.com/tweet_on_twitter.png',
                 'width'     =>  620,
                 'height'    =>  415,
                 'title'     =>  $this->countrycode === 'de' ? 'Auf Twitter tweeten' : 'Tweet on twitter'
             ),
         ));
-
+        
+        if($this->countrycode === 'de') {
+            $this->view->assign('learnMore', 'Erfahre mehr über');
+        } else {
+            $this->view->assign('learnMore', 'Learn more about');
+        }
+        
         $this->view->assign('shareServices', array('facebook', 'twitter'));
-
-        $this->view->setTemplate('Shop');
-
-        $this->view->addCssFile('elefunds.min.css');
-
-
 
         // L18n
         if ($this->countrycode === 'de') {
-            $this->view->assign('tellAboutIt', 'Begeister Deine Freunde, erzähl von deiner Guten Tat:');
-            $this->view->assign('IDonatedAndWantToTellAboutIt', 'Ich habe gerade bei %shopname% eingekauft, aufgerundet und gemeinsam mit %receivers% etwas Gutes getan.');
+            $this->view->assign('tellAboutIt', 'Juhu! Vielen Dank für Deine Spende.');
+            $this->view->assign('IDonatedAndWantToTellAboutIt', 'Teilen kann man nicht nur mit seinem Einkauf, sondern auch mit seinen Freunden.<br />Erzähle Deinen Freunden von elefunds!');
         } else {
-            $this->view->assign('tellAboutIt', 'Enchant your friends, share your good deed:');
-            $this->view->assign('IDonatedAndWantToTellAboutIt', 'I just went shopping at %shopname% and supported: %receivers%.');
+            $this->view->assign('tellAboutIt', 'Yay! Thank you for your donation.');
+            $this->view->assign('IDonatedAndWantToTellAboutIt', 'If everyone used their change for change we could make the world a better place. Tell your friends about elefunds.');
         }
 
         // Hooks
-       $this->view->registerAssignHook('receivers', 'Library_Elefunds_Template_Shop_Hooks_ShopHooks', 'onReceiversAdded');
-       $this->view->registerAssignHook('foreignId', 'Library_Elefunds_Template_Shop_Hooks_ShopHooks', 'onForeignIdAdded');
-
+       $this->view->registerAssignHook('receivers', 'Elefunds_Template_Shop_Hooks_ShopHooks', 'onReceiversAdded');
+       $this->view->registerAssignHook('foreignId', 'Elefunds_Template_Shop_Hooks_ShopHooks', 'onForeignIdAdded');
     }
 
 }

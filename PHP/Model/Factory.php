@@ -50,7 +50,7 @@ require_once 'ReceiverInterface.php';
  * @link       http://www.elefunds.de
  * @since      File available since Release 1.0.0
  */
-class Library_Elefunds_Model_Factory {
+class Elefunds_Model_Factory {
     
     /**
      * @var string
@@ -89,14 +89,14 @@ class Library_Elefunds_Model_Factory {
     /**
      * Returns a copy of the provided donation.
      * 
-     * @throws Library_Elefunds_Exception_ElefundsException if class does not implement the DonationInterface
-     * @return Library_Elefunds_Model_DonationInterface
+     * @throws Elefunds_Exception_ElefundsException if class does not implement the DonationInterface
+     * @return Elefunds_Model_DonationInterface
      */
     public static function getDonation() {
         $donationPrototype = new self::$donationPrototype();
-        if ($donationPrototype instanceof Library_Elefunds_Model_DonationInterface === FALSE) {
-            throw new Library_Elefunds_Exception_ElefundsException(
-                'Given prototype for donation does not implement Library_Elefunds_Model_DonationInterface',
+        if ($donationPrototype instanceof Elefunds_Model_DonationInterface === FALSE) {
+            throw new Elefunds_Exception_ElefundsException(
+                'Given prototype for donation does not implement Elefunds_Model_DonationInterface',
                 1347883795444);
         }
         return $donationPrototype;
@@ -105,14 +105,14 @@ class Library_Elefunds_Model_Factory {
     /**
      * Returns a copy of the provided receiver. 
      *
-     * @throws Library_Elefunds_Exception_ElefundsException if class does not implement the ReceiverInterface
-     * @return Library_Elefunds_Model_ReceiverInterface
+     * @throws Elefunds_Exception_ElefundsException if class does not implement the ReceiverInterface
+     * @return Elefunds_Model_ReceiverInterface
      */
     public static function getReceiver() {
         $receiverPrototype = new self::$receiverPrototype();
-        if ($receiverPrototype instanceof Library_Elefunds_Model_ReceiverInterface === FALSE) {
-            throw new Library_Elefunds_Exception_ElefundsException(
-                'Given prototype for donation does not implement Library_Elefunds_Model_ReceiverInterface',
+        if ($receiverPrototype instanceof Elefunds_Model_ReceiverInterface === FALSE) {
+            throw new Elefunds_Exception_ElefundsException(
+                'Given prototype for donation does not implement Elefunds_Model_ReceiverInterface',
                 1347883795444);
         }
         return $receiverPrototype;

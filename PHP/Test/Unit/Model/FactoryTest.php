@@ -43,7 +43,7 @@ require_once dirname(__FILE__) . '/../../../Model/Receiver.php';
 
 
 /**
- * Unit Test for Library_Elefunds_Model_Factory.
+ * Unit Test for Elefunds_Model_Factory.
  * 
  * @package    elefunds API PHP Library
  * @subpackage Test
@@ -53,47 +53,55 @@ require_once dirname(__FILE__) . '/../../../Model/Receiver.php';
  * @link       http://www.elefunds.de
  * @since      File available since Release 1.0.0
  */
-class Library_Elefunds_Test_Unit_Model_FactoryTest extends PHPUnit_Framework_TestCase {
+class Elefunds_Test_Unit_Model_FactoryTest extends PHPUnit_Framework_TestCase {
    
    
    /**
+    * getDonationProducesDonationPrototype
+    *
     * @test
     */ 
    public function getDonationProducesDonationPrototype() {
        
-       Library_Elefunds_Model_Factory::setDonationImplementation('Library_Elefunds_Model_Donation');
-       $prototype = Library_Elefunds_Model_Factory::getDonation();
+       Elefunds_Model_Factory::setDonationImplementation('Elefunds_Model_Donation');
+       $prototype = Elefunds_Model_Factory::getDonation();
        
-       $this->assertInstanceOf('Library_Elefunds_Model_DonationInterface', $prototype);
+       $this->assertInstanceOf('Elefunds_Model_DonationInterface', $prototype);
    }
    
    /**
+    * getReceiverProducesReceiverPrototype
+    *
     * @test
     */ 
    public function getReceiverProducesReceiverPrototype() {
        
-       Library_Elefunds_Model_Factory::setReceiverImplementation('Library_Elefunds_Model_Receiver');
-       $prototype = Library_Elefunds_Model_Factory::getReceiver();
+       Elefunds_Model_Factory::setReceiverImplementation('Elefunds_Model_Receiver');
+       $prototype = Elefunds_Model_Factory::getReceiver();
        
-       $this->assertInstanceOf('Library_Elefunds_Model_ReceiverInterface', $prototype);
+       $this->assertInstanceOf('Elefunds_Model_ReceiverInterface', $prototype);
    }
    
    /**
+    * getDonationProducesErrorIfGivenInstanceIsNotDonationInterface
+    *
     * @test
-    * @expectedException Library_Elefunds_Exception_ElefundsException
+    * @expectedException Elefunds_Exception_ElefundsException
     */ 
    public function getDonationProducesErrorIfGivenInstanceIsNotDonationInterface() {
-       Library_Elefunds_Model_Factory::setDonationImplementation('Library_Elefunds_Model_Receiver'); 
-       Library_Elefunds_Model_Factory::getDonation();
+       Elefunds_Model_Factory::setDonationImplementation('Elefunds_Model_Receiver');
+       Elefunds_Model_Factory::getDonation();
    }
    
    /**
+    * getReceiverProducesErrorIfGivenInstanceIsNotReceiverInterface
+    *
     * @test
-    * @expectedException Library_Elefunds_Exception_ElefundsException
+    * @expectedException Elefunds_Exception_ElefundsException
     */ 
    public function getReceiverProducesErrorIfGivenInstanceIsNotReceiverInterface() {
-       Library_Elefunds_Model_Factory::setReceiverImplementation('Library_Elefunds_Model_Donation'); 
-       Library_Elefunds_Model_Factory::getReceiver();
+       Elefunds_Model_Factory::setReceiverImplementation('Elefunds_Model_Donation');
+       Elefunds_Model_Factory::getReceiver();
    }
    
 }

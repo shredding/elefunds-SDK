@@ -40,7 +40,7 @@ x<?php
 require_once dirname(__FILE__) . '/../../Facade.php';
 
 /**
- * Unit Test for Library_Elefunds_Facade
+ * Unit Test for Elefunds_Facade
  *
  * @package    elefunds API PHP Library
  * @subpackage Test
@@ -50,10 +50,10 @@ require_once dirname(__FILE__) . '/../../Facade.php';
  * @link       http://www.elefunds.de
  * @since      File available since Release 1.0.0
  */
-class Library_Elefunds_Test_Unit_Facade extends PHPUnit_Framework_TestCase {
+class Elefunds_Test_Unit_Facade extends PHPUnit_Framework_TestCase {
 
    /**
-    * @var Library_Elefunds_Facade
+    * @var Elefunds_Facade
     */
    protected $facade;
 
@@ -62,20 +62,24 @@ class Library_Elefunds_Test_Unit_Facade extends PHPUnit_Framework_TestCase {
      */
     protected $uniqueTimestampForAllTests;
 
-
-   public function setUp() {
-      $this->facade = new Library_Elefunds_Facade();
+    /**
+     * Sets up the class under test.
+     */
+    public function setUp() {
+      $this->facade = new Elefunds_Facade();
 
        date_default_timezone_set('Europe/Berlin');
        $this->uniqueTimestampForAllTests = new DateTime();
    }
 
    /**
+    * setConfigurationCallsInit
+    *
     * @test
     */
    public function setConfigurationCallsInit() {
 
-        $configuration = $this->getMock('Library_Elefunds_Configuration_ConfigurationInterface');
+        $configuration = $this->getMock('Elefunds_Configuration_ConfigurationInterface');
 
         $configuration->expects($this->once())
                       ->method('init');
@@ -88,11 +92,11 @@ class Library_Elefunds_Test_Unit_Facade extends PHPUnit_Framework_TestCase {
      * We test that here.
      *
      * @test
-     * @expectedException Library_Elefunds_Exception_ElefundsException
+     * @expectedException Elefunds_Exception_ElefundsException
      */
     public function addDonationsThrowsErrorIfDonationIsNotRichEnough() {
 
-        $configuration = $this->getMock('Library_Elefunds_Configuration_ConfigurationInterface');
+        $configuration = $this->getMock('Elefunds_Configuration_ConfigurationInterface');
 
         $configuration->expects($this->once())
             ->method('getApiUrl')
@@ -108,24 +112,18 @@ class Library_Elefunds_Test_Unit_Facade extends PHPUnit_Framework_TestCase {
 
         $this->facade->setConfiguration($configuration);
 
-        $donations = array($this->getMock('Library_Elefunds_Model_DonationInterface'));
+        $donations = array($this->getMock('Elefunds_Model_DonationInterface'));
 
         $this->facade->addDonations($donations);
     }
 
     /**
-     * @test
-     * @expectedException InvalidArgumentException
-     */
-    public function deleteDonationThrowsErrorIfGivenParamIsNotAnInt() {
-        $this->facade->deleteDonation(array());
-    }
-
-    /**
+     * cancelDonationCalculatesCorrectApiUrl
+     *
      * @test
      */
-    public function deleteDonationCalculatesCorrectApiUrl() {
-        $configuration = $this->getMock('Library_Elefunds_Configuration_ConfigurationInterface');
+    public function cancelDonationCalculatesCorrectApiUrl() {
+        $configuration = $this->getMock('Elefunds_Configuration_ConfigurationInterface');
 
         $configuration->expects($this->once())
                        ->method('getApiUrl')
@@ -139,11 +137,11 @@ class Library_Elefunds_Test_Unit_Facade extends PHPUnit_Framework_TestCase {
                        ->method('getHashedKey')
                        ->will($this->returnValue('3382a100edcb335c6af4efc1d5fb37b4ec264553'));
 
-        $rest = $this->getMock('Library_Elefunds_Communication_RestInterface');
+        $rest = $this->getMock('Elefunds_Communication_RestInterface');
 
         $rest->expects($this->once())
              ->method('delete')
-             ->with($this->equalTo('https://api.elefunds.de/donation/1234/?clientId=1234&hashedKey=3382a100edcb335c6af4efc1d5fb37b4ec264553'))
+             ->with($this->equalTo('https://api.elefunds.de/donations/1234/?clientId=1234&hashedKey=3382a100edcb335c6af4efc1d5fb37b4ec264553'))
              ->will($this->returnValue(json_encode(array('message' => 'Works like a charm!'))));
 
         $configuration->expects($this->once())
@@ -153,24 +151,56 @@ class Library_Elefunds_Test_Unit_Facade extends PHPUnit_Framework_TestCase {
 
         $this->facade->setConfiguration($configuration);
 
-        $result = $this->facade->deleteDonation(1234);
+        $result = $this->facade->cancelDonation(1234);
         $this->assertSame('Works like a charm!', $result);
     }
 
     /**
+     * completeDonationCalculatesCorrectApiUrl
+     *
      * @test
-     * @expectedException InvalidArgumentException
      */
-    public function deleteDonationsThrowsErrorIfNotOnlyIdsAreGiven() {
-        $this->facade->deleteDonations(array(1, 2, 'Just a string in the middle', 4, 5));
+    public function completeDonationCalculatesCorrectApiUrl() {
+        $configuration = $this->getMock('Elefunds_Configuration_ConfigurationInterface');
+
+        $configuration->expects($this->once())
+            ->method('getApiUrl')
+            ->will($this->returnValue('https://api.elefunds.de'));
+
+        $configuration->expects($this->once())
+            ->method('getClientId')
+            ->will($this->returnValue(1234));
+
+        $configuration->expects($this->once())
+            ->method('getHashedKey')
+            ->will($this->returnValue('3382a100edcb335c6af4efc1d5fb37b4ec264553'));
+
+        $rest = $this->getMock('Elefunds_Communication_RestInterface');
+
+        $rest->expects($this->once())
+            ->method('put')
+            ->with($this->equalTo('https://api.elefunds.de/donations/1234/?clientId=1234&hashedKey=3382a100edcb335c6af4efc1d5fb37b4ec264553'))
+            ->will($this->returnValue(json_encode(array('message' => 'Works like a charm!'))));
+
+        $configuration->expects($this->once())
+            ->method('getRestImplementation')
+            ->will($this->returnValue($rest));
+
+
+        $this->facade->setConfiguration($configuration);
+
+        $result = $this->facade->completeDonation(1234);
+        $this->assertSame('Works like a charm!', $result);
     }
 
     /**
+     * addDonationsCallsCorrectAPiUrl
+     *
      * @test
      */
     public function addDonationsCallsCorrectAPiUrl() {
 
-        $configuration = $this->getMock('Library_Elefunds_Configuration_ConfigurationInterface');
+        $configuration = $this->getMock('Elefunds_Configuration_ConfigurationInterface');
 
         $configuration->expects($this->once())
                        ->method('getApiUrl')
@@ -184,7 +214,7 @@ class Library_Elefunds_Test_Unit_Facade extends PHPUnit_Framework_TestCase {
                       ->method('getHashedKey')
                       ->will($this->returnValue('3382a100edcb335c6af4efc1d5fb37b4ec264553'));
 
-        $rest = $this->getMock('Library_Elefunds_Communication_RestInterface');
+        $rest = $this->getMock('Elefunds_Communication_RestInterface');
 
         $rest->expects($this->once())
               ->method('post')
@@ -209,7 +239,7 @@ class Library_Elefunds_Test_Unit_Facade extends PHPUnit_Framework_TestCase {
                       ->method('getRestImplementation')
                       ->will($this->returnValue($rest));
 
-        $donation = $this->getMock('Library_Elefunds_Model_DonationInterface');
+        $donation = $this->getMock('Elefunds_Model_DonationInterface');
 
         $donation->expects($this->any())
                   ->method('getForeignId')
@@ -251,11 +281,13 @@ class Library_Elefunds_Test_Unit_Facade extends PHPUnit_Framework_TestCase {
     }
 
     /**
+     * cancelDonationsCallsCorrectAPiUrl
+     *
      * @test
      */
-    public function deleteDonationsCallsCorrectAPiUrl() {
+    public function cancelDonationsCallsCorrectAPiUrl() {
 
-        $configuration = $this->getMock('Library_Elefunds_Configuration_ConfigurationInterface');
+        $configuration = $this->getMock('Elefunds_Configuration_ConfigurationInterface');
 
         $configuration->expects($this->once())
                       ->method('getApiUrl')
@@ -269,14 +301,11 @@ class Library_Elefunds_Test_Unit_Facade extends PHPUnit_Framework_TestCase {
                       ->method('getHashedKey')
                       ->will($this->returnValue('3382a100edcb335c6af4efc1d5fb37b4ec264553'));
 
-        $rest = $this->getMock('Library_Elefunds_Communication_RestInterface');
+        $rest = $this->getMock('Elefunds_Communication_RestInterface');
 
         $rest->expects($this->once())
-                ->method('post')
-                ->with(
-                    $this->equalTo('https://api.elefunds.de/donations/delete/?clientId=1234&hashedKey=3382a100edcb335c6af4efc1d5fb37b4ec264553'),
-                    json_encode(array(1,2,3,4))
-                )
+                ->method('delete')
+                ->with($this->equalTo('https://api.elefunds.de/donations/1,2,3,4/?clientId=1234&hashedKey=3382a100edcb335c6af4efc1d5fb37b4ec264553'))
                 ->will($this->returnValue(json_encode(array('message' => 'Works like a charm!'))));
 
         $configuration->expects($this->once())
@@ -284,16 +313,55 @@ class Library_Elefunds_Test_Unit_Facade extends PHPUnit_Framework_TestCase {
             ->will($this->returnValue($rest));
 
         $this->facade->setConfiguration($configuration);
-        $result = $this->facade->deleteDonations(array(1, 2, 3, 4));
+        $result = $this->facade->cancelDonations(array(1, 2, 3, 4));
         $this->assertSame($result, 'Works like a charm!');
     }
 
     /**
+     * completeDonationsCallsCorrectAPiUrl
+     *
      * @test
-     * @expectedException Library_Elefunds_Exception_ElefundsCommunicationException
+     */
+    public function completeDonationsCallsCorrectAPiUrl() {
+
+        $configuration = $this->getMock('Elefunds_Configuration_ConfigurationInterface');
+
+        $configuration->expects($this->once())
+            ->method('getApiUrl')
+            ->will($this->returnValue('https://api.elefunds.de'));
+
+        $configuration->expects($this->once())
+            ->method('getClientId')
+            ->will($this->returnValue(1234));
+
+        $configuration->expects($this->once())
+            ->method('getHashedKey')
+            ->will($this->returnValue('3382a100edcb335c6af4efc1d5fb37b4ec264553'));
+
+        $rest = $this->getMock('Elefunds_Communication_RestInterface');
+
+        $rest->expects($this->once())
+            ->method('put')
+            ->with($this->equalTo('https://api.elefunds.de/donations/1,2,3,4/?clientId=1234&hashedKey=3382a100edcb335c6af4efc1d5fb37b4ec264553'))
+            ->will($this->returnValue(json_encode(array('message' => 'Works like a charm!'))));
+
+        $configuration->expects($this->once())
+            ->method('getRestImplementation')
+            ->will($this->returnValue($rest));
+
+        $this->facade->setConfiguration($configuration);
+        $result = $this->facade->completeDonations(array(1, 2, 3, 4));
+        $this->assertSame($result, 'Works like a charm!');
+    }
+
+    /**
+     * getReceiversCallsCorrectApiUrlAndThrowsErrorIfWrongCountryCodeIsSet
+     *
+     * @test
+     * @expectedException Elefunds_Exception_ElefundsCommunicationException
      */
     public function getReceiversCallsCorrectApiUrlAndThrowsErrorIfWrongCountryCodeIsSet() {
-        $configuration = $this->getMock('Library_Elefunds_Configuration_ConfigurationInterface');
+        $configuration = $this->getMock('Elefunds_Configuration_ConfigurationInterface');
 
         $configuration->expects($this->once())
                       ->method('getApiUrl')
@@ -308,7 +376,7 @@ class Library_Elefunds_Test_Unit_Facade extends PHPUnit_Framework_TestCase {
                        ->will($this->returnValue('3382a100edcb335c6af4efc1d5fb37b4ec264553'));
 
 
-        $rest = $this->getMock('Library_Elefunds_Communication_RestInterface');
+        $rest = $this->getMock('Elefunds_Communication_RestInterface');
 
         $rest->expects($this->once())
               ->method('get')
@@ -354,16 +422,18 @@ class Library_Elefunds_Test_Unit_Facade extends PHPUnit_Framework_TestCase {
     }
 
     /**
+     * getTemplateCssFilesReturnsArray
+     *
      * @test
      */
     public function getTemplateCssFilesReturnsArray() {
 
-        $view = $this->getMock('Library_Elefunds_View_ViewInterface');
+        $view = $this->getMock('Elefunds_View_ViewInterface');
         $view->expects($this->once())
              ->method('getCssFiles')
              ->will($this->returnValue(array('http://path/to/css.css')));
 
-        $configuration = $this->getMock('Library_Elefunds_Configuration_ConfigurationInterface');
+        $configuration = $this->getMock('Elefunds_Configuration_ConfigurationInterface');
 
         $configuration->expects($this->once())
                        ->method('getView')
@@ -376,16 +446,18 @@ class Library_Elefunds_Test_Unit_Facade extends PHPUnit_Framework_TestCase {
     }
 
     /**
+     * renderTemplateReturnsStringFromViewIfViewIsSet
+     *
      * @test
      */
     public function renderTemplateReturnsStringFromViewIfViewIsSet() {
 
-        $view = $this->getMock('Library_Elefunds_View_ViewInterface');
+        $view = $this->getMock('Elefunds_View_ViewInterface');
         $view->expects($this->once())
             ->method('render')
             ->will($this->returnValue('<p>Hello World!</p>'));
 
-        $configuration = $this->getMock('Library_Elefunds_Configuration_ConfigurationInterface');
+        $configuration = $this->getMock('Elefunds_Configuration_ConfigurationInterface');
 
         $configuration->expects($this->once())
             ->method('getView')
@@ -398,11 +470,13 @@ class Library_Elefunds_Test_Unit_Facade extends PHPUnit_Framework_TestCase {
     }
 
     /**
+     * renderTemplateThrowsErrorIfNoViewIsGiven
+     *
      * @test
-     * @expectedException Library_Elefunds_Exception_ElefundsException
+     * @expectedException Elefunds_Exception_ElefundsException
      */
     public function renderTemplateThrowsErrorIfNoViewIsGiven() {
-        $configuration = $this->getMock('Library_Elefunds_Configuration_ConfigurationInterface');
+        $configuration = $this->getMock('Elefunds_Configuration_ConfigurationInterface');
 
         $configuration->expects($this->once())
             ->method('getView');
@@ -412,16 +486,18 @@ class Library_Elefunds_Test_Unit_Facade extends PHPUnit_Framework_TestCase {
     }
 
     /**
+     * getTemplateJavascriptFilesReturnsArray
+     *
      * @test
      */
     public function getTemplateJavascriptFilesReturnsArray() {
 
-        $view = $this->getMock('Library_Elefunds_View_ViewInterface');
+        $view = $this->getMock('Elefunds_View_ViewInterface');
         $view->expects($this->once())
             ->method('getJavascriptFiles')
             ->will($this->returnValue(array('http://path/to/script.js')));
 
-        $configuration = $this->getMock('Library_Elefunds_Configuration_ConfigurationInterface');
+        $configuration = $this->getMock('Elefunds_Configuration_ConfigurationInterface');
 
         $configuration->expects($this->once())
             ->method('getView')
@@ -434,11 +510,13 @@ class Library_Elefunds_Test_Unit_Facade extends PHPUnit_Framework_TestCase {
     }
 
     /**
+     * getTemplateCssFilesThrowsErrorIfNoViewGiven
+     *
      * @test
-     * @expectedException Library_Elefunds_Exception_ElefundsException
+     * @expectedException Elefunds_Exception_ElefundsException
      */
     public function getTemplateCssFilesThrowsErrorIfNoViewGiven() {
-        $configuration = $this->getMock('Library_Elefunds_Configuration_ConfigurationInterface');
+        $configuration = $this->getMock('Elefunds_Configuration_ConfigurationInterface');
 
         $configuration->expects($this->once())
                       ->method('getView');
@@ -448,11 +526,13 @@ class Library_Elefunds_Test_Unit_Facade extends PHPUnit_Framework_TestCase {
     }
 
     /**
+     * getTemplateJavascriptFilesThrowsErrorIfNoViewGiven
+     *
      * @test
-     * @expectedException Library_Elefunds_Exception_ElefundsException
+     * @expectedException Elefunds_Exception_ElefundsException
      */
     public function getTemplateJavascriptFilesThrowsErrorIfNoViewGiven() {
-        $configuration = $this->getMock('Library_Elefunds_Configuration_ConfigurationInterface');
+        $configuration = $this->getMock('Elefunds_Configuration_ConfigurationInterface');
 
         $configuration->expects($this->once())
             ->method('getView');

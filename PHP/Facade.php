@@ -50,10 +50,10 @@ require_once dirname(__FILE__) . '/Model/Factory.php';
  * @link       http://www.elefunds.de
  * @since      File available since Release 1.0.0
  */
-class Library_Elefunds_Facade {
+class Elefunds_Facade {
 
       /**
-       * @var Library_Elefunds_Configuration_ConfigurationInterface
+       * @var Elefunds_Configuration_ConfigurationInterface
        */
       protected $configuration;
 
@@ -65,9 +65,11 @@ class Library_Elefunds_Facade {
      protected $cachedReceivers = array();
 
       /**
-       * @param Library_Elefunds_Configuration_ConfigurationInterface $configuration
+       * Sets up the facade and initializes configuration (if set).
+       *
+       * @param Elefunds_Configuration_ConfigurationInterface $configuration
        */
-      public function __construct(Library_Elefunds_Configuration_ConfigurationInterface $configuration = NULL) {
+      public function __construct(Elefunds_Configuration_ConfigurationInterface $configuration = NULL) {
           if ($configuration !== NULL) {
               $this->setConfiguration($configuration);
           }
@@ -76,28 +78,28 @@ class Library_Elefunds_Facade {
      /**
       * Returns a brand new donation.
       *
-      * @return Library_Elefunds_Model_DonationInterface
+      * @return Elefunds_Model_DonationInterface
       */
       public function createDonation() {
-          return Library_Elefunds_Model_Factory::getDonation();
+          return Elefunds_Model_Factory::getDonation();
       }
 
      /**
       * Returns a brand new Receiver.
       *
-      * @return Library_Elefunds_Model_ReceiverInterface
+      * @return Elefunds_Model_ReceiverInterface
       */
       public function createReceiver() {
-          return Library_Elefunds_Model_Factory::getReceiver();
+          return Elefunds_Model_Factory::getReceiver();
       }
 
       /**
        * Sets the configuration.
        *
-       * @param Library_Elefunds_Configuration_ConfigurationInterface $configuration
-       * @return Library_Elefunds_Facade
+       * @param Elefunds_Configuration_ConfigurationInterface $configuration
+       * @return Elefunds_Facade
        */
-      public function setConfiguration(Library_Elefunds_Configuration_ConfigurationInterface $configuration) {
+      public function setConfiguration(Elefunds_Configuration_ConfigurationInterface $configuration) {
           $this->configuration = $configuration;
           $this->configuration->setFacade($this);
           $this->configuration->init();
@@ -107,7 +109,7 @@ class Library_Elefunds_Facade {
       /**
        * Returns the configuration instance.
        *
-       * @return Library_Elefunds_Configuration_ConfigurationInterface
+       * @return Elefunds_Configuration_ConfigurationInterface
        */
       public function getConfiguration() {
           return $this->configuration;
@@ -116,7 +118,7 @@ class Library_Elefunds_Facade {
     /**
      * Returns the available receivers
      *
-     * @throws Library_Elefunds_Exception_ElefundsCommunicationException
+     * @throws Elefunds_Exception_ElefundsCommunicationException
      * @return array
      */
      public function getReceivers() {
@@ -131,7 +133,7 @@ class Library_Elefunds_Facade {
 
             // Let's get the country specific receivers
             if (!isset($this->cachedReceivers['receivers'][$this->configuration->getCountrycode()])) {
-                throw new Library_Elefunds_Exception_ElefundsCommunicationException(
+                throw new Elefunds_Exception_ElefundsCommunicationException(
                     'Requested countrycode was not available. Available country codes are: ' . implode(', ', array_keys($response['receivers'])) . '.',
                     1347966301
                 );
@@ -156,40 +158,45 @@ class Library_Elefunds_Facade {
        *
        * This is just a wrapper for the addDonations method.
        *
-       * @param Library_Elefunds_Model_DonationInterface
-       * @throws Library_Elefunds_Exception_ElefundsCommunicationException if connection or authentication fails or retrieved http code is not 200
+       * @param Elefunds_Model_DonationInterface
+       * @throws Elefunds_Exception_ElefundsCommunicationException if connection or authentication fails or retrieved http code is not 200
        * @return string Message returned from the API
        */
-      public function addDonation(Library_Elefunds_Model_DonationInterface $donation) {
+      public function addDonation(Elefunds_Model_DonationInterface $donation) {
           return $this->addDonations(array($donation));
       }
 
       /**
-       * Deletes a single Donation at the API.
+       * Cancels a single Donation at the API.
        *
-       * This is just a wrapper for the deleteDonations method.
+       * This is just a wrapper for the cancelDonations method.
        *
        * @param int $donationId
-       * @throws InvalidArgumentException if given donationId is not of type integer
-       * @throws Library_Elefunds_Exception_ElefundsCommunicationException if connection or authentication fails or retrieved http code is not 200
+       * @throws Elefunds_Exception_ElefundsCommunicationException if connection or authentication fails or retrieved http code is not 200
        * @return string Message returned from the API
        */
-      public function deleteDonation($donationId) {
-          if (!is_int($donationId) || $donationId <= 0) {
-              throw new InvalidArgumentException('Given donationId must be of type integer.', 1348239496967);
-          }
-          $restUrl = $this->configuration->getApiUrl() . '/donation/' . $donationId . '/?clientId=' . $this->configuration->getClientId() . '&hashedKey=' . $this->configuration->getHashedKey();
-
-          $response = json_decode($this->getConfiguration()->getRestImplementation()->delete($restUrl), TRUE);
-
-          return $response['message'];
+      public function cancelDonation($donationId) {
+          return $this->cancelDonations(array($donationId));
       }
+
+    /**
+     * Completes a single Donation in the API.
+     *
+     * This is just a wrapper for the completeDonations method.
+     *
+     * @param int $donationId
+     * @throws Elefunds_Exception_ElefundsCommunicationException if connection or authentication fails or retrieved http code is not 200
+     * @return string Message returned from the API
+     */
+    public function completeDonation($donationId) {
+        return $this->completeDonations(array($donationId));
+    }
 
       /**
        * Sends an array of donations to the API.
        *
        * @param array $donations
-       * @throws Library_Elefunds_Exception_ElefundsCommunicationException if connection or authentication fails or retrieved http code is not 200
+       * @throws Elefunds_Exception_ElefundsCommunicationException if connection or authentication fails or retrieved http code is not 200
        * @return string Message returned from the API
        */
       public function addDonations(array $donations) {
@@ -212,27 +219,23 @@ class Library_Elefunds_Facade {
       }
 
       /**
-       * Deletes an array of donation from the API.
+       * Cancels an array of donation from the API.
        *
        * @param array $donationIds with ids
        *
-       * @throws InvalidArgumentException if given array is not made up of integers
-       * @throws Library_Elefunds_Exception_ElefundsCommunicationException if connection or authentication fails or retrieved http code is not 200
+       * @throws Elefunds_Exception_ElefundsCommunicationException if connection or authentication fails or retrieved http code is not 200
        * @return string Message returned from the API
        */
-      public function deleteDonations(array $donationIds) {
+      public function cancelDonations(array $donationIds) {
 
           if (count($donationIds) > 0) {
-              $isValidArray = $donationIds === array_filter($donationIds, create_function('$donationIds', 'return is_int($donationIds) && $donationIds > 0;'));
+              $donationIds = array_filter($donationIds, create_function('$donationIds', 'return (string)$donationIds;'));
 
-              if (!$isValidArray) {
-                  throw new InvalidArgumentException('Given array is not made up of integers only', 1348237365947);
-              }
-              $restUrl = $this->configuration->getApiUrl() . '/donations/delete/?clientId=' . $this->configuration->getClientId() . '&hashedKey=' . $this->configuration->getHashedKey();
+              $donationIdsString = implode(',', $donationIds);
 
-              $body = json_encode($donationIds);
+              $restUrl = $this->configuration->getApiUrl() . '/donations/' . $donationIdsString . '/?clientId=' . $this->configuration->getClientId() . '&hashedKey=' . $this->configuration->getHashedKey();
 
-              $response = json_decode($this->configuration->getRestImplementation()->post($restUrl, $body), TRUE);
+              $response = json_decode($this->configuration->getRestImplementation()->delete($restUrl), TRUE);
               return $response['message'];
           } else {
               return 'No donations given.';
@@ -240,11 +243,36 @@ class Library_Elefunds_Facade {
       }
 
     /**
+     * Completes an array of Donations in the API.
+     *
+     * @param array $donationIds with ids
+     *
+     * @throws Elefunds_Exception_ElefundsCommunicationException if connection or authentication fails or retrieved http code is not 200
+     * @return string Message returned from the API
+     */
+    public function completeDonations(array $donationIds) {
+
+        if (count($donationIds) > 0) {
+            $donationIds = array_filter($donationIds, create_function('$donationIds', 'return (string)$donationIds;'));
+
+            $donationIdsString = implode(',', $donationIds);
+
+            $restUrl = $this->configuration->getApiUrl() . '/donations/' . $donationIdsString . '/?clientId=' . $this->configuration->getClientId() . '&hashedKey=' . $this->configuration->getHashedKey();
+
+            $response = json_decode($this->configuration->getRestImplementation()->put($restUrl), TRUE);
+
+            return $response['message'];
+        } else {
+            return 'No donations given.';
+        }
+    }
+
+    /**
      * Renders the template.
      *
      * @param string $templateName
      * @param bool $givenTemplateNameIsAbsolutePath
-     * @throws Library_Elefunds_Exception_ElefundsException
+     * @throws Elefunds_Exception_ElefundsException
      * @return string The rendered HTML Snippet
      */
       public function renderTemplate($templateName = 'View', $givenTemplateNameIsAbsolutePath = FALSE) {
@@ -252,7 +280,7 @@ class Library_Elefunds_Facade {
           $view = $this->getConfiguration()->getView();
 
           if ($view === NULL) {
-              throw new Library_Elefunds_Exception_ElefundsException('There is no template set in your configuration file. Please refer to the documentation or use one of the sample templates.', 1348051662593);
+              throw new Elefunds_Exception_ElefundsException('There is no template set in your configuration file. Please refer to the documentation or use one of the sample templates.', 1348051662593);
           }
 
           return $view->render($templateName, $givenTemplateNameIsAbsolutePath);
@@ -261,13 +289,13 @@ class Library_Elefunds_Facade {
       /**
        * Returns the CSS Files required by the template.
        *
-       * @throws Library_Elefunds_Exception_ElefundsException if no template is configured
+       * @throws Elefunds_Exception_ElefundsException if no template is configured
        * @return array with css files (path relative to this library)
        */
       public function getTemplateCssFiles() {
            $view = $this->getConfiguration()->getView();
             if ($view === NULL) {
-                 throw new Library_Elefunds_Exception_ElefundsException('There is no template set in your configuration file. Please refer to the documentation or use one of the sample templates.', 1348051662593);
+                 throw new Elefunds_Exception_ElefundsException('There is no template set in your configuration file. Please refer to the documentation or use one of the sample templates.', 1348051662593);
             } else {
                 return $view->getCssFiles();
             }
@@ -276,29 +304,29 @@ class Library_Elefunds_Facade {
       /**
        * Returns the Javascript Files required by the template.
        *
-       * @throws Library_Elefunds_Exception_ElefundsException if no template is configured
+       * @throws Elefunds_Exception_ElefundsException if no template is configured
        * @return array with javascript files (path relative to this library)
        */
       public function getTemplateJavascriptFiles() {
            $view = $this->getConfiguration()->getView();
             if ($view === NULL) {
-                 throw new Library_Elefunds_Exception_ElefundsException('There is no template set in your configuration file. Please refer to the documentation or use one of the sample templates.', 1348051662593);
+                 throw new Elefunds_Exception_ElefundsException('There is no template set in your configuration file. Please refer to the documentation or use one of the sample templates.', 1348051662593);
             } else {
                 return $view->getJavascriptFiles();
             }
       }
 
       /**
-       * Maps a Library_Elefunds_Model_DonationInterface to a JSON ready array.
+       * Maps a Elefunds_Model_DonationInterface to a JSON ready array.
        *
-       * @param Library_Elefunds_Model_DonationInterface
-       * @throws Library_Elefunds_Exception_ElefundsException if not all information are given that are needed for the API
+       * @param Elefunds_Model_DonationInterface
+       * @throws Elefunds_Exception_ElefundsException if not all information are given that are needed for the API
        * @return array
        */
-      protected function mapDonationToArray(Library_Elefunds_Model_DonationInterface $donation) {
+      protected function mapDonationToArray(Elefunds_Model_DonationInterface $donation) {
 
           if ($donation->getForeignId() === NULL || $donation->getTime() === NULL || $donation->getAmount() === NULL || $donation->getReceiverIds() === NULL || $donation->getAvailableReceiverIds() === NULL) {
-              throw new Library_Elefunds_Exception_ElefundsException('Given donation does not contain all information needed to be send to the API.', 1347975987321);
+              throw new Elefunds_Exception_ElefundsException('Given donation does not contain all information needed to be send to the API.', 1347975987321);
           }
 
           $donationAsArray = $donation->toArray();

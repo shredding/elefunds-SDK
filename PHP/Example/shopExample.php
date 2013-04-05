@@ -7,9 +7,9 @@ require_once dirname(__FILE__) . '/../Facade.php';
 require_once dirname(__FILE__) . '/ShopExampleConfiguration.php';
 
 try {
-    $facade = new Library_Elefunds_Facade();
+    $facade = new Elefunds_Facade();
 
-    $facade->setConfiguration(new Library_Elefunds_Example_ShopExampleConfiguration());
+    $facade->setConfiguration(new Elefunds_Example_ShopExampleConfiguration());
 
     // Assign the total at runtime.
     //
@@ -18,9 +18,19 @@ try {
     $actualTotal = 960;
     $facade->getConfiguration()->getView()->assign('total', $actualTotal);
 
+    // Define the skin of the module. Currently, the skin is made up of the following
+    // theme: 'light', 'dark'
+    // color: 'orange', 'blue', 'green', 'purple'
+    $facade->getConfiguration()->getView()->assign('skin',
+        array(
+            'theme' =>  'dark',
+            'color' =>  'blue'
+        )
+    );
+
     $snippet = $facade->renderTemplate();
 
-} catch (Library_Elefunds_Exception_ElefundsCommunicationException $error) {
+} catch (Elefunds_Exception_ElefundsCommunicationException $error) {
 
     // If something goes wrong, we do not render anything at all.
     $snippet = '';

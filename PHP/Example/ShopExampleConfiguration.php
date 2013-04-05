@@ -50,7 +50,7 @@ require_once dirname(__FILE__) . '/../Template/Shop/CheckoutConfiguration.php';
  * @link       http://www.elefunds.de
  * @since      File available since Release 1.0.0
  */
-class Library_Elefunds_Example_ShopExampleConfiguration extends Library_Elefunds_Template_Shop_CheckoutConfiguration {
+class Elefunds_Example_ShopExampleConfiguration extends Elefunds_Template_Shop_CheckoutConfiguration {
     
     //Insert your clientID and apiKey
     protected $clientId = 1001;
@@ -58,6 +58,9 @@ class Library_Elefunds_Example_ShopExampleConfiguration extends Library_Elefunds
 
     protected $countrycode = 'de';
 
+    /**
+     * Assigns the shop width and the currency delimiter that should be used for the elefunds module.
+     */
     public function init() {
         
         parent::init();
@@ -66,11 +69,10 @@ class Library_Elefunds_Example_ShopExampleConfiguration extends Library_Elefunds
         
         // Width of the checkout area, ie. how wide you want the plugin to be
         // (- 2) to exclude the side borders
-        $this->view->assign('shopWidth', 600 - 2);
+        $this->view->assign('shopWidth', 900 - 2);
 
         // These are default Values, you can override this if you have another currency # $this->view->assign('currency', '€'); #
         $this->view->assign('currencyDelimiter', '.');
-       
     }
  
 }
