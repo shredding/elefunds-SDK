@@ -1,26 +1,20 @@
-## CHANGELOG 
-### VERSION 1.0.1
+## CHANGELOG
 
-- small bug fixes
-
-
-### VERSION 1.1
+### VERSION 1.2.1
 
 #### Breaking Changes
 
-- rewrite of the share API
+- Form names submitted during the donation process changed
 
-In order to use the share API, you have to exchange the Facebook and Twitter Share Links. If you are using the SDK and it's
-Templates, just update and you're good to go.
+### Features
 
+- [RequestHelper](https://github.com/elefunds/elefunds-SDK/blob/master/PHP/Template/Shop/Helper/RequestHelper.php) added to handle and verify said input data
+- Javascript saves donation data to the `#elefunds` element for easier access
+- Javascript events `elefunds_enabled`, `elefunds_enabled` and `elefunds_donationChange` are triggered on the `#elefunds` element
 
-#### Features
+---
 
-- added donation receipt to API as well as to the templates
-- added multiple HTML Templates for basic usage without PHP SDK
-
-
-### VERSION 1.2
+### [VERSION 1.2](https://github.com/elefunds/elefunds-SDK/tree/14da25585541f6c5700544b12aaa614b2ebb97d7)
 
 #### Breaking Changes
 
@@ -37,3 +31,20 @@ Templates, just update and you're good to go.
 ### Nice to know
 
 - for convenience, shared logic between `CheckoutConfiguration` and `CheckoutConfiguration` have been moved to `ShopConfiguration`.
+
+---
+
+### [VERSION 1.1](https://github.com/elefunds/elefunds-SDK/tree/d08561dd3856b4a33a854248d710513dd587da6c)
+
+#### Breaking Changes
+
+- rewrite of the share API
+
+In order to use the share API, you have to exchange the Facebook and Twitter Share Links. If you are using the SDK and it's
+Templates, just update and you're good to go.
+
+
+#### Features
+
+- added donation receipt to API as well as to the templates
+- added multiple HTML Templates for basic usage without PHP SDK

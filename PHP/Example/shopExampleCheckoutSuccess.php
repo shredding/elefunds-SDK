@@ -42,13 +42,13 @@ $facade->getConfiguration()->getView()->assign('skin',
 <html>
 <head>
     <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-    <title>My Shop</title>
+    <title>My awesome Shop</title>
     <?php foreach ($facade->getTemplateCssFiles() as $cssFile): ?>
     <link rel="stylesheet" type="text/css" href="../<?php echo $cssFile; ?>">
     <?php endforeach; ?>
 </head>
 <body>
-<h2>My shop is awesome</h2>
+<h2>My awesome Shop</h2>
 
 <!-- Some other HTML here -->
 

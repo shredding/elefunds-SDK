@@ -23,7 +23,7 @@ For questions regarding the API or the PHP Client Library, please contact Christ
 Prerequisites
 -------------
 
-This PHP Client Library requires PHP 5.2 or higher and should therefore work on every modern and even a bit aged system.
+This PHP Client Library requires PHP 5.3 or higher and should therefore work on every modern and even a bit aged system.
 However, if you want to run the tests, you need PHP 5.3.8 or higher. The tests are mainly for code quality and are not
 needed in a production environment.
 

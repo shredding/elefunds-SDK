@@ -97,7 +97,7 @@ class Elefunds_Template_Shop_CheckoutConfiguration extends Elefunds_Template_Sho
         $this->view->assign('currencyDelimiter', '.');
 
         $this->view->assign('roundSum', 'elefunds_round_sum');
-        $this->view->assign('roundSumContainer', 'elefunds_round_sum_container');
+        $this->view->assign('roundSumContainer', 'elefunds_below_container');
 
         // L18n
         if ($this->countrycode === 'de') {

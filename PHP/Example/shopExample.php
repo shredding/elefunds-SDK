@@ -48,9 +48,17 @@ try {
 <?php endforeach; ?>
 <!-- Be sure to include jQuery as it's required by our JavaScript files -->
 <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+<style>
+    body {
+        font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    }
+</style>
 </head>
 <body>
-    <h2>My shop is awesome</h2>
+    <h2>My awesome Shop</h2>
+
+    <!-- Lets assume the checkout total is 9.60€ -->
+    <div style="margin-left: 780px; margin-bottom: 10px; font-weight: bold;">Total:&nbsp;&nbsp;&nbsp;&nbsp;9.60 €</div>
 
     <!-- Some other HTML here -->
 
