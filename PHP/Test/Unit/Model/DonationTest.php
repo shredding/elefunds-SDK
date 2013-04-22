@@ -71,10 +71,10 @@ class Elefunds_Test_Unit_Model_DonationTest extends PHPUnit_Framework_TestCase {
     */ 
    public function setForeignIdAcceptsNumbersOrDigitOnlyString() {
         $this->donation->setForeignId('12345');
-        $this->assertSame(12345, $this->donation->getForeignId());
+        $this->assertSame('12345', $this->donation->getForeignId());
         
         $this->donation->setForeignId(12345);
-        $this->assertSame(12345, $this->donation->getForeignId());
+        $this->assertSame('12345', $this->donation->getForeignId());
    }
    
    /**
@@ -400,7 +400,7 @@ class Elefunds_Test_Unit_Model_DonationTest extends PHPUnit_Framework_TestCase {
         $this->donation
             ->setAmount(100)
             ->setAvailableReceiverIds(array(1,2,3))
-            ->setForeignId(1234)
+            ->setForeignId('1234')
             ->setReceiverIds(array(1,2))
             ->setTime($now);
 
@@ -408,7 +408,7 @@ class Elefunds_Test_Unit_Model_DonationTest extends PHPUnit_Framework_TestCase {
 
         $this->assertSame($array['donationAmount'], 100);
         $this->assertSame(implode(',', $array['receiversAvailable']), '1,2,3');
-        $this->assertSame($array['foreignId'], 1234);
+        $this->assertSame($array['foreignId'], '1234');
         $this->assertSame(implode(',', $array['receivers']), '1,2');
         $this->assertSame($array['donationTimestamp'], $now->format(DateTime::ISO8601));
 

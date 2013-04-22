@@ -1,7 +1,7 @@
-elefunds PHP Client Library 1.2.0
+elefunds PHP Client Library 1.2.1
 =================================
 
-Welcome to our amazing 1.2.0 version of the elefunds PHP Client Library.
+Welcome to the elefunds PHP Client Library.
 
 We put a lot of effort into making your daily work with our elefunds API an ease and loads of fun.
 Therefore we tried to minimize the workload for shop implementers and developers as much as possible 

@@ -95,6 +95,7 @@ class Elefunds_Template_Shop_CheckoutConfiguration extends Elefunds_Template_Sho
         // Defaults, you can opt to override this if you like.
         $this->view->assign('currency', '€');
         $this->view->assign('currencyDelimiter', '.');
+        $this->view->assign('toolTipPosition', 'top');
 
         $this->view->assign('roundSum', 'elefunds_round_sum');
         $this->view->assign('roundSumContainer', 'elefunds_below_container');

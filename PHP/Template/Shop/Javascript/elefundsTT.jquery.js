@@ -148,12 +148,44 @@
                     } else if (opts.defaultPosition === "right") {
                         t_class = "_right";
                     }
+                    
+                    var right_compare = (w_compare + left) < parseInt($(window).scrollLeft());
+          					var left_compare = (tip_w + left) > parseInt($(window).width());
+
+          					if((right_compare && w_compare < 0) || (t_class == "_right" && !left_compare) || (t_class == "_left" && left < (tip_w + opts.edgeOffset + 5))){
+          						t_class = "_right";
+          						arrow_top = Math.round(tip_h - 13) / 2;
+          						arrow_left = -12;
+          						marg_left = Math.round(left + org_width + opts.edgeOffset);
+          						marg_top = Math.round(top + h_compare);
+          					} else if((left_compare && w_compare < 0) || (t_class == "_left" && !right_compare)){
+          						t_class = "_left";
+          						arrow_top = Math.round(tip_h - 13) / 2;
+          						arrow_left =  Math.round(tip_w);
+          						marg_left = Math.round(left - (tip_w + opts.edgeOffset + 5));
+          						marg_top = Math.round(top + h_compare);
+          					}
 
                     var top_compare = (top + org_height + opts.edgeOffset + tip_h + 8) > parseInt($(window).height() + $(window).scrollTop()),
-                        bottom_compare = ((top + org_height) - (opts.edgeOffset + tip_h + 8)) < 0;
+                    bottom_compare = ((top + org_height) - (opts.edgeOffset + tip_h + 8)) < 0;
 
-                    arrow_top = tip_h;
-                    marg_top = Math.round(top - (tip_h + 5 + opts.edgeOffset));
+                    if(top_compare || (t_class == "_bottom" && top_compare) || (t_class == "_top" && !bottom_compare)){
+          						if(t_class == "_top" || t_class == "_bottom"){
+          							t_class = "_top";
+          						} else {
+          							t_class = t_class+"_top";
+          						}
+          						arrow_top = tip_h;
+          						marg_top = Math.round(top - (tip_h + 5 + opts.edgeOffset));
+          					} else if(bottom_compare | (t_class == "_top" && bottom_compare) || (t_class == "_bottom" && !top_compare)){
+          						if(t_class == "_top" || t_class == "_bottom"){
+          							t_class = "_bottom";
+          						} else {
+          							t_class = t_class+"_bottom";
+          						}
+          						arrow_top = -12;						
+          						marg_top = Math.round(top + org_height + opts.edgeOffset);
+          					}
 
                     tiptip_arrow.css({"margin-left": arrow_left + "px", "margin-top": arrow_top + "px"});
                     tiptip_holder.css({"margin-left": marg_left + "px", "margin-top": marg_top + "px"}).attr("class", "tip" + t_class);

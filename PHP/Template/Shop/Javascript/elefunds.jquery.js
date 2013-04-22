@@ -1,6 +1,6 @@
 var elefunds = (function(parent, $) {
 
-  var roundSumContainer, roundSum, currency, decimal, decimalAlt, total;
+  var roundSumContainer, roundSum, currency, decimal, decimalAlt, total, toolTipPosition;
   var enabled = false;
 
   function init(options) {
@@ -10,6 +10,7 @@ var elefunds = (function(parent, $) {
     decimal = options.decimal;
     decimalAlt = options.deciamlAlt;
     total = options.total;
+    toolTipPosition = options.toolTipPosition;
 
     $('#elefunds').data('elefunds-roundSum', convertToFloat(total + parseInt($('#elefunds_donation_cent').val(), 10)));
     $('#elefunds').data('elefunds-donation', {donationCent: parseInt($('#elefunds_donation_cent').val(), 10), donationFloat: convertToFloat(parseInt($('#elefunds_donation_cent').val(), 10))});
@@ -76,7 +77,7 @@ var elefunds = (function(parent, $) {
 
     // Enable tooltips
     $('.tiptip').tipTip({
-      defaultPosition: 'top',
+      defaultPosition: toolTipPosition || 'top',
       edgeOffset: -12,
       delay: 200
     });

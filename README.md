@@ -1,7 +1,7 @@
-elefunds API SDK v1.2.1
+elefunds API SDK v1.2.2
 =======================
 
-Welcome to the elefunds API.
+Welcome to the elefunds API SDK.
 
 Be sure to checkout the the [Getting Started Guide](https://github.com/elefunds/elefunds-SDK/blob/master/Documentation/GettingStarted.md)
 for a general introduction to the elefunds API, before moving on to the language of your choice.

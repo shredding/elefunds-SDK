@@ -68,8 +68,7 @@ class Elefunds_Example_ShopExampleConfiguration extends Elefunds_Template_Shop_C
         /** You have to assign some vars here, to calculate the view. */
         
         // Width of the checkout area, ie. how wide you want the plugin to be
-        // (- 2) to exclude the side borders
-        $this->view->assign('shopWidth', 900 - 2);
+        $this->view->assign('shopWidth', 900);
 
         // These are default Values, you can override this if you have another currency # $this->view->assign('currency', '€'); #
         $this->view->assign('currencyDelimiter', '.');

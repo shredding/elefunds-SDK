@@ -123,6 +123,12 @@ class Elefunds_Template_Shop_Hooks_ShopHooks {
      * @return void
      */
     public static function calculatePadding(Elefunds_View_ViewInterface $view, $width) {
+
+        if ($width < 632) {
+            $width = 632;
+        }
+
+        $width = $width - 2;
         
         // Max number of receivers that can be displayed
         $receiversCount = (int) floor($width / 210);
@@ -187,6 +193,7 @@ class Elefunds_Template_Shop_Hooks_ShopHooks {
             )
         );
 
+        $view->assign('actualShopWidth', $width);
     }
     
     /**

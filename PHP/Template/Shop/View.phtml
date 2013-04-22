@@ -1,7 +1,7 @@
 <div id="elefunds">
     <input type="hidden" id="elefunds_donation_cent" value="<?php echo $view['suggestedDonationAmountCent']; ?>" name="elefunds_donation_cent"/>
     <input type="hidden" id="<?php echo 'elefunds_suggested_round_up_cent'; ?>" name="<?php echo 'elefunds_suggested_round_up_cent'; ?>" value="<?php echo $view['suggestedDonationAmountCent'];?>"/>
-    <div id="elefunds_top" style="width: <?php echo $view['shopWidth']; ?>px;">
+    <div id="elefunds_top" style="width: <?php echo $view['actualShopWidth']; ?>px;">
         <img src="https://0ce8ff584bf613ee6639-c1fc539e0df6af03ccc14b5020ab4161.ssl.cf1.rackcdn.com/<?php echo $view['theme'] ?>/elefunds_logo.png" id="elefunds_logo" class="tiptip" desc="<?php echo $view['elefundsDescription']; ?>" title="elefunds" />
         <div>
             <div id="elefunds_arrow">
@@ -19,7 +19,7 @@
         </div>
     </div>
     
-    <div id="elefunds_bottom" style="width: <?php echo $view['shopWidth']; ?>px;">
+    <div id="elefunds_bottom" style="width: <?php echo $view['actualShopWidth']; ?>px;">
         <?php $numReceivers = count($view['receivers']); $i = 0; foreach ($view['receivers'] as $key => $receiver): ?>
         <input type="hidden" name="elefunds_receiver_name[]" value="<?php echo $receiver->getName(); ?>" />
         <div class="elefunds_receiver tiptip" desc="<?php echo $receiver->getDescription(); ?>" title="<?php echo $receiver->getName(); ?>">
@@ -33,7 +33,7 @@
         <?php endforeach; ?>
     </div>
 
-    <div id="elefunds_below_container" style="width: <?php echo $view['shopWidth']; ?>px; display: none;">
+    <div id="elefunds_below_container" style="width: <?php echo $view['actualShopWidth']; ?>px; display: none;">
         <?php if ($view['offerDonationReceipt']): ?>
         <div id="elefunds_receipt">
             <input type="checkbox" name="elefunds_receipt" id="elefunds_receipt_checkbox" /><label for="elefunds_receipt_checkbox"><?php echo $view['receipt_slogan'];?></label>
@@ -60,7 +60,8 @@ var elefunds = (function(parent, $) {
         currency: '<?php echo $view["currency"]; ?>',
         decimal: '<?php echo $view["currencyDelimiter"]; ?>',
         decimalAlt: ',',
-        total: <?php echo $view["total"]; ?>
+        total: <?php echo $view["total"]; ?>,
+        toolTipPosition: '<?php echo $view["toolTipPosition"]; ?>'
     };
     
     if(options.decimal === options.decimalAlt) {

@@ -37,77 +37,36 @@
  *
  */
 
-require_once dirname(__FILE__) . '/../../Configuration/DefaultConfiguration.php';
-require_once dirname(__FILE__) . '/../../View/BaseView.php';
-require_once dirname(__FILE__) . '/Hooks/ShopHooks.php';
+require_once dirname(__FILE__) . '/../../../Configuration/DefaultConfiguration.php';
 
 /**
- * Shop Configuration for a shop template.
+ * Unit Test for Elefunds_Configuration_BaseConfiguration.
  *
  * @package    elefunds API PHP Library
- * @subpackage Template\Shop
+ * @subpackage Test
  * @author     Christian Peters <christian@elefunds.de>
- * @copyright  2013 elefunds GmbH <hello@elefunds.de>
+ * @copyright  2012 elefunds GmbH <hello@elefunds.de>
  * @license    http://www.opensource.org/licenses/BSD-3-Clause  The BSD 3-Clause License
  * @link       http://www.elefunds.de
- * @since      File available since Release 1.2.0
+ * @since      File available since Release 1.0.0
  */
-class Elefunds_Template_Shop_ShopConfiguration extends Elefunds_Configuration_DefaultConfiguration {
+class Elefunds_Test_Unit_Configuration_DefaultConfigurationTest extends PHPUnit_Framework_TestCase {
+
+    protected $defaultConfiguration;
 
     /**
-     * @var array
-     */
-    protected $themes;
-
-    /**
-     * @var array
-     */
-    protected $colors;
-
-    /**
-     * Assigns the receivers.
+     * initSetsCurlDonationAndReceiver
      *
-     * @return void
+     * Checks if the correct model factory pattern is set are not included here.
+     *
+     * @test
      */
-    public function init() {
+    public function initSetsCurlDonationAndReceiver() {
+        $this->defaultConfiguration = new Elefunds_Configuration_DefaultConfiguration();
+        $this->defaultConfiguration->init();
 
-        parent::init();
-
-        $this->setView(new Elefunds_View_BaseView());
-        $this->view->setTemplate('Shop');
-
-        //Available theme and color choices
-        $this->themes = array('light', 'dark');
-        $this->colors = array('orange', 'blue', 'green', 'purple', 'grey');
-
-        //Chose your theme and color
-        $theme = $this->themes[0];
-        $color = $this->colors[0];
-
-        $this->view->addJavascriptFile('elefunds.jquery.min.js');
-
-        $this->view->registerAssignHook('skin', 'Elefunds_Template_Shop_Hooks_ShopHooks', 'chooseCssFile');
-        $this->view->assign('skin',
-            array(
-                'theme' =>  $theme,
-                'color' =>  $color
-            )
-        );
+        $this->assertEquals('Elefunds_Model_Receiver', $this->defaultConfiguration->getReceiverClassName());
+        $this->assertEquals('Elefunds_Model_Donation', $this->defaultConfiguration->getDonationClassName());
 
     }
-
-    /**
-     * @return array
-     */
-    public function getAvailableThemes() {
-        return $this->themes;
-    }
-
-    /**
-     * @return array
-     */
-    public function getAvailableColors() {
-        return $this->colors;
-    }
-
 }
