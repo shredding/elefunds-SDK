@@ -52,20 +52,22 @@ var elefunds = (function(parent, $) {
         $('#elefunds_bottom').find('input[type="checkbox"]').parent().toggleClass('elefunds_receiver_selected');
       }
 
-      if(enabled) {
+      if(!$('#elefunds_checkbox:checked').length) {
         roundSumContainer.slideUp();
         $('#elefunds').trigger('elefunds_disabled');
         enabled = false;
 
       } else {
-        roundSumContainer.slideDown();
+        if ($('#elefunds_checkbox:checked').length) {
+            roundSumContainer.slideDown();
 
-        //Store data
-        var centValue = parseInt($('#elefunds_donation_cent').val(), 10);
-        $('#elefunds').data('elefunds-donation', {donationCent: centValue, donationFloat: convertToFloat(centValue)});
+            //Store data
+            var centValue = parseInt($('#elefunds_donation_cent').val(), 10);
+            $('#elefunds').data('elefunds-donation', {donationCent: centValue, donationFloat: convertToFloat(centValue)});
 
-        $('#elefunds').trigger('elefunds_enabled');
-        enabled = true;
+            $('#elefunds').trigger('elefunds_enabled');
+            enabled = true;
+        }
       }
 
       $('#elefunds_input').toggleClass('elefunds_input_active');
