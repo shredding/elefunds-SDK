@@ -1,5 +1,5 @@
-@import "elements.less";
-@import "color.less";
+@import "elements";
+@import "color";
 
 @cdn-URL: "https://0ce8ff584bf613ee6639-c1fc539e0df6af03ccc14b5020ab4161.ssl.cf1.rackcdn.com";
 
@@ -171,15 +171,16 @@
     margin: 0;
     text-align: center;
     display: inline-block;
-    border-right: 1px solid #a3a6ac;
+    border-left: 1px solid #a3a6ac;
     background: url('@{cdn-URL}/receiver_off_bg.png') repeat-x;
     float: left;
     position: relative;
     
     > label > img {
         vertical-align: middle;
-        filter: gray;
         -webkit-filter: grayscale(1) opacity(0.7);
+        -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=50)";
+        filter: alpha(opacity=50);
     }
     
     > input {
@@ -210,8 +211,8 @@
     }
 }
 
-#elefunds_bottom > div:last-child {
-    border-right: 0 !important;
+#elefunds_bottom > input:first-child + div {
+    border-left: 0 !important;
 }
 
 .elefunds_receiver_selected {
@@ -220,22 +221,30 @@
     > label > img {
         filter: none;
         -webkit-filter: none;
+        -ms-filter: none;
+    }
+}
+
+#elefunds_below_container {
+    font-family: @font-family;
+    font-size: 16px;
+    margin: 0;
+    padding: 15px 0 10px;
+    text-align: right;
+
+    label {
+      font-weight: normal;
     }
 }
 
 #elefunds_round_sum_container {
-    font-family: @font-family;
-    font-size: 16px;
-    background: url('@{cdn-URL}/elefunds_highlight.png') right bottom no-repeat;
-    margin: 0;
-    padding: 15px 0 0;
-    text-align: right;
-    
+    background: url('@{cdn-URL}/elefunds_highlight.png') right top no-repeat;
+
     strong {
         font-weight: bold;
         line-height: 1.5em;
     }
-    
+
     strong:last-child {
         margin-right: 8px;
     }
@@ -244,7 +253,7 @@
 #elefunds_round_sum {
     display: inline-block;
     width: 65px;
-    color: #222
+    color: #222;
 }
 
 #elefunds_receipt {
@@ -257,7 +266,7 @@
     .user-select(none);
 }
 
-#elefunds_receipt_input {
+#elefunds_receipt_checkbox {
     position: absolute;
     top: 1px;
     cursor: pointer;
@@ -266,15 +275,16 @@
     margin: 0;
     vertical-align: baseline;
     width: 16px;
+
+      + label {
+        margin: 0;
+        cursor: pointer;
+        background: url('@{cdn-URL}/receipt_off.png') no-repeat;
+        display: inline-block;
+        padding-left: 20px;
+      }
 }
 
-#elefunds_receipt_input + label {
-    margin: 0;
-    cursor: pointer;
-    background: url('@{cdn-URL}/receipt_off.png') no-repeat;
-    display: inline-block;
-    padding-left: 20px;
-}
 
 #elefunds_receipt > input:checked + label {
     background: url('@{cdn-URL}/receipt_on.png') no-repeat;
@@ -398,15 +408,29 @@
 }
 
 #tiptip_holder.tip_top #tiptip_arrow_inner {
-	margin-top: -7px;
-	margin-left: -6px;
-	border-top-color: rgb(25,25,25);
-	border-top-color: rgba(25,25,25,0.92);
+  margin-top: -7px;
+  margin-left: -6px;
+  border-top-color: rgb(25,25,25);
+  border-top-color: rgba(25, 25, 25, 0.92);
+}
+
+#tiptip_holder.tip_right #tiptip_arrow_inner {
+  margin-top: -6px;
+  margin-left: -5px;
+  border-right-color: rgb(25,25,25);
+  border-right-color: rgba(25, 25, 25, 0.92);
+}
+
+#tiptip_holder.tip_bottom #tiptip_arrow_inner {
+  margin-top: -5px;
+  margin-left: -6px;
+  border-bottom-color: rgb(25,25,25);
+  border-bottom-color: rgba(25, 25, 25, 0.92);
 }
 
 #tiptip_holder.tip_left #tiptip_arrow_inner {
-	margin-top: -6px;
-	margin-left: -7px;
-	border-left-color: rgb(25,25,25);
-	border-left-color: rgba(25,25,25,0.92);
+  margin-top: -6px;
+  margin-left: -7px;
+  border-left-color: rgb(25,25,25);
+  border-left-color: rgba(25, 25, 25, 0.92);
 }

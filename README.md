@@ -7,14 +7,13 @@ Be sure to checkout the the [Getting Started Guide](https://github.com/elefunds/
 for a general introduction to the elefunds API, before moving on to the language of your choice.
 
 The API itself is (naturally) language agnostic, but the SDKs are a great help and timesaver! If your language
-is not supported yet or you're just interested in reference material (ie. HTML, CSS or Javascript snippets), be sure to contact us at <hello@elefunds.de> and we'll find a solution.
+is not supported yet, contact us at <hello@elefunds.de> and we'll help you get started.
 
 Best,  
 the elefunds team
 
 
-Dive in
--------
+## Dive in
 
 [Getting Started](https://github.com/elefunds/elefunds-SDK/blob/master/Documentation/GettingStarted.md) 
 
@@ -25,17 +24,11 @@ Dive in
 [Social Media Share](https://github.com/elefunds/elefunds-SDK/blob/master/Documentation/SocialMediaShare.md)
 
 
-PHP SDK
--------
+## PHP SDK
 
-[Basics](https://github.com/elefunds/elefunds-SDK/blob/master/PHP/Documentation/PHPGuideBasics.md)
-
-[Configuration](https://github.com/elefunds/elefunds-SDK/blob/master/PHP/Documentation/PHPGuideConfiguration.md)
-
-[Templating](https://github.com/elefunds/elefunds-SDK/blob/master/PHP/Documentation/PHPGuideTemplating.md)
+The PHP SDK has moved to its own repository: [elefunds-PHP](https://github.com/elefunds/elefunds-PHP)
 
 
-License
--------
+## License
 
 The elefunds API SDK is licensed under the [New BSD license](https://github.com/elefunds/elefunds-SDK/blob/master/LICENSE).
