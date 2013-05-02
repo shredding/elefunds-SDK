@@ -1,6 +1,12 @@
 ## CHANGELOG
 
-### VERSION 1.2.2
+### [VERSION 1.2.3](https://github.com/elefunds/elefunds-SDK/tree/v1.2.3)
+
+- PHP SDK moved to its own repository: [elefunds-PHP](https://github.com/elefunds/elefunds-PHP)
+
+---
+
+### [VERSION 1.2.2](https://github.com/elefunds/elefunds-SDK/tree/v1.2.2)
 
 #### Breaking Changes
 
