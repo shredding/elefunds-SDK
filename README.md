@@ -1,4 +1,4 @@
-elefunds API SDK v1.2.3
+elefunds API SDK v1.3.0
 =======================
 
 Welcome to the elefunds API SDK.

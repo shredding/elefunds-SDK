@@ -1,0 +1,21 @@
+{
+    "name": "lfnds/sdk",
+    "version": "1.2.3",
+    "description": "PHP SDK for the elefunds API.",
+    "minimum-stability": "stable",
+    "keywords": ["charity","donation"],
+    "homepage": "http://elefunds.github.io/elefunds-SDK/",
+    "license": "BSD-3",
+    "authors": [
+        {
+            "name": "Christian Peters",
+            "email": "christian@elefunds.de"
+        }
+    ],
+    "require": {
+        "php": ">=5.3.2"
+    },
+    "autoload": {
+        "psr-0": { "Elefunds": "src/" }
+    }
+}
