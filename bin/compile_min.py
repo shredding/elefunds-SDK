@@ -6,8 +6,8 @@ from subprocess import call
 from sys import stdout
 
 BIN_PATH = os.path.split(os.path.realpath(__file__))[0] + '/'
-CSS_PATH = BIN_PATH + '../PHP/Template/Shop/Css/'
-JS_PATH = BIN_PATH + '../PHP/Template/Shop/Javascript/'
+CSS_PATH = BIN_PATH + '../PHP/src/Elefunds/Template/Shop/Css/'
+JS_PATH = BIN_PATH + '../PHP/src/Elefunds/Template/Shop/Javascript/'
 
 ELEFUNDS_LESS = CSS_PATH + 'elefunds.less'
 ELEFUNDS_JQUERY = JS_PATH + 'elefunds.jquery.js'

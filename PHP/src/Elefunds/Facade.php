@@ -134,7 +134,7 @@ class Elefunds_Facade {
             // Let's get the country specific receivers
             if (!isset($this->cachedReceivers['receivers'][$this->configuration->getCountrycode()])) {
                 throw new Elefunds_Exception_ElefundsCommunicationException(
-                    'Requested countrycode was not available. Available country codes are: ' . implode(', ', array_keys($response['receivers'])) . '.',
+                    'Requested countrycode was not available. Available country codes are: ' . implode(', ', array_keys($this->cachedReceivers['receivers'])) . '.',
                     1347966301
                 );
             }

@@ -96,15 +96,21 @@ class Elefunds_Template_Shop_Hooks_ShopHooks {
 
         //In case the suggestion is higher than the nearest $roundup, we subtract the nearest $roundup
         //and adjust the $roundTotal
-
         if ($donationSuggestion > $roundup[$tier] && $tier < count($tiers)-2) {
             $donationSuggestion -= $roundup[$tier];
         }
 
         //Round the donationSuggestion to eliminate float bugs
-
         $assigns = $view->getAssignments();
         $suggestedDonationAmount = round($donationSuggestion, 2);
+
+        //Limit the donation suggestion to 30
+        if($suggestedDonationAmount > 30) {
+            $removeFromSuggestion = round($suggestedDonationAmount / 10, 2);
+            $removeFromSuggestion = floor($removeFromSuggestion) * 10;
+            $suggestedDonationAmount = round($suggestedDonationAmount - $removeFromSuggestion, 2) + 20;
+        }
+
         $donationAmountString = number_format($suggestedDonationAmount, 2, $assigns['currencyDelimiter'], '');
         $roundedSum = number_format(($suggestedDonationAmount + $total), 2, $assigns['currencyDelimiter'], '');
 
