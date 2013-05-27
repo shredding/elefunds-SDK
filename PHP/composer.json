@@ -1,6 +1,6 @@
 {
     "name": "lfnds/sdk",
-    "version": "1.2.3",
+    "version": "1.3.1",
     "description": "PHP SDK for the elefunds API.",
     "minimum-stability": "stable",
     "keywords": ["charity","donation"],
