@@ -9,7 +9,7 @@ for a general introduction to the elefunds API, before moving on to the language
 The API itself is (naturally) language agnostic, but the SDKs are a great help and timesaver! If your language
 is not supported yet or you're just interested in reference material (ie. HTML, CSS or Javascript snippets), be sure to contact us at <hello@elefunds.de> and we'll find a solution.
 
-Best,
+Best,  
 the elefunds team
 
 

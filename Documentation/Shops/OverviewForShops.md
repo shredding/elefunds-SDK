@@ -3,7 +3,7 @@
 This guide is intended for all shops wanting to connect to the API and develop their own elefunds donation module implementation for their checkout.
 This guide also assumes you've already read through the Getting Started Guide, as it covers the general API usage and principles.
 
-> **Note**: If you're system is running on PHP, we strongly recommend you use the [PHP-SDK]().
+> **Note**: If you're system is running on PHP, we strongly recommend you use the [PHP-SDK](https://github.com/elefunds/elefunds-PHP).
 > It takes 70% of the work off your hands, was test driven developed and is used in production environments, such as Shopware and Magento.
 > It's also a good reference to use when building your own solution.
 
@@ -31,12 +31,14 @@ displaying the module and much more is done by the elefunds JavaScript frontend.
 ## 1. Create a configuration file
 
 The first part of the process should a configuration file that contains vital information for the operation.
-This configuration should be including, but not limited to:
+This configuration should include:
 
 * your `clientId`
 * your `apiKey`
 * theme / color options
 * various DOM selectors (that we will cover in the next step)
+
+It is a good idea to make at least the `clientId` and the `apiKey` configurable in the shop backend by the user!
 
 ## 2. Display the elefunds JavaScript module in the checkout
 
@@ -48,9 +50,9 @@ https://43ce0697b91280cbef31-14c96824618f1f6e4d87350d0f98c98a.ssl.cf1.rackcdn.co
 Just include this file after any other JavaScript libraries you might already be using (jQuery, Prototype, etc.),
 preferably at the bottom of the page.
 
-> **Note**: In case your frontend is not built on HTML, please contact us so we can work together on an alternative.
+> **Note**: In case your frontend is not built in HTML, please contact us so we can work together on an alternative.
 
-Next, check out the [JavaScriptGuide](). It will explain how to setup and display the module in the checkout.
+Next, check out the [JavaScriptGuide](JavaScriptFrontend.md). It will explain how to setup and display the module in the checkout.
 To be Trusted Shops compatible, we recommend displaying the module *before* the listed positions that make up the shopping cart.
 
 
@@ -79,7 +81,7 @@ In order to report a state change, you must persist the donation in the database
 After a donation has been made, it's time to display the social media share options to the customer to allow him to share
 his good deed and promote your shop in the process. The social media view also comes with the JavaScript frontend, so include
 the JavaScript file again in your checkout success page, with the adjusted parameters in the `window.elefundsOptions` object as detailed
-in the [JavaScript Guide]().
+in the [JavaScript Guide](JavaScriptFrontend.md).
 
 
 ## 6. Add a short disclaimer regarding the donation to the invoice
@@ -96,7 +98,7 @@ Your donation is processed by the elefunds Foundation gUG which forwards 100% to
 // German version
 Die Spende wird vereinnahmt für die elefunds Stiftung gUG und zu 100% an die ausgewählten Organisationen weitergeleitet.
 Der Kaufbeleg ersetzt keine Spendenbescheinigung im Sinne des Steuerrechts.
-``
+```
 
 The common scenario would be to overwrite the invoice template (as we did in Magento) or hook into the PDF generation (as we did in Shopware).
 But the solution depends heavily on the system you are implementing for.
@@ -114,7 +116,7 @@ when an order including a donation has been refunded or if the customer refuses 
 
 A donation is completed when you received the money and the order can't be refunded.
 
-Most shops have internal states that reflect this and all you have to do is hook into the change of said state.
+Most shops have internal states that reflect this and all you have to do is hook into the change of said state and report it to the API.
 
 
 ## Summary
