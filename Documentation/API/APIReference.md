@@ -16,60 +16,59 @@ JSON, as specified in the resource documentation.
 
 *HTTP Code:* 403
 
-    {
-        "error":"Access to resources have been denied."
-    }
+```js
+{
+    "error":"Access to resources have been denied."
+}
+```
 
 
 ## Receivers
 
 ### GET /receivers
 
-Retrieves all receivers that are registered for a client.
+Retrieves all receivers that are registered for a client. This api call does not require authentication.
 
 **Resource URL**
 
-    https://connect.elefunds.de/receivers
+    https://connect.elefunds.de/receivers/:clientId
 
 **Parameters**
 
-Only the basic authentication.
+The clientId that requests the receivers.
 
 **Example Request**
 
-    https://connect.elefunds.de/receivers/?clientId=1001&hashedKey=eb85fa24f23b7ade5224a036b39556d65e764653
+    https://connect.elefunds.de/receivers/1001
 
 **Response**
 
 *HTTP Code:* 200
-
-    {
-       "meta":{
-          "valid":"2012-12-31T12:00:00"
-       },
-       "receivers":{
-          "de":[
-             {
-                "images":{
-                   "horizontal":{
-                      "small":"https://bbbf9fd0e36d5cb36b93-c1fc539e0df6af03ccc14b5020ab4161.ssl.cf1.rackcdn.com/receivers/sample_receiver_01h.png",
-                      "large":"https://bbbf9fd0e36d5cb36b93-c1fc539e0df6af03ccc14b5020ab4161.ssl.cf1.rackcdn.com/receivers/sample_receiver_01h.png",
-                      "medium":"https://bbbf9fd0e36d5cb36b93-c1fc539e0df6af03ccc14b5020ab4161.ssl.cf1.rackcdn.com/receivers/sample_receiver_01h.png"
-                   },
-                   "vertical":{
-                      "small":"https://bbbf9fd0e36d5cb36b93-c1fc539e0df6af03ccc14b5020ab4161.ssl.cf1.rackcdn.com/receivers/sample_receiver_01v.png",
-                      "large":"https://bbbf9fd0e36d5cb36b93-c1fc539e0df6af03ccc14b5020ab4161.ssl.cf1.rackcdn.com/receivers/sample_receiver_01v.png",
-                      "medium":"https://bbbf9fd0e36d5cb36b93-c1fc539e0df6af03ccc14b5020ab4161.ssl.cf1.rackcdn.com/receivers/sample_receiver_01v.png"
-                   }
-                },
-                "description":"A description of the receiver.",
-                "id":101,
-                "name":"The name of the receiver."
-             }
-          ]
-       }
-    }
-
+```js
+{       
+   "receivers":{
+      "de":[
+         {
+            "images":{
+               "horizontal":{
+                  "small":"https://bbbf9fd0e36d5cb36b93-c1fc539e0df6af03ccc14b5020ab4161.ssl.cf1.rackcdn.com/receivers/sample_receiver_01h.png",
+                  "large":"https://bbbf9fd0e36d5cb36b93-c1fc539e0df6af03ccc14b5020ab4161.ssl.cf1.rackcdn.com/receivers/sample_receiver_01h.png",
+                  "medium":"https://bbbf9fd0e36d5cb36b93-c1fc539e0df6af03ccc14b5020ab4161.ssl.cf1.rackcdn.com/receivers/sample_receiver_01h.png"
+               },
+               "vertical":{
+                  "small":"https://bbbf9fd0e36d5cb36b93-c1fc539e0df6af03ccc14b5020ab4161.ssl.cf1.rackcdn.com/receivers/sample_receiver_01v.png",
+                  "large":"https://bbbf9fd0e36d5cb36b93-c1fc539e0df6af03ccc14b5020ab4161.ssl.cf1.rackcdn.com/receivers/sample_receiver_01v.png",
+                  "medium":"https://bbbf9fd0e36d5cb36b93-c1fc539e0df6af03ccc14b5020ab4161.ssl.cf1.rackcdn.com/receivers/sample_receiver_01v.png"
+               }
+            },
+            "description":"A description of the receiver.",
+            "id":101,
+            "name":"The name of the receiver."
+         }
+      ]
+   }
+}
+```
 
 ## Donations
 ### POST /donations
@@ -90,33 +89,35 @@ Only the basic authentication.
 
 *Example POST body*
 
-    [
-           {
-              "foreignId":125,
-              "donationTimestamp":"2012-10-10T15:57:40+0200",
-              "donationAmount":80,
-              "receivers":[
-                 101,
-                 204
-              ],
-              "receiversAvailable":[
-                 101,
-                 204,
-                 311
-              ],
-              "grandTotal":1000,
-              "donationAmountSuggested":30,
-              "donator":{
-                   "email":"christian@elefunds.de",
-                   "firstName":"Christian",
-                   "lastName":"Peters",
-                   "streetAddress":"Sch\u00f6nhauser Allee 124",
-                   "zip":10243,
-                   "city":"Berlin",
-                   "countryCode":"en"
-              }
-           }
-    ]
+```js
+[
+    {
+        "foreignId":125,
+        "donationTimestamp":"2012-10-10T15:57:40+0200",
+        "donationAmount":80,
+        "receivers":[
+            101,
+            204
+        ],
+        "receiversAvailable":[
+            101,
+            204,
+            311
+        ],
+        "grandTotal":1000,
+        "donationAmountSuggested":30,
+        "donator":{
+            "email":"christian@elefunds.de",
+            "firstName":"Christian",
+            "lastName":"Peters",
+            "streetAddress":"Sch\u00f6nhauser Allee 124",
+            "zip":10243,
+            "city":"Berlin",
+            "countryCode":"en"
+        }
+    }
+]
+```
 
 **Response**
 
@@ -125,11 +126,12 @@ Only the basic authentication.
 To improve performance, we update the status of donations and process them later in the background. Hence, you get a
 status response as soon as the donation information has been received.
 
-    {
-        "success": true,
-        "message": "2 of 2 donation(s) have been saved. 0 donation(s) failed the validation. 0 donation(s) failed due to a server problem."
-    }
-
+```js
+{
+    "success": true,
+    "message": "2 of 2 donation(s) have been saved. 0 donation(s) failed the validation. 0 donation(s) failed due to a server problem."
+}
+```
 
 ### PUT /donations/:foreignIds
 
@@ -154,11 +156,12 @@ Sets the status of one or multiple donation(s) to completed. You should use the 
 To improve performance, we update the status of donations and process them later in the background. Hence, you get a
 status response as soon as the donation information has been received.
 
-    {
-        "success": true,
-        "message": "3 of 3 donation(s) have been saved. 0 donation(s) failed the validation. 0 donation(s) failed due to a server problem."
-    }
-
+```js
+{
+    "success": true,
+    "message": "3 of 3 donation(s) have been saved. 0 donation(s) failed the validation. 0 donation(s) failed due to a server problem."
+}
+```
 
 ### DELETE /donations/:foreignIds
 
@@ -183,11 +186,12 @@ Cancels a single or multiple donations identified by a comma separated list of f
 To improve performance, we update the status of donations and process them later in the background. Hence, you get a
 status response as soon as the donation information has been received.
 
-    {
-        "success": true,
-        "message": "3 of 3 donation(s) have been saved. 0 donation(s) failed the validation. 0 donation(s) failed due to a server problem."
-    }
-    
+```js
+{
+    "success": true,
+    "message": "3 of 3 donation(s) have been saved. 0 donation(s) failed the validation. 0 donation(s) failed due to a server problem."
+}
+```
 
 ### ~~POST /donations/delete~~ ** DEPRECATED ** (Use [DELETE /donations/:foreignIds](#delete-donationsforeignids) instead)
 
@@ -207,9 +211,11 @@ Only the basic authentication.
 
 *Example POST body*
 
-    [
-        125,123
-    ]
+```js
+[
+    125,123
+]
+```
 
 **Response**
 
@@ -218,7 +224,9 @@ Only the basic authentication.
 To improve performance, we update the status of donations and process them later in the background. Hence, you get a
 status response as soon as the donation information has been received.
 
-    {
-        "success": true,
-        "message": "2 of 2 donation(s) have been saved. 0 donation(s) failed the validation. 0 donation(s) failed due to a server problem."
-    }
+```js
+{
+    "success": true,
+    "message": "2 of 2 donation(s) have been saved. 0 donation(s) failed the validation. 0 donation(s) failed due to a server problem."
+}
+```

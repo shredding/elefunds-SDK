@@ -1,5 +1,17 @@
 ## CHANGELOG
 
+### [VERSION 2.0](https://github.com/elefunds/elefunds-SDK/tree/v2.0)
+
+- PHP SDK moved to [elefunds-PHP](https://github.com/elefunds/elefunds-PHP)
+- Frontend exported to stand-alone JavaScript app. See [JavaScriptFrontend](Documentation/Shops/JavaScriptFrontend.md) for more info
+  - HTML template removed
+- Documentation divided into [API Docs](Documentation/API/) & [Shop Docs](Documentation/Shops/)
+
+
+---
+
+### [VERSION 1.3](https://github.com/elefunds/elefunds-SDK/tree/v1.3.1)
+
 #### Breaking Changes
 
 - Form names submitted during the donation process changed

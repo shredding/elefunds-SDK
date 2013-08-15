@@ -1,27 +1,34 @@
-elefunds API SDK v1.3.1
-=======================
+elefunds API SDK v2.0
+=====================
 
 Welcome to the elefunds API SDK.
 
-Be sure to checkout the the [Getting Started Guide](https://github.com/elefunds/elefunds-SDK/blob/master/Documentation/GettingStarted.md)
+Be sure to checkout the the [Getting Started Guide](Documentation/API/GettingStarted.md)
 for a general introduction to the elefunds API, before moving on to the language of your choice.
 
 The API itself is (naturally) language agnostic, but the SDKs are a great help and timesaver! If your language
-is not supported yet, contact us at <hello@elefunds.de> and we'll help you get started.
+is not supported yet or you're just interested in reference material (ie. HTML, CSS or Javascript snippets), be sure to contact us at <hello@elefunds.de> and we'll find a solution.
 
-Best,  
+Best,
 the elefunds team
 
 
-## Dive in
+## API Guides
 
-[Getting Started](https://github.com/elefunds/elefunds-SDK/blob/master/Documentation/GettingStarted.md) 
+- [Getting Started](Documentation/API/GettingStarted.md)
 
-[Information for online retailers](https://github.com/elefunds/elefunds-SDK/blob/master/Documentation/InformationForOnlineRetailers.md)
+- [API Reference](Documentation/API/APIReference.md)
 
-[API Reference](https://github.com/elefunds/elefunds-SDK/blob/master/Documentation/APIReference.md)
+- [Social Media Share](Documentation/API/SocialMediaShare.md)
 
-[Social Media Share](https://github.com/elefunds/elefunds-SDK/blob/master/Documentation/SocialMediaShare.md)
+
+## Shop Implementation Guides
+
+- [Overview for Shops](Documentation/Shops/OverviewForShops.md)
+
+- [JavaScript Frontend](Documentation/Shops/JavaScriptFrontend.md)
+
+- [Information for Online Retailers](Documentation/Shops/InformationForOnlineRetailers.md)
 
 
 ## PHP SDK
@@ -38,8 +45,3 @@ To see the SDK in action, take a look at our plugins for the following shop plat
 :octocat: [**Shopware**](https://github.com/elefunds/elefunds-Shopware)
 
 :octocat: [**Magento**](https://github.com/elefunds/elefunds-Magento)
-
-
-## License
-
-The elefunds API SDK is licensed under the [New BSD license](https://github.com/elefunds/elefunds-SDK/blob/master/LICENSE).

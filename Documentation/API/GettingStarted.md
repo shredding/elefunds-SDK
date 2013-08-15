@@ -18,19 +18,25 @@ You can access everything via two URIs:
     https://connect.elefunds.de/receivers
     https://connect.elefunds.de/donations
 
+
 ## Client Libraries
 
 Sounds simple, right? But can it get any simpler? Yes, it can. Check out our client libraries!
 
-Currently available is a full featured Library for PHP. It supports full access to the elefunds API, ships with a powerful templating system, prebuilt implementations for shops, elegant class abstraction, features persistence layer integration - and that's just an overview!
+Currently available is a full featured Library for PHP and a complete frontend JavaScript template.
 
-You're system is written in PHP? Skim through this guide and be sure to grab a copy of our PHP client library.
+The [PHP SDK](https://github.com/elefunds/elefunds-PHP) supports full access to the elefunds API, comes with prebuilt implementations for shops,
+elegant class abstraction, features persistence layer integration - and that's just an overview!
+
+Additionally, the JavaScript SDK provides the frontend implementation, that handles frontend logic,
+such as retrieving and displaying receivers. Its simple usage and flexible architecture is designed to
+make integration of the module as effortless as possible for your HTML5 based application.
 
 
 ## Prerequisites
 
-In order to connect to the API, all you need is an API-Key and your client ID. For testing purposes, you are free to use
-one of our test accounts.
+In order to connect to the API, all you need is your client ID and API-key. For testing purposes, feel free to use
+one of our [test accounts](testaccounts.csv).
 
 > Donations that are pushed to the test accounts are not creating a real payment request and can be used for all testing
 > purposes.
@@ -40,13 +46,13 @@ one of our test accounts.
 
 Here are some sample clientIDs with their API keys.
 
-    clientId                API Key
+| client ID   | API Key              |
+|:-----------:|:--------------------:|
+| 1001        | ay3456789gg234561234 |
+| 1002        | vXqolz79vY80Bms037cM |
+| 1003        | TDls1Dj34Dc7KHpfkzbA |
 
-    1001                    ay3456789gg234561234
-    1002                    vXqolz79vY80Bms037cM
-    1003                    TDls1Dj34Dc7KHpfkzbA
-
-The entire list is included in the `Documentation` folder as `testaccounts.csv`
+The entire list can be found in the `Documentation` folder as [testaccounts.csv](testaccounts.csv).
 
 
 ## Connecting to the API
@@ -88,40 +94,39 @@ You may want to use the receiver information to select a recipient for the to-be
 roundup suggestion in your shop, via an admin panel of plugin or even random.
 
 In order to retrieve receivers that are registered to your account, you can just call the `/receivers` resource with
-your clientId and hashed key.
+your clientId.
 
 An example for the clientId of 1001 would be:
 
-    GET https://connect.elefunds.de/receivers/?clientId=1001&hashedKey=eb85fa24f23b7ade5224a036b39556d65e764653
+    GET https://connect.elefunds.de/receivers/1001
 
 This returns, based on the nature of your client arrangement, a JSON in the following format:
 
-    {
-       "meta":{
-          "valid":"2012-12-31T12:00:00"
-       },
-       "receivers":{
-          "de":[
-             {
-                "images":{
-                   "horizontal":{
-                      "small":"https://bbbf9fd0e36d5cb36b93-c1fc539e0df6af03ccc14b5020ab4161.ssl.cf1.rackcdn.com/receivers/sample_receiver_01h.png",
-                      "large":"https://bbbf9fd0e36d5cb36b93-c1fc539e0df6af03ccc14b5020ab4161.ssl.cf1.rackcdn.com/receivers/sample_receiver_01h.png",
-                      "medium":"https://bbbf9fd0e36d5cb36b93-c1fc539e0df6af03ccc14b5020ab4161.ssl.cf1.rackcdn.com/receivers/sample_receiver_01h.png"
-                   },
-                   "vertical":{
-                      "small":"https://bbbf9fd0e36d5cb36b93-c1fc539e0df6af03ccc14b5020ab4161.ssl.cf1.rackcdn.com/receivers/sample_receiver_01v.png",
-                      "large":"https://bbbf9fd0e36d5cb36b93-c1fc539e0df6af03ccc14b5020ab4161.ssl.cf1.rackcdn.com/receivers/sample_receiver_01v.png",
-                      "medium":"https://bbbf9fd0e36d5cb36b93-c1fc539e0df6af03ccc14b5020ab4161.ssl.cf1.rackcdn.com/receivers/sample_receiver_01v.png"
-                   }
-                },
-                "description":"A description of the receiver.",
-                "id":101,
-                "name":"The name of the receiver."
-             }
-          ]
-       }
-    }
+```js
+{       
+   "receivers":{
+      "de":[
+         {
+            "images":{
+               "horizontal":{
+                  "small":"https://bbbf9fd0e36d5cb36b93-c1fc539e0df6af03ccc14b5020ab4161.ssl.cf1.rackcdn.com/receivers/sample_receiver_01h.png",
+                  "large":"https://bbbf9fd0e36d5cb36b93-c1fc539e0df6af03ccc14b5020ab4161.ssl.cf1.rackcdn.com/receivers/sample_receiver_01h.png",
+                  "medium":"https://bbbf9fd0e36d5cb36b93-c1fc539e0df6af03ccc14b5020ab4161.ssl.cf1.rackcdn.com/receivers/sample_receiver_01h.png"
+               },
+               "vertical":{
+                  "small":"https://bbbf9fd0e36d5cb36b93-c1fc539e0df6af03ccc14b5020ab4161.ssl.cf1.rackcdn.com/receivers/sample_receiver_01v.png",
+                  "large":"https://bbbf9fd0e36d5cb36b93-c1fc539e0df6af03ccc14b5020ab4161.ssl.cf1.rackcdn.com/receivers/sample_receiver_01v.png",
+                  "medium":"https://bbbf9fd0e36d5cb36b93-c1fc539e0df6af03ccc14b5020ab4161.ssl.cf1.rackcdn.com/receivers/sample_receiver_01v.png"
+               }
+            },
+            "description":"A description of the receiver.",
+            "id":101,
+            "name":"The name of the receiver."
+         }
+      ]
+   }
+}
+```
 
 The bread and butter of this JSON is the receivers object, which contains information about all receivers that are linked to your account. In this case, we have access to exactly one receiver.
 
@@ -134,12 +139,12 @@ Note that the object may contain multiple languages - these will be german and e
 
 You can use any of the given information to build a nice UI for your users. However, the id is essential if a donation
 is finally made, as it identifies who will benefit from the donation. Thus, you must ensure, that the id is available,
-once you send a donation back to the API. This can be achieved by persisting them to the database or make them part of the session during a checkout process. Have a look at our client libraries for more information and examples.
+once you send a donation back to the API. This can be achieved by persisting them to the database or make them part of the session during a checkout process. 
 
-Our API is very fast, optimized for massive amounts of concurrent requests and build to be scalable as our business grows. Therefore, you can easily request the receivers every time you need them. However, if the nature of your site requires to cache the receivers on your server side, you are free to do so. Just make sure, that the cache expires within the valid time.
+Have a look at our client libraries or existing shop implementation for more information and examples.
 
-The valid time depends on your settings and the agreement for your clientId. If you are participating in campaigns, you may have a dynamic and shorter valid time; some agreements may have longer valid times and can therefore cache the receivers for a very long time.
-
+> Normal circumstances assumed, you won't have to deal with receiving and displaying receivers, as the Javascript SDK can
+> do that for you.
 
 ## Sending donations
 
@@ -149,33 +154,35 @@ A sent donation is basically a notification of the API that a donation has been 
 
 The donation should be sent in form of a JSON object to the API. For example:
 
-    [
-       {
-          "foreignId":125,
-          "donationTimestamp":"2012-10-10T15:57:40+0200",
-          "donationAmount":80,
-          "receivers":[
-             101,
-             204
-          ],
-          "receiversAvailable":[
-             101,
-             204,
-             311
-          ],
-          "grandTotal":1000,
-          "donationAmountSuggested":30,
-          "donator":{
-               "email":"christian@elefunds.de",
-               "firstName":"Christian",
-               "lastName":"Peters",
-               "streetAddress":"Sch\u00f6nhauser Allee 124",
-               "zip":10243,
-               "city":"Berlin",
-               "countryCode":"en"
-          }
-       }
-    ]
+```js
+[
+    {
+        "foreignId":125,
+        "donationTimestamp":"2012-10-10T15:57:40+0200",
+        "donationAmount":80,
+        "receivers":[
+            101,
+            204
+        ],
+        "receiversAvailable":[
+            101,
+            204,
+            311
+        ],
+        "grandTotal":1000,
+        "donationAmountSuggested":30,
+        "donator":{
+            "email":"christian@elefunds.de",
+            "firstName":"Christian",
+            "lastName":"Peters",
+            "streetAddress":"Sch\u00f6nhauser Allee 124",
+            "zip":10243,
+            "city":"Berlin",
+            "countryCode":"en"
+        }
+    }
+]
+```
 
 As you can see, the donation itself is wrapped in an array. Hence, you are able to send multiple donations via one API
 call. This can be useful if you decide to collect multiple donations (or maybe wait until some payment from a customer
