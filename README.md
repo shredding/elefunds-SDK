@@ -3,7 +3,7 @@ elefunds API SDK v2.0
 
 Welcome to the elefunds API SDK.
 
-Be sure to checkout the the [Getting Started Guide](Documentation/API/GettingStarted.md)
+Be sure to checkout the the [Getting Started Guide](https://github.com/elefunds/elefunds-SDK/blob/master/Documentation/API/GettingStarted.md)
 for a general introduction to the elefunds API, before moving on to the language of your choice.
 
 The API itself is (naturally) language agnostic, but the SDKs are a great help and timesaver! If your language
