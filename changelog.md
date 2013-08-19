@@ -3,9 +3,9 @@
 ### [VERSION 2.0](https://github.com/elefunds/elefunds-SDK/tree/v2.0)
 
 - PHP SDK moved to [elefunds-PHP](https://github.com/elefunds/elefunds-PHP)
-- Frontend exported to stand-alone JavaScript app. See [JavaScriptFrontend](Documentation/Shops/JavaScriptFrontend.md) for more info
+- Frontend exported to stand-alone JavaScript app. See [JavaScriptFrontend](https://github.com/elefunds/elefunds-SDK/blob/master/Documentation/Shops/JavaScriptFrontend.md) for more info
   - HTML template removed
-- Documentation divided into [API Docs](Documentation/API/) & [Shop Docs](Documentation/Shops/)
+- Documentation divided into [API Docs](https://github.com/elefunds/elefunds-SDK/blob/master/Documentation/API/) & [Shop Docs](https://github.com/elefunds/elefunds-SDK/blob/master/Documentation/Shops/)
 
 
 ---

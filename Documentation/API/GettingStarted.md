@@ -36,7 +36,7 @@ make integration of the module as effortless as possible for your HTML5 based ap
 ## Prerequisites
 
 In order to connect to the API, all you need is your client ID and API-key. For testing purposes, feel free to use
-one of our [test accounts](testaccounts.csv).
+one of our [test accounts](https://github.com/elefunds/elefunds-SDK/blob/master/Documentation/API/testaccounts.csv).
 
 > Donations that are pushed to the test accounts are not creating a real payment request and can be used for all testing
 > purposes.
@@ -52,7 +52,7 @@ Here are some sample clientIDs with their API keys.
 | 1002        | vXqolz79vY80Bms037cM |
 | 1003        | TDls1Dj34Dc7KHpfkzbA |
 
-The entire list can be found in the `Documentation` folder as [testaccounts.csv](testaccounts.csv).
+The entire list can be found in the `Documentation` folder as [testaccounts.csv](https://github.com/elefunds/elefunds-SDK/blob/master/Documentation/API/testaccounts.csv).
 
 
 ## Connecting to the API

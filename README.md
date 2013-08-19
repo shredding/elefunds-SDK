@@ -15,20 +15,20 @@ the elefunds team
 
 ## API Guides
 
-- [Getting Started](Documentation/API/GettingStarted.md)
+- [Getting Started](https://github.com/elefunds/elefunds-SDK/blob/master/Documentation/API/GettingStarted.md)
 
-- [API Reference](Documentation/API/APIReference.md)
+- [API Reference](https://github.com/elefunds/elefunds-SDK/blob/master/Documentation/API/APIReference.md)
 
-- [Social Media Share](Documentation/API/SocialMediaShare.md)
+- [Social Media Share](https://github.com/elefunds/elefunds-SDK/blob/master/Documentation/API/SocialMediaShare.md)
 
 
 ## Shop Implementation Guides
 
-- [Overview for Shops](Documentation/Shops/OverviewForShops.md)
+- [Overview for Shops](https://github.com/elefunds/elefunds-SDK/blob/master/Documentation/Shops/OverviewForShops.md)
 
-- [JavaScript Frontend](Documentation/Shops/JavaScriptFrontend.md)
+- [JavaScript Frontend](https://github.com/elefunds/elefunds-SDK/blob/master/Documentation/Shops/JavaScriptFrontend.md)
 
-- [Information for Online Retailers](Documentation/Shops/InformationForOnlineRetailers.md)
+- [Information for Online Retailers](https://github.com/elefunds/elefunds-SDK/blob/master/Documentation/Shops/InformationForOnlineRetailers.md)
 
 
 ## PHP SDK
