@@ -1,4 +1,4 @@
-## elefunds (Deutsch)
+Deutsch: elefunds AGB-Erweiterung
 
 Im Bezahlprozess befindet sich das von der elefunds GmbH entwickelte elefunds Spenden-Plug-In, das Ihnen die Möglichkeit gibt, abseits vom Zahlbetrag einen frei wählbaren Betrag als Spende aufzurunden. Die Aufrundung kann nach Wahl an die zur Verfügung stehenden Organisationen gespendet werden, wobei der Betrag bei Mehrfachauswahl gleichmäßig unter den spendenempfangenden Organisationen aufgeteilt wird. Bei Fragen rund um das Thema Spenden in unserem Shop können Sie sich gerne jederzeit direkt mit der elefunds GmbH in Verbindung setzen:
 
@@ -12,9 +12,11 @@ www.elefunds.de
 
 Mit der Aktivierung des elefunds Plug-Ins erklären Sie sich einverstanden, dass der gewählte Spendenbetrag zu Ihrem  Kaufpreis hinzugefügt wird und als eigene Position auf der Rechnung erscheint. Die Spende beinhaltet keine MwSt.. Die Spende wird für Rechnung der elefunds Stiftung gUG vereinnahmt, die den Betrag zu 100% an die ausgewählten Organisationen weiterleitet. Der vorliegende Kaufbeleg ersetzt keine Spendenbescheinigung im Sinne des Steuerrechts.
 
+
 ---
 
-## elefunds (English)
+
+English: General Terms and Conditions - Extention
 
 The elefunds donation plug-in, developed by elefunds GmbH, is part of the payment process to provide you with the chance to round up a freely eligible donation amount aside your invoice. The up-rounding can be donated to any displayed organisation according to your choice.
 
