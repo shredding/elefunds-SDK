@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="elefunds SDK Demo">
+    <meta name="author" content="elefunds">
+
+    <title>elefunds Demo Checkout</title>
+
+    <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css">
+    
+    <!-- Include the elefunds.css file -->
+    <link rel="stylesheet" href="https://43ce0697b91280cbef31-14c96824618f1f6e4d87350d0f98c98a.ssl.cf1.rackcdn.com/static/elefunds.css">
+    <style>
+        .container {
+            min-width: 680px;
+        }
+        #articles th:nth-child(1) {
+            width: 78%;
+        }
+        #articles th:nth-child(2) {
+            width: 10%;
+        }
+        #articles th:nth-child(3) {
+            width: 12%;
+        }
+        .btn-custom {
+          background-color: #00efa2;
+          border-color: #00efa2;
+        }
+        .btn-custom:hover,
+        .btn-custom:focus,
+        .btn-custom:active,
+        .btn-custom.active {
+          color: #fff;
+          background-color: #00d691;
+          border-color: #00bc7f;
+        }
+        .white {
+          color: #fff;
+        }
+    </style>
+
+    <!-- You don't have to include jQuery, but we'll be using it for this checkout... -->
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
+    <script>
+        // Checkout specific JS - ignore this
+        $(document).ready(function() {
+            $('#buy').on('click', function(e) {
+                e.preventDefault();
+                  
+                if($('#agree').is(':checked')) {
+                    $(this).unbind('click').click();
+                } else {
+                    $('#agree').parent().css('color', '#ff0000');
+                }
+            });
+              
+            $('#agree').on('click', function() {
+                $(this).parent().css('color', '#000');
+            });
+        });
+    </script>
+    
+    
+    <!-- Include the elefunds.min.js file after all other JS files -->
+    <script type="text/javascript" src="https://43ce0697b91280cbef31-14c96824618f1f6e4d87350d0f98c98a.ssl.cf1.rackcdn.com/static/elefunds.min.js"></script>
+  </head>
+  <body>
+    <div class="container">
+
+      <div class="page-header">
+        <h1>Example Shop Checkout</h1>
+        <p class="lead">A sample checkout demonstrating the elefunds plugin and simple frontend integration.</p>
+      </div>
+      
+      <h3>Overview</h3>
+      <table id="articles" class="table table-striped">
+          <thead>
+              <tr>
+                  <th>Article</th>
+                  <th class="text-center">Quanity</th>
+                  <th class="text-right">Price</th>
+              </tr>
+          </thead>
+          <tbody>
+              <tr>
+                  <td><span class="glyphicon glyphicon-camera"></span>&nbsp;&nbsp;<strong>Camera</strong>
+                      <p>
+                          <small>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;12 megapixel, 3x zoom, 18-55mm lens</small>
+                      </p>
+                  </td>
+                  <td class="text-center">1</td>
+                  <td class="text-right">249.00 €</td>
+              </tr>
+              <tr>
+                  <td><span class="glyphicon glyphicon-headphones"></span>&nbsp;&nbsp;<strong>Headphones</strong>
+                      <p>
+                          <small>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;3.5mm connector, 32 ohm</small>
+                      </p>
+                  </td>
+                  <td class="text-center">1</td>
+                  <td class="text-right">39.00 €</td>
+              </tr>
+          </tbody>
+          
+          <!-- Include a div with the ID "elefunds" -->
+          <tr>
+              <td colspan="3" style="padding: 0"><div id="elefunds"></div></td>
+          </tr>
+          
+          <tfoot>
+              <tr>
+                  <td></td>
+                  <td class="text-center warning"><strong>Total</strong></td>
+                  <!-- Note the ID / selector for the grand total. #total -->
+                  <td class="text-right warning"><strong id="total">288.00 €<strong></td>
+              </tr>
+          </tfoot>
+      </table>
+      
+      <!-- Note the ID / selector for the form. #checkout-form -->
+      <form id="checkout-form" role="form" action="demo-success.html" method="POST">
+          <div class="checkbox">
+              <label class="pull-right">
+                  <!-- Gotta agree to something, right? -->
+                  <input id="agree" type="checkbox"> I understand that this is <strong>not</strong> a real order.
+              </label>
+          </div>
+
+          <button id="buy" type="submit" class="btn btn-custom pull-right white">
+              <span class="glyphicon glyphicon-shopping-cart"></span> Buy now!
+          </button>
+      </form>
+      
+      <!-- Include the window.elefundsOptions object -->
+      <script>
+          window.elefundsOptions = {
+              view: 'module',
+              skin: {
+                  theme: 'light',
+                  color: '#00efa2',
+                  dimensions: 'flexible',
+                  orientation: 'horizontal'
+              },
+              offerDonationReceipt: true,
+              currency: '€',
+              currencyDelimiter: '.',
+              sumExcludingDonation: 28800,
+              formSelector: '#checkout-form',
+              clientId: 1001,
+              foreignId: 'TEST01',
+              totalSelector: '#total',
+              countryCode: 'en'
+          }
+      </script>
+
+    </div> <!-- /container -->
+    
+    <div class="container">
+        <hr />
+        <ul class="pager">
+            <li><a href="http://elefunds.github.io/elefunds-SDK/" type="button" class="btn btn-default">
+                <span class="glyphicon glyphicon-chevron-left"></span> Back to GitHub
+            </a></li>
+        </ul>
+    </div>
+  </body>
+</html>

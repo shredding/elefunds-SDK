@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="elefunds SDK Demo">
+    <meta name="author" content="elefunds">
+
+    <title>elefunds Demo Checkout Success</title>
+
+    <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://43ce0697b91280cbef31-14c96824618f1f6e4d87350d0f98c98a.ssl.cf1.rackcdn.com/static/elefunds.css">
+    <style>
+        .container {
+            min-width: 680px;
+        }
+    </style>
+    
+    <script type="text/javascript" src="https://43ce0697b91280cbef31-14c96824618f1f6e4d87350d0f98c98a.ssl.cf1.rackcdn.com/static/elefunds.min.js"></script>
+  </head>
+
+  <body>
+    <div class="container">
+
+      <div class="page-header">
+          <div class="alert alert-success"><strong>Success</strong>, you have completed the checkout!</div>
+          
+          <!-- Include a div with the ID "elefunds-share" -->
+          <div id="elefunds-share"></div>
+      </div>
+      
+      <p>Find out how easy it is to integrate elefunds into your checkout. Head on over to the <a href="http://elefunds.github.io/elefunds-SDK/">SDK Documentation</a> on GitHub.</p>
+      
+      <ul class="pager">
+          <li><a href="demo.html" type="button" class="btn btn-default">
+                <span class="glyphicon glyphicon-repeat"></span> Back to Checkout
+            </a></li>
+      </ul>
+      
+      <!-- Include the window.elefundsOptions object -->
+      <script>
+          window.elefundsOptions = {
+              view: 'socialMediaShare',
+              clientId: 1001,
+              foreignId: 'TEST01',
+              countryCode: 'en'
+          }
+      </script>
+
+    </div> <!-- /container -->
+  </body>
+</html>
