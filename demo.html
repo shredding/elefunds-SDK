@@ -51,7 +51,7 @@
                 e.preventDefault();
                   
                 if($('#agree').is(':checked')) {
-                    $(this).unbind('click').click();
+                    window.location.replace('demo-success.html');
                 } else {
                     $('#agree').parent().css('color', '#ff0000');
                 }
@@ -121,8 +121,7 @@
       </table>
       
       <!-- Note the ID / selector for the form. #checkout-form -->
-      <!-- This form would also be sent using a POST request, but GitHub doesn't allow us to do that-->
-      <form id="checkout-form" role="form" action="demo-success.html" method="GET">
+      <form id="checkout-form" role="form" action="demo-success.html" method="POST">
           <div class="checkbox">
               <label class="pull-right">
                   <!-- Gotta agree to something, right? -->
