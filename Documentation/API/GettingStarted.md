@@ -178,7 +178,8 @@ The donation should be sent in form of a JSON object to the API. For example:
             "streetAddress":"Sch\u00f6nhauser Allee 124",
             "zip":10243,
             "city":"Berlin",
-            "countryCode":"en"
+            "countryCode":"en",
+            "company":"elefunds"
         }
     }
 ]
@@ -199,7 +200,6 @@ donation, you can send this information along.
 - **grandTotal** (optional) is the sum of the overall transaction (including the donation).
 - **donationAmountSuggested** (optional) is the donation amount that was presented to the user (if applicable).
 - **donator** (optional) is an object with information about a donator. This is only needed when the user wants to receive a donation receipt and has therefore agreed to have his information shared. If so, all you have to do is to submit the user data and the elefunds foundation will send the user a donation receipt.
-
 Sending the donation is as easy as doing a POST request to `/donations` and sending the JSON as a raw POST body.
 
 The URL for the client with the id of 1001 would be:
