@@ -113,7 +113,8 @@ Only the basic authentication.
             "streetAddress":"Sch\u00f6nhauser Allee 124",
             "zip":10243,
             "city":"Berlin",
-            "countryCode":"en"
+            "countryCode":"en",
+            "company":"elefunds"
         }
     }
 ]
