@@ -5,7 +5,9 @@ The elefunds API is what we like to call *A better world as a service*.
 It enables you to bake electronic fundraising directly into your applications.
 
 Whether it's a shop; a mobile app where you give away a few bucks every time a user checks in at your café; a ticket
-system where your company donates any time your employees finishes a milestone; or an open source system, where you enable agencies to contribute a donation every time a bug is resolved.
+system where your company donates any time your employees finishe a milestone; or an open source system, where you enable agencies to contribute a donation every time a bug is resolved.
+In case you want to compensate CO2-Emissions or give to charity with round ups or downs on Banking Softwares and Transfers, ERP-based Billing or Invoicing Systems 
+Salary Statements or just a Flight or Train Ticket purchase, we are here to serve...
 
 We build the elefunds API to handle massive amounts of concurrent requests and it is aggressively pushed for speed. It
 resides upon a powerful backend, that treats donation, receiver, campaign management and much more with pleasure and is accompanied with a rich social media integration of the most successful social networks around.
@@ -178,7 +180,8 @@ The donation should be sent in form of a JSON object to the API. For example:
             "streetAddress":"Sch\u00f6nhauser Allee 124",
             "zip":10243,
             "city":"Berlin",
-            "countryCode":"en"
+            "countryCode":"en",
+            "company":"elefunds"
         }
     }
 ]
@@ -199,8 +202,8 @@ donation, you can send this information along.
 - **grandTotal** (optional) is the sum of the overall transaction (including the donation).
 - **donationAmountSuggested** (optional) is the donation amount that was presented to the user (if applicable).
 - **donator** (optional) is an object with information about a donator. This is only needed when the user wants to receive a donation receipt and has therefore agreed to have his information shared. If so, all you have to do is to submit the user data and the elefunds foundation will send the user a donation receipt.
-
 Sending the donation is as easy as doing a POST request to `/donations` and sending the JSON as a raw POST body.
+The validation for donator will fail if any field is invalid or missing, except for "company", which is optional and may be empty or invalid.
 
 The URL for the client with the id of 1001 would be:
 
