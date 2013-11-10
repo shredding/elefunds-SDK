@@ -91,6 +91,11 @@ window.elefundsOptions = {
     //The element you choose here will be cloned and appended after itself with the donation label as its content (elefunds donation)
     //Helpful when it's desired to show the donation separated from the module (ie. in an order overview)
     //Values: any DOM selector (class, element, id)
+    rowContainer: '#lfnds-row-container',
+    
+    //The element you choose here will be cloned and appended after itself with the donation label as its content (elefunds donation)
+    //Helpful when it's desired to show the donation separated from the module (ie. in an order overview)
+    //Values: any DOM selector (class, element, id)
     rowLabel: '#lfnds-row-label',
 
     //The element you choose here will be cloned and appended after itself with the donation value aus content (12.00 €)
