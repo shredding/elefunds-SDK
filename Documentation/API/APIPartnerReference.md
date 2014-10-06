@@ -9,9 +9,13 @@ Registers a new, pending client with the API. The JSON must be sent as raw POST 
 
     https://connect.elefunds.de/register/client
 
+**Parameters**
+
+Only the basic authentication.
+
 **Example Request**
 
-    POST https://connect.elefunds.de/register/client
+    POST https://connect.elefunds.de/register/client/?clientId=1001&hashedKey=eb85fa24f23b7ade5224a036b39556d65e764653
 
 *Example POST body*
 
