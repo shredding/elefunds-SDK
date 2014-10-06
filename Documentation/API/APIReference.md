@@ -27,15 +27,15 @@ JSON, as specified in the resource documentation.
 
 ### GET /receivers
 
-Retrieves all receivers that are registered for a client. This api call does not require authentication.
+Retrieves all available receivers. Providing a clientId fetches all receivers that are registered to that client. This api call does not require authentication.
 
 **Resource URL**
 
-    https://connect.elefunds.de/receivers/:clientId
+    https://connect.elefunds.de/receivers
 
 **Parameters**
 
-The clientId that requests the receivers.
+*Optional* A clientId to get the cooresponding receivers.
 
 **Example Request**
 
