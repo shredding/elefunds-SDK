@@ -19,6 +19,8 @@ the elefunds team
 
 - [API Reference](https://github.com/elefunds/elefunds-SDK/blob/master/Documentation/API/APIReference.md)
 
+- [API Reference for Partners](https://github.com/elefunds/elefunds-SDK/blob/master/Documentation/API/APIPartnerReference.md) 
+
 - [Social Media Share](https://github.com/elefunds/elefunds-SDK/blob/master/Documentation/API/SocialMediaShare.md)
 
 
