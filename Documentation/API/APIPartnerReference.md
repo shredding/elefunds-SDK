@@ -15,7 +15,7 @@ Only the basic authentication.
 
 **Example Request**
 
-    POST https://connect.elefunds.de/register/client/?clientId=1001&hashedKey=eb85fa24f23b7ade5224a036b39556d65e764653
+    POST https://connect.elefunds.de/register/client/?partnerId=1001&hashedKey=eb85fa24f23b7ade5224a036b39556d65e764653
 
 *Example POST body*
 
