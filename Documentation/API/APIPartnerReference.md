@@ -43,6 +43,12 @@ Only the basic authentication.
 }
 ```
 
+The above listed attributes are all required.
+
+*gender*: 'm' for male or 'f' for female  
+*receivers*: an array of receiver IDs as selected by the client from the pool of [receivers](https://github.com/elefunds/elefunds-SDK/blob/master/Documentation/API/APIReference.md#get-receivers)
+
+
 **Response**
 
 *HTTP Code:* 200
