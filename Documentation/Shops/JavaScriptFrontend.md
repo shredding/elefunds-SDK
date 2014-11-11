@@ -5,10 +5,14 @@ and handling the logic independent of the system you are developing for.
 We highly recommend you to use the JS-Application as it takes the heavy frontend lifting from you and let's you concentrate on the backend.
 
 > We appreciate your work and interest in the elefunds API. Whenever you need assistance, found a bug or just want to get in touch, just drop
-> us a line: **Christian** (Backend), **David** (Design & Frontend) or **Roland** (Frontend) @elefunds.de
+> us a line: hello@elefunds.de
 
 ## Overview
-Configure and setting up the JavaScript-Application is pretty straight forward. All you need to do is provide is a simple JSON-Object.
+Include the following script on your checkout page:
+
+https://43ce0697b91280cbef31-14c96824618f1f6e4d87350d0f98c98a.ssl.cf1.rackcdn.com/static/elefunds.min.js
+
+Configuring and setting up the JavaScript-Application is pretty straight forward. All you need to do is provide is a simple JSON-Object.
 
 The passed parameters handle which view to show (module / social media),
 which total to use to calculate the suggested donation and the grand total including the donation,
