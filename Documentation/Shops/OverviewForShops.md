@@ -47,8 +47,10 @@ and various logic for you. The latest version can always be found here:
 
 https://43ce0697b91280cbef31-14c96824618f1f6e4d87350d0f98c98a.ssl.cf1.rackcdn.com/static/elefunds.min.js
 
-Just include this file after any other JavaScript libraries you might already be using (jQuery, Prototype, etc.),
-preferably at the bottom of the page.
+Include this file after any other JavaScript libraries you might already be using (jQuery, Prototype, etc.),
+preferably at the bottom of the page. Additionally, include the following CSS file in the header of every page the module displayed. In most cases, this will be the checkout and checkout success page.
+
+https://43ce0697b91280cbef31-14c96824618f1f6e4d87350d0f98c98a.ssl.cf1.rackcdn.com/static/elefunds.css
 
 > **Note**: In case your frontend is not built in HTML, please contact us so we can work together on an alternative.
 
