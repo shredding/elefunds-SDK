@@ -21,8 +21,7 @@ Writing an implementation for your shop system can be summed up in the following
 3. Add any donations made to the order
 4. Forward incoming donations to the API
 5. Display the social media share view after the checkout
-6. Add a short disclaimer regarding the donation to the invoice
-7. Observe status changes and report them to the API
+6. Observe status changes and report them to the API
 
 The good news is that a good chunk of the logic - such as retrieving the receivers from the API,
 displaying the module and much more is done by the elefunds JavaScript frontend.
@@ -86,27 +85,7 @@ the JavaScript file again in your checkout success page, with the adjusted param
 in the [JavaScript Guide](JavaScriptFrontend.md).
 
 
-## 6. Add a short disclaimer regarding the donation to the invoice
-
-First of all, we assume that the donation appears on invoices and order emails, because it has been added to the order as additional position in step 3.
-
-However, german legislative requires us to provide a disclaimer regarding the donation on each invoice containing a donation. In order to comply,
-please also include the following sentence to the final invoice that is sent to the customer:
-
-```
-// English version
-Your donation is processed by the elefunds Foundation gUG which forwards 100% to your chosen charities.
-
-// German version
-Die Spende wird vereinnahmt für die elefunds Stiftung gUG und zu 100% an die ausgewählten Organisationen weitergeleitet.
-Der Kaufbeleg ersetzt keine Spendenbescheinigung im Sinne des Steuerrechts.
-```
-
-The common scenario would be to overwrite the invoice template (as we did in Magento) or hook into the PDF generation (as we did in Shopware).
-But the solution depends heavily on the system you are implementing for.
-
-
-## 7. Observe status changes and report them to the API
+## 6. Observe status changes and report them to the API
 
 A donation can have three states in the API. We already introduced the first one **pending**, but there are two more:
 
