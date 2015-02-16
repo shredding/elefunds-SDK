@@ -108,7 +108,7 @@ window.elefundsOptions = {
     //This is helpful, for example, when your template doesn't seperate the label and value into different elements by default, but you're able to define them manually for the elefunds donation.
     //Values: bool
     //Default: false
-    rowLabel: false,
+    rowContainerInline: false,
 
     //If the rowContainer is set, the element you define here will be looked up relative to the rowContainer element. //Otherwise, the element defined here will be cloned and appended after itself with the donation label as its content (elefunds donation)
     //Values: any DOM selector (class, element, id)
