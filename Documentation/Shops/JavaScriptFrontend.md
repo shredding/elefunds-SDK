@@ -47,8 +47,8 @@ window.elefundsOptions = {
         dimensions: 'flexible',
 
         //Orientation of the receiver logos.
-        //Values: horizontal, vertical
-        //Default: horizontal
+        //Values: 'horizontal', 'vertical'
+        //Default: 'horizontal'
         orientation: 'horizontal'
     },
 
@@ -101,6 +101,14 @@ window.elefundsOptions = {
     //If your checkout summary layout doesn't have the label and value in the same element, leave this undefined and only provide the rowLabel and rowValue keys.
     //Values: any DOM selector (class, element, id)
     rowContainer: '#shipping-row',
+
+    // Additionally, you have the option to set the following boolean flag. Only set this if rowContainer is defined.
+
+    //Define the following boolean flag if the following rowLabel and rowValue elements are pre-defined (ie. they are already in the template and don't need to be copied).
+    //This is helpful, for example, when your template doesn't seperate the label and value into different elements by default, but you're able to define them manually for the elefunds donation.
+    //Values: bool
+    //Default: false
+    rowLabel: false,
 
     //If the rowContainer is set, the element you define here will be looked up relative to the rowContainer element. //Otherwise, the element defined here will be cloned and appended after itself with the donation label as its content (elefunds donation)
     //Values: any DOM selector (class, element, id)
