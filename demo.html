@@ -54,6 +54,15 @@
         #articles tfoot {
           -webkit-transform: translateZ(0);
         }
+        .table tfoot > tr > td {
+          border-top: 0;
+        }
+        .table tfoot > tr > td:last-child {
+          white-space: nowrap;
+        }
+        .table tfoot {
+          border-top: 1px solid #ddd;
+        }
     </style>
 
     <!-- You don't have to include jQuery, but we'll be using it for this checkout... -->
@@ -106,7 +115,7 @@
                       </p>
                   </td>
                   <td class="text-center">1</td>
-                  <td class="text-right">249.00 €</td>
+                  <td class="text-right">245.00 €</td>
               </tr>
               <tr>
                   <td><span class="glyphicon glyphicon-headphones"></span>&nbsp;&nbsp;<strong>Headphones</strong>
@@ -125,11 +134,21 @@
           </tr>
           
           <tfoot>
+              <tr id="subtotal">
+                  <td></td>
+                  <td><strong>Subtotal</strong></td>
+                  <td class="text-right"><strong>284.00 €<strong></td>
+              </tr>
+              <tr id="shipping">
+                  <td></td>
+                  <td>Shipping</td>
+                  <td class="text-right">4.00 €</td>
+              </tr>
               <tr>
                   <td></td>
-                  <td class="text-center warning"><strong>Total</strong></td>
+                  <td class="warning"><strong>Total</strong></td>
                   <!-- Note the ID / selector for the grand total. #total -->
-                  <td class="text-right warning"><strong id="total">288.00 €<strong></td>
+                  <td class="text-right warning"><strong id="total">286.00 €<strong></td>
               </tr>
           </tfoot>
       </table>
@@ -162,11 +181,14 @@
               currency: '€',
               currencyDelimiter: '.',
               sumExcludingDonation: 28800,
-              formSelector: '#checkout-form',
+              formSelector: '#checkout-form',   //the form submitted with the order
               clientId: 1001,
               foreignId: 'TEST01',
               totalSelector: '#total',
-              countryCode: 'en'
+              countryCode: 'en',
+              rowContainer: '#shipping',    //the table row we want to copy in the order summary and replace with the donation
+              rowLabel: 'td:nth-child(2)',  //the label we want to replace 
+              rowValue: 'td:last-child',    //the value we want to replace with the donation amount
           }
       </script>
 
