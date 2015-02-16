@@ -10,12 +10,6 @@ The following part is meant to be a Q&A-Section pointing out those bumps ahead t
 In case you want to show off in front of your accountants, tell them the item shall be named *"Durchlaufende Posten"*
 Some Payment Gateways to report or even proceed one digital payment partially to differnt accounts, check with us if possible for you, because it's a lot easier for everybody.
 
-* Please make sure that every issued bill containing a donation item is provided with the following sentence:
-*"Der Spendenbetrag wird im Namen der elefunds Stiftung gUG vereinnahmt und zu 100% weitergeleitet. Dieser Kaufbeleg ersetzt keine Spendenbescheinigung im Sinne des Steuerrechts."*
-or
-*" The donation is billed on behalf of and accounted for the elefunds foundation gUG and proceeded without deductions at a 100% rate. Please don't hesitate to contact elefunds directly if a donation receipt is needed."*
-This is absolutely necessary to make sure that not just your tax advisor but your national fiscal authorities and your customers' tax advisor do understand the mediacy of the transferred amounts.
-
 That's pretty much all you have to do here but check below for more details and ways to make our cooperation nice and smooth.
 
 Service and further information
@@ -34,5 +28,4 @@ We won't force you to transfer donations for cancelled orders, in case the custo
 
 So now, that we have really tried to provide you with all the necessary information please make sure that you have all the features mentioned above in place and order when you are going live with our service.
 As always, make sure to call us in case of doubt!
-Thx for reading, applying and double checking all the above, you're awesome!
-Yiiiieeehaaaaa, Let's save the world together!
+Thanks for reading, applying and double checking all the above, you're awesome!

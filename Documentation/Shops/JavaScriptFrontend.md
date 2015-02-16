@@ -92,13 +92,21 @@ window.elefundsOptions = {
     //Default: 'en'
     countryCode: 'en',
 
-    //The element you choose here will be cloned and appended after itself with the donation label as its content (elefunds donation)
-    //Helpful when it's desired to show the donation separated from the module (ie. in an order overview)
+    // You have a couple of different choices to show the donation amount in the order summary.
+    // If you have a table-like layout containing the shipping amount, tax, etc. with a row for each position,
+    // you can define the following key (rowContainer) to copy and append the enitre row to the order summary.
+    // Alternatively, you can just set the rowLabel and rowValue to be copied individually.
+
+    //Define a row to be copied in the order summary list. An item listing like the shipping or tax is usually a good choice.
+    //If your checkout summary layout doesn't have the label and value in the same element, leave this undefined and only provide the rowLabel and rowValue keys.
+    //Values: any DOM selector (class, element, id)
+    rowContainer: '#shipping-row',
+
+    //If the rowContainer is set, the element you define here will be looked up relative to the rowContainer element. //Otherwise, the element defined here will be cloned and appended after itself with the donation label as its content (elefunds donation)
     //Values: any DOM selector (class, element, id)
     rowLabel: '#lfnds-row-label',
 
-    //The element you choose here will be cloned and appended after itself with the donation value aus content (12.00 €)
-    //Helpful when it's desired to show the donation separated from the module (ie. in an order overview)
+    //If the rowContainer is set, the element you define here will be looked up relative to the rowContainer element. //Otherwise, the element defined here will be cloned and appended after itself with the donation amount as its content (ie. 12.00 €)
     //Values: any DOM selector (class, element, id)
     rowValue: '#lfnds-row-value'
 }
@@ -114,7 +122,7 @@ To get the module running on your desired page, simply follow these steps:
 2. Include the JavaScript file in your page - **after** any libraries you might have are including (jQuery, Prototype, etc.)
 3. Provide the JSON-object (as shown above) in a global variable called `window.elefundsOptions` on the page.
 
-The module view requires all values marked with **\*Required\***, whereas the others will use their default value if not provided.
+The module view requires all values marked with **&nbsp;\*Required\*&nbsp;**, whereas the others will use their default value if not provided.
 
 
 ## 2. Using the donation values in the backend
