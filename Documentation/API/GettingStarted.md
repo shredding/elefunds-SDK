@@ -30,7 +30,7 @@ Currently available is a full featured Library for PHP and a complete frontend J
 The [PHP SDK](https://github.com/elefunds/elefunds-PHP) supports full access to the elefunds API, comes with prebuilt implementations for shops,
 elegant class abstraction, features persistence layer integration - and that's just an overview!
 
-Additionally, the JavaScript SDK provides the frontend implementation, that handles frontend logic,
+Additionally, the [JavaScript SDK](https://github.com/elefunds/elefunds-SDK/blob/master/Documentation/Shops/JavaScriptFrontend.md) provides the frontend implementation, that handles frontend logic,
 such as retrieving and displaying receivers. Its simple usage and flexible architecture is designed to
 make integration of the module as effortless as possible for your HTML5 based application.
 
@@ -150,7 +150,7 @@ Have a look at our client libraries or existing shop implementation for more inf
 
 ## Sending donations
 
-A sent donation is basically a notification of the API that a donation has been made. Using the API to report a donation is a binding transaction, with the obligation to fulfill said donation to the elefunds foundation. Depending on your contract details, this means that we will be sending you an invoice or collecting the donation amount via your registered payment method.
+A sent donation is basically a notification to the API that a donation has been made. Using the API to report a donation is a binding transaction, with the obligation to fulfill said donation to the elefunds foundation. Depending on your contract details, this means that we will be sending you an invoice or collecting the donation amount via your registered payment method.
 
 > Reminder: Using a test account is completely free and not associated with any obligations.
 
