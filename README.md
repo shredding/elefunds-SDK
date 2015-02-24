@@ -38,12 +38,3 @@ the elefunds team
 The PHP SDK has moved to its own repository:
 
 :octocat: [**elefunds-PHP**](https://github.com/elefunds/elefunds-PHP)
-
-
-## Shop Plugins
-
-To see the SDK in action, take a look at our plugins for the following shop platforms:
-
-:octocat: [**Shopware**](https://github.com/elefunds/elefunds-Shopware)
-
-:octocat: [**Magento**](https://github.com/elefunds/elefunds-Magento)
