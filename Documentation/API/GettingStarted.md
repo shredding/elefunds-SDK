@@ -182,7 +182,8 @@ The donation should be sent in form of a JSON object to the API. For example:
             "city":"Berlin",
             "countryCode":"en",
             "company":"elefunds"
-        }
+        },
+        "project": "awesome"
     }
 ]
 ```
@@ -204,6 +205,7 @@ donation, you can send this information along.
 - **donator** (optional) is an object with information about a donator. This is only needed when the user wants to receive a donation receipt and has therefore agreed to have his information shared. If so, all you have to do is to submit the user data and the elefunds foundation will send the user a donation receipt.
 Sending the donation is as easy as doing a POST request to `/donations` and sending the JSON as a raw POST body.
 The validation for donator will fail if any field is invalid or missing, except for "company", which is optional and may be empty or invalid.
+- **project** (optional) is an identifier for a receiver's project that should receive the donation.
 
 The URL for the client with the id of 1001 would be:
 
