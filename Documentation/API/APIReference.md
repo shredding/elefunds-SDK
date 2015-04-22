@@ -115,7 +115,8 @@ Only the basic authentication.
             "city":"Berlin",
             "countryCode":"en",
             "company":"elefunds"
-        }
+        },
+        "project": "awesome"
     }
 ]
 ```
