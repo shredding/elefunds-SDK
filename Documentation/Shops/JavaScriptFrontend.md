@@ -112,6 +112,11 @@ window.elefundsOptions = {
 
     //If the rowContainer is set, the element you define here will be looked up relative to the rowContainer element. //Otherwise, the element defined here will be cloned and appended after itself with the donation label as its content (elefunds donation)
     //Values: any DOM selector (class, element, id)
+    rowContainer: '#lfnds-row-container',
+    
+    //The element you choose here will be cloned and appended after itself with the donation label as its content (elefunds donation)
+    //Helpful when it's desired to show the donation separated from the module (ie. in an order overview)
+    //Values: any DOM selector (class, element, id)
     rowLabel: '#lfnds-row-label',
 
     //If the rowContainer is set, the element you define here will be looked up relative to the rowContainer element. //Otherwise, the element defined here will be cloned and appended after itself with the donation amount as its content (ie. 12.00 €)
